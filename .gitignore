@@ -1,0 +1,15 @@
+# WordPress
+*.log
+.DS_Store
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build artifacts
+*.zip
+
+# IDE
+.idea/
+.vscode/
+*.swp
