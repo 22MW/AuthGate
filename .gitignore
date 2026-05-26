@@ -2,9 +2,10 @@
 *.log
 .DS_Store
 
-# Credenciales locales — nunca subir al repo
+# Credenciales locales y contexto de IA — nunca subir al repo
 .env.local
 .env
+CLAUDE.md
 
 # Dependencies
 /vendor/
