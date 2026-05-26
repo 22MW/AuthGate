@@ -7,6 +7,18 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.0] — 2026-05-26
+
+### Added
+- Multisite network admin settings page (global options) and per-subsite settings page (exclusions + Mail Mint list).
+- `subsite_keys()` routing: `excluded_pages` and `mailmint_list_id` stored per-site via `get_option`; all other settings use `get_site_option` on network.
+- `login_slug_redirect` setting: configurable redirect URL after login from the standalone `/slug/` page (default: home). Protected-page `redirect_to` flow unchanged.
+- AJAX settings save with WordPress-style snackbar Toast (no page reload); toast CSS injected via `wp_add_inline_style`.
+- GitHub Releases auto-updater (`class-github-updater.php`): hooks into `site_transient_update_plugins`, prefers named ZIP asset, fixes extracted folder name.
+- `uninstall.php`: drops `authgate_log` table, removes all `authgate_*` options and rate-limit transients on uninstall.
+- `deploy-release.sh`: automated release script — clean `release` branch, `authgate.zip`, GitHub release with changelog, merge to `main` and tag.
+- Media library button now enqueues on both `admin_enqueue_scripts` and `network_admin_enqueue_scripts` to fix network admin context.
+
 ## [1.0.0] — 2026-05-26
 
 ### Added

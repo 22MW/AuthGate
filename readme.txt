@@ -4,7 +4,7 @@ Tags: login, register, authentication, access control, woocommerce
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,14 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 3. Settings panel in WordPress admin.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added multisite support: network admin settings page for global options; per-subsite settings page for exclusions and Mail Mint list.
+* Added `login_slug_redirect` setting: configurable redirect after login from the standalone login page.
+* Added GitHub Releases auto-updater — updates appear in Dashboard › Updates.
+* Added AJAX settings save with snackbar Toast notification (no page reload).
+* Added `uninstall.php` for full cleanup on plugin deletion.
+* Fixed media library button not opening in network admin context.
 
 = 1.0.0 =
 * Initial public release.
