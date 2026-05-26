@@ -2,6 +2,10 @@
 *.log
 .DS_Store
 
+# Credenciales locales — nunca subir al repo
+.env.local
+.env
+
 # Dependencies
 /vendor/
 /node_modules/

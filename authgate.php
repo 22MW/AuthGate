@@ -23,6 +23,12 @@ add_action('init', function () {
 require_once __DIR__ . '/includes/class-auth-install.php';
 require_once __DIR__ . '/includes/class-auth-settings.php';
 require_once __DIR__ . '/includes/class-auth-forms.php';
+require_once __DIR__ . '/includes/class-github-updater.php';
+
+// Auto-updater desde GitHub Releases
+add_action('init', function () {
+    (new AuthGate_Github_Updater())->register_hooks();
+});
 
 // Ocultar barra de admin a no-admins
 add_filter('show_admin_bar', function ($show) {
