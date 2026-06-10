@@ -1,4 +1,10 @@
-<?php defined('ABSPATH') || exit; ?>
+<?php
+defined('ABSPATH') || exit;
+
+if (!AuthGate_Settings::registration_enabled()) {
+    return;
+}
+?>
 <div class="authgate authgate--register">
     <h2 class="authgate__title"><?php echo esc_html(AuthGate_Settings::get_string('register_title')); ?></h2>
 

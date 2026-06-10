@@ -15,6 +15,15 @@ final class AuthGate_Github_Updater {
     private const SLUG       = 'authgate';
     private const CACHE_KEY  = 'authgate_github_release_latest';
 
+    /**
+     * Get the actual plugin basename for the current installation folder.
+     *
+     * @return string
+     */
+    private function get_plugin_basename(): string {
+        return plugin_basename(dirname(__DIR__) . '/authgate.php');
+    }
+
     /** @return void */
     public function register_hooks(): void {
         add_filter('site_transient_update_plugins', array($this, 'filter_plugin_updates'));
@@ -108,7 +117,7 @@ final class AuthGate_Github_Updater {
         }
 
         $remote_version = $this->get_remote_version($release);
-        $plugin_slug    = self::SLUG . '/' . self::SLUG . '.php';
+        $plugin_slug    = $this->get_plugin_basename();
 
         if (empty($remote_version) || empty($transient->checked[$plugin_slug])) {
             return $transient;
@@ -202,17 +211,19 @@ final class AuthGate_Github_Updater {
      * @return string
      */
     public function fix_source_dir(string $source, string $remote_source, object $upgrader, array $hook_extra): string {
-        $plugin_slug = self::SLUG . '/' . self::SLUG . '.php';
+        $plugin_slug = $this->get_plugin_basename();
 
         if (empty($hook_extra['plugin']) || $hook_extra['plugin'] !== $plugin_slug) {
             return $source;
         }
 
-        if (basename($source) === self::SLUG) {
+        $plugin_dir = dirname($plugin_slug);
+
+        if (basename($source) === $plugin_dir) {
             return $source;
         }
 
-        $corrected = trailingslashit(dirname($source)) . self::SLUG;
+        $corrected = trailingslashit(dirname($source)) . $plugin_dir;
         // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
         if (@rename($source, $corrected)) {
             return $corrected;

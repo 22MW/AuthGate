@@ -132,6 +132,16 @@ class AuthGate_Settings {
         return get_option('authgate_' . $key, $default);
     }
 
+    /** @return bool */
+    public static function registration_enabled(): bool {
+        return (bool) get_option('users_can_register');
+    }
+
+    /** @return bool */
+    private static function is_woocommerce_active(): bool {
+        return class_exists('WooCommerce');
+    }
+
     /**
      * Definición de todos los strings públicos editables.
      *
@@ -298,6 +308,38 @@ class AuthGate_Settings {
                             <p class="description"><?php esc_html_e('Bloqueo de 1 hora al superar este límite. Por defecto: 10.', 'authgate'); ?></p>
                         </td>
                     </tr>
+                </table>
+            </div>
+
+            <!-- Registro -->
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('Registro de usuarios', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;">
+                    <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
+                </p>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Permitir registro', 'authgate'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="users_can_register" value="1" <?php checked(self::registration_enabled()); ?>>
+                                <?php esc_html_e('Permitir que los visitantes creen una cuenta', 'authgate'); ?>
+                            </label>
+                            <p class="description"><?php esc_html_e('Equivale a la opción nativa de WordPress “Cualquiera puede registrarse”.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                    <?php if (self::is_woocommerce_active()) : ?>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Contraseña WooCommerce', 'authgate'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="woocommerce_registration_generate_password" value="1" <?php checked(get_option('woocommerce_registration_generate_password'), 'yes'); ?>>
+                                <?php esc_html_e('Enviar enlace de configuración de contraseña', 'authgate'); ?>
+                            </label>
+                            <p class="description"><?php esc_html_e('Equivale a la opción nativa de WooCommerce. Si está activa, AuthGate no mostrará campos de contraseña en el registro.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                    <?php endif; ?>
                 </table>
             </div>
 
@@ -856,6 +898,11 @@ class AuthGate_Settings {
         self::update_setting('login_slug_redirect', esc_url_raw(wp_unslash($_POST['login_slug_redirect'] ?? '')));
         self::update_setting('reset_slug',          sanitize_title(wp_unslash($_POST['reset_slug'] ?? 'restablecer-contrasena')));
         self::update_setting('block_wp_login',      !empty($_POST['block_wp_login']));
+        update_option('users_can_register', !empty($_POST['users_can_register']) ? 1 : 0);
+
+        if (self::is_woocommerce_active()) {
+            update_option('woocommerce_registration_generate_password', !empty($_POST['woocommerce_registration_generate_password']) ? 'yes' : 'no');
+        }
 
         if (!self::is_network()) {
             self::update_setting('mailmint_list_id', max(0, (int) ($_POST['mailmint_list_id'] ?? 0)));

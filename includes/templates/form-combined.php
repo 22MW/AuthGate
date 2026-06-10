@@ -1,6 +1,11 @@
 <?php
 defined('ABSPATH') || exit;
 $default_tab = $default_tab ?? 'login';
+$registration_allowed = isset($registration_allowed) ? (bool) $registration_allowed : AuthGate_Settings::registration_enabled();
+
+if (!$registration_allowed) {
+    $default_tab = 'login';
+}
 ?>
 <div class="authgate authgate--combined">
 
@@ -13,13 +18,15 @@ $default_tab = $default_tab ?? 'login';
             data-tab="login">
             <?php echo esc_html(AuthGate_Settings::get_string('tab_login')); ?>
         </button>
-        <button type="button"
-            class="authgate__tab <?php echo $default_tab === 'register' ? 'is-active' : ''; ?>"
-            role="tab"
-            aria-selected="<?php echo $default_tab === 'register' ? 'true' : 'false'; ?>"
-            data-tab="register">
-            <?php echo esc_html(AuthGate_Settings::get_string('tab_register')); ?>
-        </button>
+        <?php if ($registration_allowed) : ?>
+            <button type="button"
+                class="authgate__tab <?php echo $default_tab === 'register' ? 'is-active' : ''; ?>"
+                role="tab"
+                aria-selected="<?php echo $default_tab === 'register' ? 'true' : 'false'; ?>"
+                data-tab="register">
+                <?php echo esc_html(AuthGate_Settings::get_string('tab_register')); ?>
+            </button>
+        <?php endif; ?>
     </div>
 
     <!-- Panel Login -->
@@ -67,11 +74,13 @@ $default_tab = $default_tab ?? 'login';
                 <?php echo esc_html(AuthGate_Settings::get_string('btn_login')); ?>
             </button>
 
-            <p class="authgate__switch">
-                <a href="#" class="authgate__switch-link" data-switch-to="register">
-                    <?php echo esc_html(AuthGate_Settings::get_string('link_to_register')); ?>
-                </a>
-            </p>
+            <?php if ($registration_allowed) : ?>
+                <p class="authgate__switch">
+                    <a href="#" class="authgate__switch-link" data-switch-to="register">
+                        <?php echo esc_html(AuthGate_Settings::get_string('link_to_register')); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
         </form>
 
         <div class="authgate__lost-panel" style="display:none;">
@@ -97,6 +106,7 @@ $default_tab = $default_tab ?? 'login';
         </div>
     </div>
 
+    <?php if ($registration_allowed) : ?>
     <!-- Panel Registro -->
     <div class="authgate__panel <?php echo $default_tab === 'register' ? 'is-active' : ''; ?>" data-panel="register" role="tabpanel">
         <div class="authgate__message" role="alert" aria-live="polite"></div>
@@ -197,5 +207,6 @@ $default_tab = $default_tab ?? 'login';
             <?php do_action('authgate_register_form_fields'); ?>
         </form>
     </div>
+    <?php endif; ?>
 
 </div>

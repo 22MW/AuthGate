@@ -35,7 +35,7 @@ class AuthGate_WC_Integration {
         // Crear usuario como cliente WC en lugar de wp_create_user
         add_filter('authgate_create_user', array($this, 'create_wc_customer'), 10, 3);
 
-        // Permitir registro si WC myaccount lo tiene habilitado
+        // Respetar el permiso de registro definido por WordPress/AuthGate.
         add_filter('authgate_registration_allowed', array($this, 'wc_registration_allowed'));
 
         // Ocultar campo de contraseña si WC genera contraseña automática
@@ -81,8 +81,7 @@ class AuthGate_WC_Integration {
      * @return bool
      */
     public function wc_registration_allowed($allowed) {
-        if ($allowed) return true;
-        return get_option('woocommerce_enable_myaccount_registration') === 'yes';
+        return (bool) $allowed;
     }
 
     /**

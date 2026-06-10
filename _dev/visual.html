@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AuthGate - Estado operativo</title>
+  <style>
+    :root { color-scheme: light; --ok: #12805c; --warn: #a15c00; --bad: #b42318; --bg: #f6f7f9; --card: #ffffff; --text: #1f2937; --muted: #667085; --line: #d0d5dd; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+    main { max-width: 1120px; margin: 0 auto; padding: 32px 20px; }
+    header { margin-bottom: 24px; }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    h2 { margin: 0 0 14px; font-size: 18px; }
+    p { margin: 0 0 10px; }
+    code { background: #f2f4f7; border-radius: 4px; padding: 1px 4px; }
+    .muted { color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; box-shadow: 0 1px 2px rgba(16, 24, 40, .04); }
+    .wide { grid-column: span 3; }
+    .badge { display: inline-block; border-radius: 999px; padding: 4px 10px; font-size: 13px; font-weight: 700; }
+    .ok { color: var(--ok); background: #ecfdf3; }
+    .warn { color: var(--warn); background: #fffaeb; }
+    .bad { color: var(--bad); background: #fef3f2; }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin: 6px 0; }
+    .areas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .area { border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: #fff; }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } .wide { grid-column: span 1; } .areas { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>AuthGate - Estado operativo</h1>
+      <p class="muted">Última actualización: 2026-06-10</p>
+      <span class="badge warn">Estado: MCP conectado, incidencia de registro abierta</span>
+    </header>
+
+    <section class="grid">
+      <article class="card wide">
+        <h2>Resumen humano</h2>
+        <p>AuthGate está activo en <code>https://plugins.local</code>, rama <code>mishaAuthDev</code>, versión <code>1.1.0</code>. WooCommerce MCP responde: WooCommerce <code>10.7.0</code>, PHP <code>8.3.30</code>, entorno local. Sigue abierta la incidencia: registro frontend devuelve mensaje genérico.</p>
+      </article>
+
+      <article class="card">
+        <h2>Urgente</h2>
+        <ul>
+          <li>Diagnosticar fallo de registro frontend.</li>
+          <li>Confirmar respuesta AJAX <code>authgate_register</code>.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Recomendado</h2>
+        <ul>
+          <li>Usar MCP solo lectura para confirmar entorno.</li>
+          <li>QA funcional mínimo tras corregir registro.</li>
+          <li>Auditoría de seguridad dirigida.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Futuro</h2>
+        <ul>
+          <li>Checklist release y exclusión de <code>_dev/</code>.</li>
+          <li>Soporte proxy/CDN configurable si aplica.</li>
+        </ul>
+      </article>
+
+      <article class="card wide">
+        <h2>Áreas</h2>
+        <div class="areas">
+          <div class="area"><strong>Funcional</strong><br><span class="badge bad">Incidencia</span></div>
+          <div class="area"><strong>Arquitectura</strong><br><span class="badge warn">Parcial</span></div>
+          <div class="area"><strong>Desarrollo</strong><br><span class="badge warn">Cambios locales</span></div>
+          <div class="area"><strong>QA</strong><br><span class="badge bad">Pendiente</span></div>
+          <div class="area"><strong>Seguridad</strong><br><span class="badge warn">Pendiente</span></div>
+          <div class="area"><strong>MCP</strong><br><span class="badge ok">Woo OK</span></div>
+          <div class="area"><strong>Release</strong><br><span class="badge bad">No listo</span></div>
+          <div class="area"><strong>Comercial</strong><br><span class="badge warn">No revisado</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Riesgos abiertos</h2>
+        <ul>
+          <li>Registro frontend falla con mensaje genérico.</li>
+          <li>Settings de registro WooCommerce/My Account están desactivados.</li>
+          <li>Release debe excluir <code>_dev/</code>.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Últimas decisiones</h2>
+        <ul>
+          <li>Trabajar AuthGate desde su repo propio.</li>
+          <li>No commit/push/release sin autorización explícita.</li>
+          <li>MCP WooCommerce disponible para diagnóstico.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Próximo paso</h2>
+        <p>Diagnóstico del registro: revisar AJAX <code>authgate_register</code>, payload, respuesta, logs y ajustes de registro WordPress/WooCommerce.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

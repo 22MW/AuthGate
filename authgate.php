@@ -35,29 +35,6 @@ add_filter('show_admin_bar', function ($show) {
     return current_user_can('manage_options') ? $show : false;
 });
 
-// Bloquear wp-admin, wp-login.php y wp-signup.php — redirigir al home si no es admin
-add_action('init', function () {
-    if (wp_doing_ajax()) return;
-
-    $uri    = $_SERVER['REQUEST_URI'] ?? '';
-    $action = $_GET['action'] ?? '';
-
-    // Permitir flujos de recuperación/reset de contraseña en wp-login.php
-    $is_password_flow = in_array($action, ['rp', 'resetpass', 'lostpassword'], true);
-
-    $is_restricted = (
-        strpos($uri, '/wp-admin') !== false ||
-        (strpos($uri, 'wp-login.php') !== false && !$is_password_flow) ||
-        strpos($uri, 'wp-signup.php') !== false ||
-        strpos($uri, 'wp-register.php') !== false
-    );
-
-    if ($is_restricted && !current_user_can('manage_options')) {
-        wp_safe_redirect(home_url('/'));
-        exit;
-    }
-});
-
 register_activation_hook(__FILE__, array('AuthGate_Install', 'activate'));
 
 add_action('plugins_loaded', function () {

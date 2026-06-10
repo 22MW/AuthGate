@@ -18,7 +18,7 @@ WP AuthGate replaces the default WordPress login and registration flow with a po
 * **Custom registration form** — shortcode `[authgate_register]`
 * **Combined form** — shortcode `[authgate_combined]` (tab-based login + register)
 * **Password reset** — shortcode `[authgate_reset]`
-* **Page protection** — shortcode `[authgate_protected]` to restrict any page to logged-in users
+ * **Page protection** — automatic restriction for private/pages-requiring-login via the plugin logic; no dedicated protected shortcode
 * **Popup / overlay mode** — embed any form inside a modal triggered by a button
 * **GDPR checkbox** — required consent field with configurable privacy-policy link
 * **Newsletter opt-in** — optional checkbox wired to Mail Mint (or any hook)
