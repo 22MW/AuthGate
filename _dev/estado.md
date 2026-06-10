@@ -16,12 +16,12 @@ Parcial: P1 implementada en código, pendiente de QA manual.
 
 - Plugin localizado en `app/public/wp-content/plugins/AuthGate/`.
 - Archivo principal confirmado: `authgate.php`.
-- Versión detectada: `1.1.0`.
+- Versión detectada: `1.1.0.1`.
 - Text domain detectado: `authgate`.
 - Repo Git propio confirmado.
 - Rama actual confirmada: `mishaAuthDev`.
 - MCP WooCommerce operativo en lectura.
-- AuthGate activo: `AuthGate/authgate.php` versión `1.1.0`.
+- AuthGate activo en WordPress: `AuthGate/authgate.php` versión `1.1.0` antes del bump local dev.
 - WooCommerce activo: `woocommerce/woocommerce.php` versión `10.7.0`.
 - Entorno local confirmado: `wp_environment_type: local`.
 - P1 aplicada: control backend para `users_can_register`.
@@ -48,7 +48,7 @@ Parcial: P1 implementada en código, pendiente de QA manual.
 
 - Ruta real del plugin: `app/public/wp-content/plugins/AuthGate/`.
 - Archivo principal: `authgate.php`.
-- Versión actual declarada: `1.1.0`.
+- Versión actual declarada en código: `1.1.0.1`.
 - Rama de trabajo: `mishaAuthDev`.
 - Sitio local confirmado por MCP: `https://plugins.local`.
 - WooCommerce activo confirmado por MCP: `10.7.0`.

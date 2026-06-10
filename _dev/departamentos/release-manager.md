@@ -6,34 +6,37 @@
 
 ## Resumen humano
 
-No hay release preparada. Hay cambios locales y una incidencia funcional abierta.
+Rama dev corregida según regla de release: el push a dev debe llevar versión de cuatro números y entrada operativa. Se preparó `1.1.0.1` como versión dev.
 
 ## Descubierto
 
-- Versión declarada: `1.1.0`.
-- Último commit visible: `Release 1.1.0`.
+- Versión estable base: `1.1.0`.
 - Rama actual: `mishaAuthDev`.
-- `_dev/` no debe incluirse en ZIP/deploy.
+- Último push dev previo no llevaba bump dev; corregido con `1.1.0.1`.
+- `_dev/` no debe incluirse en ZIP/deploy público.
 
 ## Hecho
 
-- Riesgos de release iniciales anotados.
+- Cabecera del plugin actualizada a `1.1.0.1`.
+- `_dev/release-notes.md` actualizado con entrada `Dev 1.1.0.1`.
+- `Stable tag` de `readme.txt` se mantiene en `1.1.0` porque no es release estable.
 
 ## Pendiente
 
-- Validar cambios locales.
-- Confirmar qué entra en próxima release.
-- Revisar changelog público solo cuando haya release aprobada.
+- Validar QA manual antes de preparar release estable.
+- Consolidar dev en versión pública de tres números cuando se prepare release.
+- Excluir `_dev/` y `.kilo/` del ZIP público.
 
 ## No volver a investigar
 
-- No publicar desde estado con incidencia de registro abierta.
+- Las versiones dev usan formato `MAJOR.MINOR.PATCH.DEV`.
+- No cambiar `Stable tag` en rama dev salvo release estable aprobada.
 
 ## Riesgos o bloqueos
 
-- Registro no validado.
-- `_dev/` debe excluirse de release pública.
+- QA manual de P1 pendiente.
+- No hay ZIP limpio preparado.
 
 ## Próximo paso recomendado
 
-- No preparar release hasta cerrar diagnóstico, QA y seguridad mínima.
+- Commit/push del bump dev `1.1.0.1` si se confirma publicar la corrección en rama dev.

@@ -4,9 +4,18 @@
 
 2026-06-10
 
+## Dev 1.1.0.1 — 2026-06-10
+
+- Añadida gestión desde AuthGate de `users_can_register`.
+- Añadida gestión de `woocommerce_registration_generate_password` cuando WooCommerce está activo.
+- Ocultado el registro frontend cuando WordPress no permite registros.
+- Ajustado AJAX de registro para respetar el estado nativo de registro.
+- Ajustada integración WooCommerce para no reactivar registro si WordPress/AuthGate lo desactiva.
+- Creada memoria operativa `_dev/` inicial.
+
 ## Entrará en la próxima release
 
-- Pendiente de confirmar después de validar el registro y cerrar el diagnóstico actual.
+- Pendiente de consolidar desde `1.1.0.1` después de QA manual.
 
 ## Queda fuera
 
@@ -24,8 +33,8 @@
 
 ## Riesgos antes de publicar
 
-- Registro frontend falla actualmente con mensaje genérico según usuario.
-- MCP WordPress/WooCommerce no está operativo por falta de credenciales.
+- QA manual de registro activo/inactivo pendiente.
+- Validación WooCommerce de enlace de configuración de contraseña pendiente.
 - `_dev/` debe excluirse de cualquier ZIP/deploy público.
 
 ## Limpieza post-release
