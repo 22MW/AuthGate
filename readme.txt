@@ -4,7 +4,7 @@ Tags: login, register, authentication, access control, woocommerce
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,15 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 3. Settings panel in WordPress admin.
 
 == Changelog ==
+
+= 1.1.1 =
+* Added registration controls for native WordPress registration and WooCommerce generated passwords.
+* Added popup shortcode `label` and improved popup button class support.
+* Added inline home link and Mail Mint conditional display.
+* Added WYSIWYG intro text for inline login, register and combined forms.
+* Moved form texts to a dedicated settings tab with independent saving.
+* Added optional custom CSS tab with CodeMirror editor, activation checkbox, sanitization and white/dark presets.
+* Improved protected-page card layout, logo handling and default form styling.
 
 = 1.1.0 =
 * Added multisite support: network admin settings page for global options; per-subsite settings page for exclusions and Mail Mint list.

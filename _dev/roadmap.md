@@ -2,7 +2,7 @@
 
 ## Urgente
 
-- Bloque D pendiente: CSS propio opcional.
+- Release production `1.1.1` en preparación.
 
 ## Recomendado
 
@@ -24,28 +24,29 @@
 
 ### Bloque D — riesgo alto / ejecutar al final
 
-- Añadir CSS propio opcional desde admin.
-- Checkbox para activar CSS propio.
-- Editor tipo CodeMirror.
-- Sanitización del CSS antes de guardar/renderizar.
-- Dos presets copiables: blanco y oscuro.
-- Preset blanco como referencia inicial.
+- Hecho local: CSS propio opcional desde admin.
+- Hecho local: checkbox de activación.
+- Hecho local: editor CodeMirror.
+- Hecho local: sanitización conservadora antes de guardar.
+- Hecho local: presets copiables blanco y oscuro.
+- Hecho local: preset blanco activo/cargado por defecto.
+- QA OK confirmado por el usuario.
 
 ### Antes de release
 
-- Ejecutar auditoría de seguridad dirigida sobre AJAX, nonces, capabilities, sanitización, escaping, SQL, updater y uninstall.
+- Validar PHP y diff.
 - Revisar que `_dev/` y `.kilo/` quedan excluidos de cualquier ZIP/deploy público.
-- Preparar release estable solo con autorización explícita.
+- Ejecutar `deploy-release.sh` con autorización explícita.
 
 ## Futuro
 
 - Definir soporte explícito para proxy/CDN si se necesita confiar en cabeceras de IP.
-- Consolidar cambios dev en una versión pública de tres números cuando se prepare release estable.
+- Revisar documentación pública tras release si se detectan dudas de soporte.
 - Revisar documentación pública y changelog antes de release.
 
 ## Bloqueado
 
-- Release estable bloqueada hasta permiso explícito.
+- Release production autorizado para `1.1.1`.
 - Creación de usuarios de prueba bloqueada hasta permiso explícito si se considera prueba que altera datos.
 
 ## Descartado

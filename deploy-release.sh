@@ -80,6 +80,7 @@ echo "[1/5] Preparando rama $BRANCH_RELEASE..."
 git checkout -B "$BRANCH_RELEASE" "origin/$BRANCH_DEV" 2>/dev/null || git checkout -B "$BRANCH_RELEASE" "$BRANCH_DEV"
 
 # Eliminar archivos que no deben ir en el ZIP de producción
+rm -rf _dev .kilo
 rm -f deploy-release.sh .env.local .env
 find . -name '.DS_Store' -delete 2>/dev/null || true
 

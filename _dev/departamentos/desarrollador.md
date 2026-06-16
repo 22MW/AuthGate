@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B quedó cerrado en `1.1.0.5`. Bloque C implementado localmente: pestaña “Textos” separada y guardado independiente.
+Bloques A, B y C cerrados. Bloque D implementado localmente: pestaña “CSS propio”, activación frontend, CodeMirror, sanitización y presets.
 
 ## Descubierto
 
@@ -29,10 +29,18 @@ Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B quedó cerrado en `1.1.0.5
 - Bloque C: añadida pestaña `Textos`.
 - Bloque C: quitado bloque de textos de la pestaña General.
 - Bloque C: añadido guardado independiente `authgate_save_strings` con nonce propio.
+- Bloque D: añadida pestaña `CSS propio`.
+- Bloque D: añadido guardado independiente `authgate_save_css` con nonce propio.
+- Bloque D: CSS frontend se carga solo si el checkbox está activo.
+- Bloque D: presets blanco y oscuro añadidos como texto copiable.
+- Bloque D: preset blanco queda activo por defecto y define caja, inputs, botones y espaciado sin forzar fuentes.
+- Bloque D: ajustado preset blanco para reducir inputs, mejorar textos e incluir logo/título/descripción de página protegida dentro de la card.
+- Bloque D: aplicado al preset oscuro el mismo patrón visual del preset blanco.
+- Bloque D: extraída base común para que blanco y oscuro compartan tamaños, espaciados y estructura; solo cambian colores.
 
 ## Pendiente
 
-- QA manual del Bloque C.
+- QA manual del Bloque D.
 
 ## No volver a investigar
 
@@ -40,6 +48,7 @@ Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B quedó cerrado en `1.1.0.5
 - El enlace de inicio no debe aparecer en popup.
 - Bloque B guarda HTML permitido mediante `wp_kses_post()`.
 - Bloque C conserva sanitización previa por tipo de texto.
+- Bloque D bloquea patrones CSS peligrosos básicos: `@import`, `javascript:`, `expression()`, `behavior` y `-moz-binding`.
 
 ## Riesgos o bloqueos
 
@@ -47,4 +56,4 @@ Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B quedó cerrado en `1.1.0.5
 
 ## Próximo paso recomendado
 
-- Validar guardado de pestaña General y pestaña Textos por separado.
+- Validar pestaña CSS, guardado, checkbox de activación y render frontend.

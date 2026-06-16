@@ -2,43 +2,44 @@
 
 ## Última actualización
 
-2026-06-10
+2026-06-16
 
 ## Resumen humano
 
-Versión dev `1.1.0.1` ya aplicada, commiteada y pusheada a `mishaAuthDev`. No hay release estable ni ZIP público preparado.
+Release production `1.1.1` autorizado por el usuario. Se consolidan los devs `1.1.0.1` a `1.1.0.7` y se usará `deploy-release.sh` para GitHub release, ZIP, merge a `main` y tag.
 
 ## Descubierto
 
-- Versión estable base: `1.1.0`.
-- Rama actual: `mishaAuthDev`.
-- Commit dev actual: `87216ff release: bump dev version to 1.1.0.1`.
-- `_dev/` no debe incluirse en ZIP/deploy público.
-- `.kilo/` queda sin trackear y no debe incluirse en release pública salvo decisión explícita.
+- Script real de release: `deploy-release.sh`.
+- El script publica GitHub release, sube `authgate.zip`, mergea `release` en `main` y crea tag.
+- El script necesitaba excluir `_dev/` y `.kilo/` antes de crear rama/ZIP de release.
 
 ## Hecho
 
-- Cabecera del plugin actualizada a `1.1.0.1`.
-- `_dev/release-notes.md` actualizado con entrada `Dev 1.1.0.1`.
-- `Stable tag` de `readme.txt` se mantiene en `1.1.0` porque no es release estable.
-- Push dev realizado a `origin/mishaAuthDev`.
+- Versión estable preparada: `1.1.1`.
+- `readme.txt` preparado con `Stable tag: 1.1.1`.
+- `CHANGELOG.md` preparado con entrada `1.1.1`.
+- `deploy-release.sh` ajustado para excluir `_dev/` y `.kilo/`.
+- Bloques A/B/C/D consolidados para release.
 
 ## Pendiente
 
-- Validar QA manual antes de preparar release estable.
-- Consolidar dev en versión pública de tres números cuando se prepare release.
-- Excluir `_dev/` y `.kilo/` del ZIP público.
+- Validar PHP y diff.
+- Commit y push de preparación en `mishaAuthDev`.
+- Ejecutar `deploy-release.sh`.
+- Confirmar URL de GitHub release.
 
 ## No volver a investigar
 
-- Las versiones dev usan formato `MAJOR.MINOR.PATCH.DEV`.
-- No cambiar `Stable tag` en rama dev salvo release estable aprobada.
+- `_dev/` y `.kilo/` no deben ir en ZIP/release pública.
+- `deploy-release.sh` requiere working tree limpio antes de ejecutarse.
+- `deploy-release.sh` requiere `GITHUB_TOKEN` disponible en `.env.local` o entorno.
 
 ## Riesgos o bloqueos
 
-- QA manual de P1 pendiente.
-- No hay ZIP limpio preparado.
+- Si falta `GITHUB_TOKEN`, el script se detendrá.
+- Si el tag `v1.1.1` ya existe, el script se detendrá.
 
 ## Próximo paso recomendado
 
-- Esperar QA manual antes de proponer release estable.
+- Validar, commitear preparación y ejecutar release production `1.1.1`.

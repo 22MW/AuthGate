@@ -25,6 +25,22 @@
     margin-top: 0;
 }
 
+.authgate-protected-page__logo img,
+.authgate-protected-page__logo .custom-logo {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    max-width: min(220px, 70%);
+    max-height: 110px;
+    object-fit: contain;
+}
+
+.authgate-protected-page__logo .custom-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .authgate__intro {
     margin: 0 auto var(--s-6, 1.5rem);
     max-width: 100%;

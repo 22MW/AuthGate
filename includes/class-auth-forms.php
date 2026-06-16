@@ -82,6 +82,12 @@ class AuthGate_Forms
             array('dashicons'),
             '1.0.0'
         );
+        if (AuthGate_Settings::custom_css_enabled()) {
+            $custom_css = AuthGate_Settings::get_custom_css();
+            if ($custom_css) {
+                wp_add_inline_style('authgate-forms', $custom_css);
+            }
+        }
         wp_enqueue_script(
             'authgate-forms',
             plugin_dir_url(dirname(__FILE__)) . 'assets/js/auth-forms.js',

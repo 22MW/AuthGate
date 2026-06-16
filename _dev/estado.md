@@ -6,17 +6,17 @@
 
 ## Resumen humano
 
-AuthGate está en rama dev `mishaAuthDev`. La P1, popup `label`, Bloque A y Bloque B están cerrados. Bloque C está implementado como `1.1.0.6`: pestaña propia para textos y guardado separado.
+AuthGate está preparando release production `1.1.1`. La P1, popup `label` y Bloques A/B/C/D tienen QA OK confirmado por el usuario.
 
 ## Estado general
 
-Dev `1.1.0.6` preparada con Bloque C; QA OK confirmado por el usuario y push autorizado.
+Release `1.1.1` en preparación para GitHub production mediante `deploy-release.sh`.
 
 ## Hecho
 
 - Plugin localizado en `app/public/wp-content/plugins/AuthGate/`.
 - Archivo principal confirmado: `authgate.php`.
-- Versión dev actual declarada: `1.1.0.6`.
+- Versión estable en preparación: `1.1.1`.
 - Rama actual confirmada: `mishaAuthDev`.
 - P1 implementada y QA OK.
 - Mejora popup pusheada con commit `58a9622 feat: add popup shortcode labels`.
@@ -30,25 +30,35 @@ Dev `1.1.0.6` preparada con Bloque C; QA OK confirmado por el usuario y push aut
 - Bloque C: textos movidos a pestaña propia con guardado independiente.
 - Bloque C: texto “Ir a la página de inicio” añadido como `link_to_home` configurable.
 - QA Bloque C OK confirmado por el usuario.
+- Bloque D: CSS propio opcional implementado localmente.
+- Bloque D: CSS propio activo por defecto y preset blanco cargado como fallback.
+- Bloque D: card de página protegida incluye logo, título y descripción dentro del mismo bloque visual.
+- Bloque D: logo de página protegida ajustado para mantener proporción y verse entero.
+- Bloque D: cambios visuales del preset blanco replicados en preset oscuro.
+- Bloque D: ajustes manuales de tamaño aplicados también al preset blanco.
+- Bloque D: presets blanco y oscuro sincronizados; solo cambian colores.
+- QA Bloque D OK confirmado por el usuario.
+- `deploy-release.sh` revisado y ajustado para excluir `_dev/` y `.kilo/`.
 
 ## En curso
 
-- Commit y push de Bloque C.
+- Preparación de release production `1.1.1`.
 
 ## Bloqueado
 
-- Release estable bloqueada hasta permiso explícito.
-- Release estable bloqueada hasta cerrar o descartar mejoras pre-release elegidas.
+- Publicación production en curso con permiso explícito del usuario.
 
 ## Próximo paso recomendado
 
-- Hacer commit y push de Bloque C.
+- Validar release, commitear preparación y ejecutar `deploy-release.sh`.
 
 ## No volver a investigar
 
 - Ruta real del plugin: `app/public/wp-content/plugins/AuthGate/`.
 - Rama de trabajo: `mishaAuthDev`.
-- Versión dev actual declarada: `1.1.0.6`.
+- Versión estable preparada: `1.1.1`.
+- Release production autorizado por el usuario el 2026-06-16.
+- Bloque D solo carga CSS si está activado.
 - Bloque C separa guardado de textos del guardado general.
 - QA Bloque A OK confirmado por el usuario.
 - Bloque B no debe aparecer en popup.

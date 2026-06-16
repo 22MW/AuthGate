@@ -4,6 +4,26 @@
 
 2026-06-16
 
+## Release 1.1.1 — 2026-06-16
+
+- Consolidación de devs `1.1.0.1` a `1.1.0.7`.
+- Release production autorizado por el usuario.
+- `deploy-release.sh` revisado y ajustado para excluir `_dev/` y `.kilo/` del ZIP/rama release.
+
+## Dev 1.1.0.7 — 2026-06-16
+
+- Bloque D: añadida pestaña “CSS propio”.
+- Bloque D: añadido checkbox para activar/desactivar CSS frontend.
+- Bloque D: añadido editor CodeMirror para CSS.
+- Bloque D: añadidos presets copiables blanco y oscuro.
+- Bloque D: sanitización conservadora del CSS antes de guardar.
+- Bloque D: preset blanco activo por defecto con estilos base de caja, inputs, botones y espaciado.
+- Ajuste visual Bloque D: card protegida incluye logo, título y descripción; inputs reducidos y textos equilibrados.
+- Ajuste visual Bloque D: logo protegido mantiene proporción y se muestra completo.
+- Ajuste visual Bloque D: preset oscuro actualizado con proporciones del preset blanco.
+- Ajuste visual Bloque D: preset blanco actualizado con los tamaños manuales confirmados.
+- Ajuste visual Bloque D: presets blanco y oscuro sincronizados para compartir estructura y tamaños.
+
 ## Dev 1.1.0.6 — 2026-06-16
 
 - Bloque C: separada la edición de “Textos del formulario” a una pestaña propia.
@@ -46,7 +66,7 @@
 
 ## Entrará en la próxima release
 
-- `1.1.0.1`, `1.1.0.2`, `1.1.0.3`, `1.1.0.4`, `1.1.0.5` y `1.1.0.6` pendientes de consolidar en versión estable cuando el usuario autorice release.
+- Devs `1.1.0.1` a `1.1.0.7` pendientes de consolidar en versión estable cuando el usuario autorice release.
 
 ## Queda fuera
 

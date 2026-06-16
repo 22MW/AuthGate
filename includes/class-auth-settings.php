@@ -25,6 +25,8 @@ class AuthGate_Settings {
         add_action('wp_ajax_authgate_save',              array($this, 'save_settings'));
         add_action($post_pfx . 'authgate_save_strings',  array($this, 'save_strings'));
         add_action('wp_ajax_authgate_save_strings',      array($this, 'save_strings'));
+        add_action($post_pfx . 'authgate_save_css',      array($this, 'save_css'));
+        add_action('wp_ajax_authgate_save_css',          array($this, 'save_css'));
         add_action($post_pfx . 'authgate_unblock',       array($this, 'handle_unblock'));
         add_action($post_pfx . 'authgate_blacklist_add', array($this, 'handle_blacklist_add'));
         add_action($post_pfx . 'authgate_blacklist_del', array($this, 'handle_blacklist_del'));
@@ -94,6 +96,9 @@ class AuthGate_Settings {
     public function enqueue_admin_assets($hook) {
         if (strpos($hook, 'authgate') === false) return;
         wp_enqueue_media();
+        wp_enqueue_code_editor(array('type' => 'text/css'));
+        wp_enqueue_script('wp-theme-plugin-editor');
+        wp_enqueue_style('wp-codemirror');
         $css = '.authgate-admin-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:2px;font-size:13px;line-height:1.4;z-index:999999;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:authgate-toast-in .2s ease;transition:opacity .35s;max-width:420px;white-space:nowrap}.authgate-admin-toast.is-error{background:#b33654}.authgate-admin-toast.is-hiding{opacity:0}@keyframes authgate-toast-in{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
         wp_add_inline_style('wp-admin', $css);
     }
@@ -212,6 +217,196 @@ class AuthGate_Settings {
         return (string) self::get('inline_intro_html', '');
     }
 
+    /** @return string */
+    public static function get_custom_css(): string {
+        $presets = self::css_presets();
+        return (string) self::get('custom_css', $presets['white']);
+    }
+
+    /** @return bool */
+    public static function custom_css_enabled(): bool {
+        return (bool) self::get('custom_css_enabled', true);
+    }
+
+    /** @return array<string,string> */
+    private static function css_presets(): array {
+        $common = <<<'CSS'
+.authgate,
+.authgate-protected-page__inner.card {
+    padding: clamp(24px, 4vw, 36px);
+    border-radius: 24px;
+}
+
+.authgate-protected-page__inner .authgate {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.authgate-protected-page__logo {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.authgate-protected-page__logo img,
+.authgate-protected-page__logo .custom-logo {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    max-width: min(220px, 70%);
+    max-height: 110px;
+    object-fit: contain;
+}
+
+.authgate-protected-page__logo .custom-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authgate-protected-page__site-name {
+    font: inherit;
+    font-weight: 700;
+}
+
+.authgate-protected-page__title,
+.authgate-protected-page__desc,
+.authgate__title,
+.authgate__intro {
+    text-align: center;
+}
+
+.authgate-protected-page__title,
+.authgate__title {
+    margin: 0 0 10px;
+    font-size: clamp(1.35rem, 2vw, 1.75rem) !important;
+    line-height: 1.2;
+}
+
+.authgate-protected-page__desc,
+.authgate__intro {
+    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+.authgate__form {
+    display: grid;
+    gap: 12px;
+}
+
+.authgate__field,
+.authgate__row {
+    margin-bottom: 0;
+}
+
+.authgate__input {
+    min-height: 46px;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 1.5rem !important;
+    box-shadow: none;
+}
+
+.authgate__input:focus {
+    outline: none;
+}
+
+.authgate__btn {
+    min-height: 48px;
+    margin-top: 6px;
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 700;
+    font-size: var(--fs-body, 1.5rem) !important;
+}
+
+.authgate__tabs {
+    margin-bottom: 22px;
+}
+
+.authgate__tab {
+    padding: 10px 14px;
+    border-radius: 999px 999px 0 0 !important;
+    font-size: var(--fs-body, 1.5rem) !important;
+}
+
+.authgate__switch {
+    margin-top: 14px;
+}
+
+.authgate__legal {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.authgate__label {
+    font-size: var(--fs-small, 1.2rem);
+}
+CSS;
+
+        $white = <<<'CSS'
+.authgate,
+.authgate-protected-page__inner.card {
+    background: #ffffff;
+    color: inherit;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.10);
+}
+
+.authgate__input {
+    border: 1px solid rgba(15, 23, 42, 0.16);
+    background: #ffffff;
+    color: inherit;
+}
+
+.authgate__input:focus {
+    border-color: currentColor;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+}
+CSS;
+
+        $dark = <<<'CSS'
+.authgate,
+.authgate-protected-page__inner.card {
+    background: #111827;
+    color: #f9fafb;
+    border: 1px solid rgba(249, 250, 251, 0.12);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+
+.authgate-protected-page__title,
+.authgate-protected-page__desc,
+.authgate__title,
+.authgate__intro,
+.authgate__label,
+.authgate__check-label,
+.authgate__legal {
+    color: #f9fafb;
+}
+
+.authgate__input {
+    border: 1px solid rgba(249, 250, 251, 0.24);
+    background: #ffffff;
+    color: #111827;
+}
+
+.authgate__input:focus {
+    border-color: #f9fafb;
+    box-shadow: 0 0 0 3px rgba(249, 250, 251, 0.16);
+}
+CSS;
+
+        return array(
+            'white' => $common . "\n" . $white,
+            'dark'  => $common . "\n" . $dark,
+        );
+    }
+
     /**
      * Claves de string que se renderizan como textarea (admiten HTML básico).
      *
@@ -266,6 +461,7 @@ class AuthGate_Settings {
                 $tabs = array(
                     'general'    => __('General', 'authgate'),
                     'strings'    => __('Textos', 'authgate'),
+                    'css'        => __('CSS propio', 'authgate'),
                     'shortcodes' => __('Shortcodes', 'authgate'),
                     'blocked'    => __('IPs bloqueadas', 'authgate'),
                     'log'        => __('Registro de accesos', 'authgate'),
@@ -285,6 +481,8 @@ class AuthGate_Settings {
                 $this->render_tab_general();
             } elseif ($tab === 'strings') {
                 $this->render_tab_strings();
+            } elseif ($tab === 'css') {
+                $this->render_tab_css();
             } elseif ($tab === 'shortcodes') {
                 $this->render_tab_shortcodes();
             } elseif ($tab === 'blocked') {
@@ -606,6 +804,59 @@ class AuthGate_Settings {
 
             <?php submit_button(__('Guardar textos', 'authgate')); ?>
         </form>
+        <?php
+    }
+
+    /** @return void */
+    private function render_tab_css() {
+        $presets = self::css_presets();
+        ?>
+        <form id="authgate-css-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
+            <input type="hidden" name="action" value="authgate_save_css">
+            <?php wp_nonce_field('authgate_save_css', '_authgate_nonce'); ?>
+
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('CSS propio', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;"><?php esc_html_e('CSS opcional para ajustar el aspecto de los formularios AuthGate. Se renderiza solo si está activado.', 'authgate'); ?></p>
+
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Activar CSS propio', 'authgate'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="custom_css_enabled" value="1" <?php checked(self::custom_css_enabled()); ?>>
+                                <?php esc_html_e('Cargar este CSS en frontend', 'authgate'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="authgate_custom_css"><?php esc_html_e('Editor CSS', 'authgate'); ?></label></th>
+                        <td>
+                            <textarea id="authgate_custom_css" name="custom_css" rows="16" style="width:100%;font-family:monospace;"><?php echo esc_textarea(self::get_custom_css()); ?></textarea>
+                            <p class="description"><?php esc_html_e('No se permiten @import, javascript:, expression(), behavior ni -moz-binding.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('Presets copiables', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;"><?php esc_html_e('Copia un preset y pégalo en el editor CSS si quieres usarlo como punto de partida.', 'authgate'); ?></p>
+                <h3><?php esc_html_e('Preset blanco', 'authgate'); ?></h3>
+                <textarea readonly rows="10" style="width:100%;font-family:monospace;margin-bottom:16px;"><?php echo esc_textarea($presets['white']); ?></textarea>
+                <h3><?php esc_html_e('Preset oscuro', 'authgate'); ?></h3>
+                <textarea readonly rows="10" style="width:100%;font-family:monospace;"><?php echo esc_textarea($presets['dark']); ?></textarea>
+            </div>
+
+            <?php submit_button(__('Guardar CSS', 'authgate')); ?>
+        </form>
+        <script>
+        (function(){
+            if (window.wp && wp.codeEditor) {
+                wp.codeEditor.initialize('authgate_custom_css', { codemirror: { mode: 'css', lineNumbers: true, lineWrapping: true } });
+            }
+        })();
+        </script>
         <?php
     }
 
@@ -971,6 +1222,40 @@ class AuthGate_Settings {
 
         wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'tab' => 'strings', 'updated' => '1'), self::settings_base_url()));
         exit;
+    }
+
+    /** @return void */
+    public function save_css() {
+        $is_ajax = wp_doing_ajax();
+        if ($is_ajax) {
+            check_ajax_referer('authgate_save_css', '_authgate_nonce');
+        } else {
+            check_admin_referer('authgate_save_css', '_authgate_nonce');
+        }
+        if (!current_user_can(self::required_cap())) {
+            $is_ajax ? wp_send_json_error(array('message' => __('Sin permiso.', 'authgate'))) : wp_die();
+        }
+
+        self::update_setting('custom_css_enabled', !empty($_POST['custom_css_enabled']));
+        self::update_setting('custom_css', self::sanitize_custom_css(wp_unslash($_POST['custom_css'] ?? '')));
+
+        if ($is_ajax) {
+            wp_send_json_success(array('message' => __('CSS guardado.', 'authgate')));
+        }
+
+        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'tab' => 'css', 'updated' => '1'), self::settings_base_url()));
+        exit;
+    }
+
+    /** @param string $css */
+    private static function sanitize_custom_css(string $css): string {
+        $css = wp_strip_all_tags($css);
+        $css = preg_replace('/@import\b[^;]*;?/i', '', $css);
+        $css = preg_replace('/expression\s*\([^)]*\)/i', '', $css);
+        $css = preg_replace('/javascript\s*:/i', '', $css);
+        $css = preg_replace('/behavior\s*:/i', '', $css);
+        $css = preg_replace('/-moz-binding\s*:/i', '', $css);
+        return trim((string) $css);
     }
 
     /** @return void */

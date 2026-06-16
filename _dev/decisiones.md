@@ -13,7 +13,7 @@
 - AuthGate debe poder cambiar directamente la opción nativa WordPress `users_can_register`.
 - Si el registro está desactivado, AuthGate oculta completamente la parte de registro en frontend.
 - Si WooCommerce está activo, AuthGate duplica en su backend la opción `woocommerce_registration_generate_password`.
-- Las versiones dev usan formato de cuatro números; la versión dev actual es `1.1.0.6`.
+- Las versiones dev usan formato de cuatro números; la versión estable en preparación es `1.1.1`.
 - `Stable tag` no se cambia en dev; queda para release estable.
 - QA P1 fue confirmado como OK por el usuario.
 - El atributo elegido para texto de botón popup es `label`.
@@ -28,12 +28,15 @@
 - El editor CSS debe ser tipo CodeMirror.
 - El CSS propio tendrá checkbox de activación.
 - Los presets CSS serán blanco y oscuro, como texto copiable; blanco será referencia inicial.
+- Bloque D se implementa en pestaña propia “CSS propio” con guardado independiente.
+- El preset blanco es el CSS inicial por defecto y queda activado salvo que el usuario lo desactive.
+- Release production `1.1.1` autorizado explícitamente por el usuario.
+- `deploy-release.sh` se usará para publicar GitHub release, ZIP, merge a `main` y tag.
 
 ## Pendientes de decisión
 
 - Si el sitio debe confiar en cabeceras de proxy/CDN para IP real.
-- Qué versión pública consolidará los dev cuando se prepare release estable.
-- Qué versión pública consolidará los dev cuando se prepare release estable.
+- Confirmar resultado final del script de release.
 
 ## No reabrir sin motivo
 
