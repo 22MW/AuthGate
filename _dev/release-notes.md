@@ -9,6 +9,9 @@
 - Consolidación de devs `1.1.0.1` a `1.1.0.7`.
 - Release production autorizado por el usuario.
 - `deploy-release.sh` revisado y ajustado para excluir `_dev/` y `.kilo/` del ZIP/rama release.
+- Release publicada en GitHub: `https://github.com/22MW/AuthGate/releases/tag/v1.1.1`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada.
 
 ## Dev 1.1.0.7 — 2026-06-16
 

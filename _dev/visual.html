@@ -36,7 +36,7 @@
     <header>
       <h1>AuthGate - Estado operativo</h1>
       <p class="muted">Última actualización: 2026-06-16</p>
-      <span class="badge warn">Release 1.1.1 - production en curso</span>
+      <span class="badge ok">Release 1.1.1 publicada</span>
     </header>
 
     <section class="grid">
@@ -48,16 +48,16 @@
       <article class="card">
         <h2>Urgente</h2>
         <ul>
-          <li>Ejecutar release production <code>1.1.1</code>.</li>
+          <li>Seguimiento post-release <code>1.1.1</code>.</li>
         </ul>
       </article>
 
       <article class="card">
         <h2>Recomendado</h2>
         <ul>
-          <li>Validar ZIP limpio y GitHub release.</li>
-          <li>Confirmar exclusión de <code>_dev/</code> y <code>.kilo/</code>.</li>
-          <li>Conservar trazabilidad en <code>main</code> y tag.</li>
+          <li>Release GitHub publicada.</li>
+          <li>ZIP subido como asset.</li>
+          <li><code>main</code> y tag remoto actualizados.</li>
         </ul>
       </article>
 
@@ -90,7 +90,7 @@
           <div class="area"><strong>QA</strong><br><span class="badge ok">QA OK</span></div>
           <div class="area"><strong>Seguridad</strong><br><span class="badge warn">Recomendado</span></div>
           <div class="area"><strong>MCP</strong><br><span class="badge ok">Woo OK</span></div>
-          <div class="area"><strong>Release</strong><br><span class="badge warn">En curso</span></div>
+          <div class="area"><strong>Release</strong><br><span class="badge ok">Publicada</span></div>
           <div class="area"><strong>Comercial</strong><br><span class="badge warn">No revisado</span></div>
         </div>
       </article>
@@ -100,7 +100,7 @@
         <ul>
           <li>CSS propio tiene mayor riesgo visual y de sanitización.</li>
           <li>Release debe excluir <code>_dev/</code> y <code>.kilo/</code>.</li>
-          <li>Publicación production autorizada; validar resultado del script.</li>
+          <li>No repetir tag <code>v1.1.1</code>; usar nueva versión si hay hotfix.</li>
         </ul>
       </article>
 
@@ -115,7 +115,7 @@
 
       <article class="card">
         <h2>Próximo paso</h2>
-        <p>Ejecutar <code>deploy-release.sh</code> y confirmar URL de GitHub release.</p>
+        <p>Release publicada: <code>https://github.com/22MW/AuthGate/releases/tag/v1.1.1</code></p>
       </article>
     </section>
   </main>

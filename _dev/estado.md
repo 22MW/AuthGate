@@ -6,11 +6,11 @@
 
 ## Resumen humano
 
-AuthGate está preparando release production `1.1.1`. La P1, popup `label` y Bloques A/B/C/D tienen QA OK confirmado por el usuario.
+AuthGate publicó release production `1.1.1` en GitHub. La P1, popup `label` y Bloques A/B/C/D quedaron consolidados.
 
 ## Estado general
 
-Release `1.1.1` en preparación para GitHub production mediante `deploy-release.sh`.
+Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.1` existente.
 
 ## Hecho
 
@@ -39,18 +39,21 @@ Release `1.1.1` en preparación para GitHub production mediante `deploy-release.
 - Bloque D: presets blanco y oscuro sincronizados; solo cambian colores.
 - QA Bloque D OK confirmado por el usuario.
 - `deploy-release.sh` revisado y ajustado para excluir `_dev/` y `.kilo/`.
+- GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.1.1`.
+- ZIP `authgate.zip` subido como asset de release.
+- Rama `main` actualizada por el script.
 
 ## En curso
 
-- Preparación de release production `1.1.1`.
+- Seguimiento post-release.
 
 ## Bloqueado
 
-- Publicación production en curso con permiso explícito del usuario.
+- No hay bloqueo de release abierto.
 
 ## Próximo paso recomendado
 
-- Validar release, commitear preparación y ejecutar `deploy-release.sh`.
+- Si no hay incidencias, continuar solo con seguimiento post-release.
 
 ## No volver a investigar
 
@@ -58,6 +61,7 @@ Release `1.1.1` en preparación para GitHub production mediante `deploy-release.
 - Rama de trabajo: `mishaAuthDev`.
 - Versión estable preparada: `1.1.1`.
 - Release production autorizado por el usuario el 2026-06-16.
+- Release GitHub `v1.1.1` publicada correctamente.
 - Bloque D solo carga CSS si está activado.
 - Bloque C separa guardado de textos del guardado general.
 - QA Bloque A OK confirmado por el usuario.

@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release production `1.1.1` autorizado por el usuario. Se consolidan los devs `1.1.0.1` a `1.1.0.7` y se usará `deploy-release.sh` para GitHub release, ZIP, merge a `main` y tag.
+Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.1` a `1.1.0.7` mediante `deploy-release.sh`.
 
 ## Descubierto
 
@@ -21,13 +21,13 @@ Release production `1.1.1` autorizado por el usuario. Se consolidan los devs `1.
 - `CHANGELOG.md` preparado con entrada `1.1.1`.
 - `deploy-release.sh` ajustado para excluir `_dev/` y `.kilo/`.
 - Bloques A/B/C/D consolidados para release.
+- GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.1.1`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada.
 
 ## Pendiente
 
-- Validar PHP y diff.
-- Commit y push de preparación en `mishaAuthDev`.
-- Ejecutar `deploy-release.sh`.
-- Confirmar URL de GitHub release.
+- Seguimiento post-release si aparece incidencia.
 
 ## No volver a investigar
 
@@ -37,9 +37,9 @@ Release production `1.1.1` autorizado por el usuario. Se consolidan los devs `1.
 
 ## Riesgos o bloqueos
 
-- Si falta `GITHUB_TOKEN`, el script se detendrá.
-- Si el tag `v1.1.1` ya existe, el script se detendrá.
+- El script terminó con aviso al empujar tag porque GitHub ya había creado el tag remoto al crear la release.
+- El resultado útil quedó publicado: release, ZIP, `main` y tag remoto existen.
 
 ## Próximo paso recomendado
 
-- Validar, commitear preparación y ejecutar release production `1.1.1`.
+- No repetir release `v1.1.1`; usar una versión nueva si hay hotfix.

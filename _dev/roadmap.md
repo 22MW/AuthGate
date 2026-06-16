@@ -2,7 +2,7 @@
 
 ## Urgente
 
-- Release production `1.1.1` en preparación.
+- Seguimiento post-release `1.1.1`.
 
 ## Recomendado
 
@@ -34,9 +34,9 @@
 
 ### Antes de release
 
-- Validar PHP y diff.
-- Revisar que `_dev/` y `.kilo/` quedan excluidos de cualquier ZIP/deploy público.
-- Ejecutar `deploy-release.sh` con autorización explícita.
+- Release GitHub `v1.1.1` publicada.
+- ZIP `authgate.zip` generado y subido.
+- Rama `main` actualizada.
 
 ## Futuro
 
@@ -46,7 +46,7 @@
 
 ## Bloqueado
 
-- Release production autorizado para `1.1.1`.
+- Ningún bloqueo de release abierto.
 - Creación de usuarios de prueba bloqueada hasta permiso explícito si se considera prueba que altera datos.
 
 ## Descartado
