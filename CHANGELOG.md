@@ -7,6 +7,20 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.0.1] — 2026-06-16
+
+### Added
+- Added AuthGate admin control for the native WordPress `users_can_register` option.
+- Added AuthGate admin control for WooCommerce `woocommerce_registration_generate_password` when WooCommerce is active.
+
+### Changed
+- Registration UI is hidden on frontend when WordPress registration is disabled.
+- Registration AJAX now respects the native WordPress registration setting.
+- WooCommerce integration no longer re-enables AuthGate registration when WordPress/AuthGate registration is disabled.
+
+### QA
+- P1 manual QA confirmed by user.
+
 ## [1.1.0] — 2026-05-26
 
 ### Added

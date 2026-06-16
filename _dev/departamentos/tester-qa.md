@@ -2,42 +2,39 @@
 
 ## Última actualización
 
-2026-06-10
+2026-06-16
 
 ## Resumen humano
 
-P1 lista para QA manual. El registro debe aparecer/desaparecer según `users_can_register`, y el campo contraseña debe depender de la opción WooCommerce de enlace de configuración.
+P1 validada manualmente por el usuario. La versión dev `1.1.0.1` ya está pusheada. No hay release estable todavía.
 
 ## Descubierto
 
 - Entorno confirmado por MCP: local `https://plugins.local`.
 - WooCommerce confirmado activo: `10.7.0`.
-- My Account configurada y visible.
+- AuthGate permite gestionar registro WordPress y opción WooCommerce de contraseña.
+- Usuario confirmó QA P1 OK.
 
 ## Hecho
 
-- Validación técnica ejecutada: `php -l` en PHP tocado.
-- `git diff --check` sin salida.
+- Validación técnica previa: `php -l` en PHP tocado.
+- `git diff --check` sin salida antes del push dev.
+- QA manual P1 confirmada por el usuario.
 
 ## Pendiente
 
-- Desactivar registro desde AuthGate y comprobar:
-  - `[authgate_register]` no muestra formulario.
-  - `[authgate_auth]` muestra solo login.
-  - No aparece tab ni enlace de registro.
-- Activar registro desde AuthGate y comprobar que registro vuelve.
-- Alternar opción WooCommerce de enlace de contraseña y comprobar campo contraseña visible/oculto.
-- Crear usuario de prueba solo si se autoriza prueba con alteración de datos.
+- Documentar release estable si el usuario la solicita.
 
 ## No volver a investigar
 
-- No ejecutar pruebas que alteren datos reales en producción.
 - Entorno actual es local.
+- P1 ya está implementada en `1.1.0.1`.
+- QA P1 OK confirmado por el usuario.
 
 ## Riesgos o bloqueos
 
-- La prueba de email WooCommerce requiere crear usuario o disparar correo; altera estado.
+- No hay bloqueo QA confirmado para P1.
 
 ## Próximo paso recomendado
 
-- QA manual visual y funcional sin crear usuario; después pedir permiso si se quiere probar creación real.
+- Pasar a preparación de release estable solo con permiso explícito.

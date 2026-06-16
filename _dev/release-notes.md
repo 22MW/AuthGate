@@ -2,7 +2,7 @@
 
 ## Última actualización
 
-2026-06-10
+2026-06-16
 
 ## Dev 1.1.0.1 — 2026-06-10
 
@@ -12,10 +12,12 @@
 - Ajustado AJAX de registro para respetar el estado nativo de registro.
 - Ajustada integración WooCommerce para no reactivar registro si WordPress/AuthGate lo desactiva.
 - Creada memoria operativa `_dev/` inicial.
+- QA P1 confirmado por el usuario el 2026-06-16.
+- `CHANGELOG.md` actualizado con entrada `1.1.0.1`.
 
 ## Entrará en la próxima release
 
-- Pendiente de consolidar desde `1.1.0.1` después de QA manual.
+- `1.1.0.1` pendiente de consolidar en versión estable cuando el usuario autorice release.
 
 ## Queda fuera
 
@@ -33,8 +35,7 @@
 
 ## Riesgos antes de publicar
 
-- QA manual de registro activo/inactivo pendiente.
-- Validación WooCommerce de enlace de configuración de contraseña pendiente.
+- Release estable pendiente de autorización explícita.
 - `_dev/` debe excluirse de cualquier ZIP/deploy público.
 
 ## Limpieza post-release

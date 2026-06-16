@@ -2,40 +2,41 @@
 
 ## Última actualización
 
-2026-06-10
+2026-06-16
 
 ## Resumen humano
 
-Memoria operativa inicial creada para coordinar AuthGate sin mezclar diagnóstico, desarrollo, QA, seguridad y release.
+P1 implementada, versionada como dev `1.1.0.1`, pusheada a `mishaAuthDev` y QA confirmada por el usuario. Queda preparar release estable solo si el usuario lo pide.
 
 ## Descubierto
 
-- Plugin en `app/public/wp-content/plugins/AuthGate/`.
-- Rama actual: `mishaAuthDev`.
-- Hay cambios locales sin commit.
-- Incidencia actual: registro frontend devuelve error genérico.
+- El fallo de registro inicial era por `users_can_register` desactivado en WordPress.
+- AuthGate ahora gestiona esa opción desde su backend.
+- AuthGate también gestiona la opción WooCommerce de enviar enlace de configuración de contraseña.
 
 ## Hecho
 
-- Estructura `_dev/` inicial definida.
-- Estado, roadmap, decisiones, release notes y vista visual iniciales creados.
+- P1 implementada.
+- Bump dev `1.1.0.1` aplicado.
+- Push dev realizado.
+- QA P1 confirmado por el usuario.
+- `CHANGELOG.md` actualizado con comentarios de `1.1.0.1`.
+- Memoria operativa actualizada.
 
 ## Pendiente
 
-- Diagnóstico específico del registro.
-- Configurar MCP si se quiere diagnóstico de WordPress/WooCommerce real.
-- Delegar seguridad y QA cuando el registro quede estabilizado.
+- Preparar release estable solo con autorización explícita.
 
 ## No volver a investigar
 
-- No trabajar AuthGate desde el repo raíz del workspace.
-- No hacer commit/push/release sin autorización explícita.
+- La P1 ya está en `mishaAuthDev` con commit `87216ff`.
+- QA P1 OK confirmado por el usuario.
+- No hacer release estable sin permiso explícito.
 
 ## Riesgos o bloqueos
 
-- Registro no funciona según usuario.
-- MCP WooCommerce no conectado.
+- ZIP/release debe excluir `_dev/` y `.kilo/`.
 
 ## Próximo paso recomendado
 
-- Delegar diagnóstico del bug de registro al Debugger Plugin.
+- Preparar release estable si el usuario lo solicita explícitamente.

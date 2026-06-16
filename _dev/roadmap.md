@@ -2,29 +2,26 @@
 
 ## Urgente
 
-- Diagnosticar por qué el registro frontend devuelve `Se ha producido un error. Inténtalo de nuevo.` en local con WooCommerce activo.
-- Confirmar si el fallo viene de ajustes de registro WordPress/WooCommerce, validación AJAX, nonce, GDPR, antibot o creación de usuario.
-- Validar que los cambios P0 aplicados no introducen regresiones en login, registro, reset y bloqueo de `wp-login.php`.
+- Ningún punto urgente confirmado tras QA P1 OK.
 
 ## Recomendado
 
-- Usar MCP WooCommerce para diagnóstico de solo lectura cuando aporte datos reales.
 - Ejecutar auditoría de seguridad dirigida sobre AJAX, nonces, capabilities, sanitización, escaping, SQL y uninstall.
-- Ejecutar QA funcional mínimo: login, registro, lost password, reset, páginas protegidas, WooCommerce My Account.
-- Revisar exclusión de `_dev/` en release/ZIP público.
+- Revisar que `_dev/` y `.kilo/` quedan excluidos de cualquier ZIP/deploy público.
+- Preparar release estable solo con autorización explícita.
 
 ## Futuro
 
 - Definir soporte explícito para proxy/CDN si se necesita confiar en cabeceras de IP.
-- Revisar documentación pública y changelog antes de una nueva release.
-- Preparar checklist release cuando el plugin esté validado.
+- Consolidar `1.1.0.1` en una versión pública de tres números cuando se prepare release estable.
+- Revisar documentación pública y changelog antes de release.
 
 ## Bloqueado
 
-- Fix del registro bloqueado hasta confirmar causa raíz.
-- Cambios de settings WordPress/WooCommerce bloqueados hasta permiso explícito.
+- Release estable bloqueada hasta permiso explícito.
+- Creación de usuarios de prueba bloqueada hasta permiso explícito si se considera prueba que altera datos.
 
 ## Descartado
 
-- No hacer refactor general dentro del diagnóstico actual.
-- No mezclar release, commit o deploy con la corrección funcional.
+- No hacer refactor general dentro de esta P1.
+- No mezclar release estable, tag o deploy con QA pendiente.

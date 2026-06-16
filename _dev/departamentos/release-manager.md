@@ -6,20 +6,22 @@
 
 ## Resumen humano
 
-Rama dev corregida según regla de release: el push a dev debe llevar versión de cuatro números y entrada operativa. Se preparó `1.1.0.1` como versión dev.
+Versión dev `1.1.0.1` ya aplicada, commiteada y pusheada a `mishaAuthDev`. No hay release estable ni ZIP público preparado.
 
 ## Descubierto
 
 - Versión estable base: `1.1.0`.
 - Rama actual: `mishaAuthDev`.
-- Último push dev previo no llevaba bump dev; corregido con `1.1.0.1`.
+- Commit dev actual: `87216ff release: bump dev version to 1.1.0.1`.
 - `_dev/` no debe incluirse en ZIP/deploy público.
+- `.kilo/` queda sin trackear y no debe incluirse en release pública salvo decisión explícita.
 
 ## Hecho
 
 - Cabecera del plugin actualizada a `1.1.0.1`.
 - `_dev/release-notes.md` actualizado con entrada `Dev 1.1.0.1`.
 - `Stable tag` de `readme.txt` se mantiene en `1.1.0` porque no es release estable.
+- Push dev realizado a `origin/mishaAuthDev`.
 
 ## Pendiente
 
@@ -39,4 +41,4 @@ Rama dev corregida según regla de release: el push a dev debe llevar versión d
 
 ## Próximo paso recomendado
 
-- Commit/push del bump dev `1.1.0.1` si se confirma publicar la corrección en rama dev.
+- Esperar QA manual antes de proponer release estable.
