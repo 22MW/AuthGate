@@ -393,11 +393,11 @@ class AuthGate_Forms
             echo '<div class="authgate-overlay" id="' . esc_attr($uid) . '" aria-modal="true" role="dialog">';
             echo '<div class="authgate-modal">';
             echo '<button type="button" class="authgate-close" aria-label="' . esc_attr__('Cerrar', 'authgate') . '">&times;</button>';
-            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login');
+            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login', false);
             echo '</div></div>';
             self::$footer_overlays[] = ob_get_clean();
         } else {
-            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login');
+            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login', true);
         }
 
         return ob_get_clean();
@@ -409,7 +409,7 @@ class AuthGate_Forms
      * @param string $default_tab
      * @return void
      */
-    private function render_form($type, $redirect, $default_tab = 'login')
+    private function render_form($type, $redirect, $default_tab = 'login', $show_home_link = false)
     {
         $tpl_dir = __DIR__ . '/templates/';
         $registration_allowed = $this->registration_allowed();
@@ -426,6 +426,12 @@ class AuthGate_Forms
         } else {
             include $tpl_dir . 'form-login.php';
         }
+    }
+
+    /** @return bool */
+    public static function is_mailmint_available()
+    {
+        return class_exists('Mint\\MRM\\DataBase\\Models\\ContactGroupModel');
     }
 
     // -------------------------------------------------------------------------

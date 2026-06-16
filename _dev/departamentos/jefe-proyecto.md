@@ -6,37 +6,39 @@
 
 ## Resumen humano
 
-P1 implementada, versionada como dev `1.1.0.1`, pusheada a `mishaAuthDev` y QA confirmada por el usuario. Queda preparar release estable solo si el usuario lo pide.
+Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 cerrada, popup `label` en dev `1.1.0.2` y un nuevo paquete de mejoras antes de release ordenado por bloques.
 
 ## Descubierto
 
-- El fallo de registro inicial era por `users_can_register` desactivado en WordPress.
-- AuthGate ahora gestiona esa opción desde su backend.
-- AuthGate también gestiona la opción WooCommerce de enviar enlace de configuración de contraseña.
+- El usuario quiere varias mejoras antes de release, no preparar release todavía.
+- Las mejoras afectan frontend, admin, WYSIWYG, tabs y CSS propio.
+- El orden debe minimizar riesgo: primero UX simple, después WYSIWYG/tabs, CSS al final.
 
 ## Hecho
 
-- P1 implementada.
-- Bump dev `1.1.0.1` aplicado.
-- Push dev realizado.
-- QA P1 confirmado por el usuario.
-- `CHANGELOG.md` actualizado con comentarios de `1.1.0.1`.
-- Memoria operativa actualizada.
+- P1 implementada y QA OK.
+- Popup `label` implementado y pusheado como `1.1.0.2`.
+- Decisiones funcionales pre-release consolidadas.
+- Roadmap por bloques A/B/C/D creado.
 
 ## Pendiente
 
-- Preparar release estable solo con autorización explícita.
+- Ejecutar Bloque A si el usuario lo autoriza.
+- Mantener cada bloque separado para evitar mezclar riesgos.
+- Versionar dev por bloque si se hace push.
 
 ## No volver a investigar
 
-- La P1 ya está en `mishaAuthDev` con commit `87216ff`.
-- QA P1 OK confirmado por el usuario.
-- No hacer release estable sin permiso explícito.
+- Siguiente bloque recomendado: Bloque A.
+- CSS propio queda al final por mayor riesgo.
+- Tab “Textos” debe guardar separado por tab.
+- WYSIWYG inline aplica a login, register y combined.
 
 ## Riesgos o bloqueos
 
-- ZIP/release debe excluir `_dev/` y `.kilo/`.
+- Release estable bloqueada hasta cerrar mejoras pre-release elegidas.
+- CSS propio requiere sanitización y editor tipo CodeMirror.
 
 ## Próximo paso recomendado
 
-- Preparar release estable si el usuario lo solicita explícitamente.
+- Ejecutar Bloque A: Mail Mint condicional + enlace de inicio inline.

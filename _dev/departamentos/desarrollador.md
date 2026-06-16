@@ -6,30 +6,32 @@
 
 ## Resumen humano
 
-Añadida mejora pre-release para shortcodes popup: ahora aceptan `label` para personalizar el texto del botón y mantienen `button_class` para clases CSS.
+Bloque A implementado localmente en modo ahorro. Tras revisión visual del usuario, el enlace “Ir a la página de inicio” se movió dentro del formulario inline para aparecer abajo, junto al estilo de enlaces del formulario.
 
 ## Descubierto
 
-- El modo popup ya existía y usaba el texto global `btn_popup`.
-- `button_class` ya existía.
-- Faltaba personalización de texto por shortcode.
+- El checkbox newsletter estaba en `form-register.php` y en el panel registro de `form-combined.php`.
+- El render inline se controla desde `render_wrapper()` en `class-auth-forms.php`.
+- El enlace de inicio fuera del contenedor quedaba visualmente desplazado a la derecha.
 
 ## Hecho
 
-- Añadido atributo `label` a `[authgate_login]`, `[authgate_register]` y `[authgate_auth]`.
-- Sanitizado `label` con texto seguro.
-- Saneadas clases de `button_class` por clase individual.
-- Añadidos ejemplos en la pestaña Shortcodes del backend.
-- Validado `php -l` en `class-auth-forms.php` y `class-auth-settings.php`.
+- Añadido helper `AuthGate_Forms::is_mailmint_available()`.
+- Ocultado checkbox newsletter si Mail Mint no está disponible.
+- Añadido enlace “Ir a la página de inicio” solo en render inline.
+- Reubicado el enlace de inicio al final del contenido inline, usando clases de enlace del formulario.
+- Validado `php -l` en archivos PHP tocados.
 - Validado `git diff --check`.
 
 ## Pendiente
 
-- Commit y push de `1.1.0.2`.
+- QA manual del Bloque A después del ajuste visual.
+- Si QA OK, bump dev `1.1.0.3`, release notes, commit y push.
 
 ## No volver a investigar
 
-- El atributo elegido por decisión del usuario es `label`, no `button_text`.
+- Bloque A no toca settings de admin ni base de datos.
+- El enlace de inicio no debe aparecer en popup.
 
 ## Riesgos o bloqueos
 
@@ -37,4 +39,4 @@ Añadida mejora pre-release para shortcodes popup: ahora aceptan `label` para pe
 
 ## Próximo paso recomendado
 
-- Probar shortcodes popup con `label` en frontend.
+- Validar frontend inline y popup.

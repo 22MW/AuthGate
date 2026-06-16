@@ -26,7 +26,8 @@
     .areas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
     .area { border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: #fff; }
     .checklist { list-style: none; padding-left: 0; }
-    .checklist li::before { content: "☑"; color: var(--ok); font-weight: 700; margin-right: 8px; }
+    .checklist li::before { content: "☐"; color: var(--warn); font-weight: 700; margin-right: 8px; }
+    .checklist .done::before { content: "☑"; color: var(--ok); }
     @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } .wide { grid-column: span 1; } .areas { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
@@ -35,61 +36,62 @@
     <header>
       <h1>AuthGate - Estado operativo</h1>
       <p class="muted">Última actualización: 2026-06-16</p>
-      <span class="badge ok">Dev 1.1.0.1 - QA P1 OK</span>
+      <span class="badge warn">Dev 1.1.0.2 - Roadmap pre-release definido</span>
     </header>
 
     <section class="grid">
       <article class="card wide">
         <h2>Resumen humano</h2>
-        <p>AuthGate está en <code>mishaAuthDev</code> con versión dev <code>1.1.0.1</code> ya pusheada. La P1 de gestión de registro está implementada y el usuario confirmó QA OK.</p>
+        <p>AuthGate tiene P1 cerrada y popup <code>label</code> en dev <code>1.1.0.2</code>. Antes de release estable hay un roadmap pre-release por bloques, empezando por mejoras simples de frontend.</p>
       </article>
 
       <article class="card">
         <h2>Urgente</h2>
         <ul>
-          <li>Ningún punto urgente confirmado.</li>
+          <li>Ejecutar Bloque A si se aprueba.</li>
+          <li>QA popup <code>label</code> si falta validarlo.</li>
         </ul>
       </article>
 
       <article class="card">
         <h2>Recomendado</h2>
         <ul>
-          <li>Preparar release estable si el usuario lo autoriza.</li>
-          <li>Revisar exclusiones para ZIP limpio.</li>
-          <li>Auditoría de seguridad dirigida antes de publicar si se desea máxima seguridad.</li>
+          <li>Seguir bloques en orden A → B → C → D.</li>
+          <li>Versionar dev por bloque si hay push.</li>
+          <li>Auditoría de seguridad antes de release estable.</li>
         </ul>
       </article>
 
       <article class="card">
         <h2>Futuro</h2>
         <ul>
-          <li>Consolidar <code>1.1.0.1</code> en versión estable.</li>
+          <li>Consolidar devs en versión estable.</li>
           <li>Soporte proxy/CDN configurable si aplica.</li>
         </ul>
       </article>
 
       <article class="card wide">
-        <h2>Checklist QA P1</h2>
+        <h2>Roadmap pre-release</h2>
         <ul class="checklist">
-          <li>Registro desactivado oculta <code>[authgate_register]</code>.</li>
-          <li>Registro desactivado deja <code>[authgate_auth]</code> solo con login.</li>
-          <li>Registro activado vuelve a mostrar formulario de registro.</li>
-          <li>Opción WooCommerce de enlace de contraseña validada por el usuario.</li>
-          <li>Login/reset sin regresión reportada.</li>
-          <li>QA P1 confirmado por el usuario.</li>
+          <li class="done">P1 registro: QA OK.</li>
+          <li class="done">Popup <code>label</code>: implementado en dev <code>1.1.0.2</code>.</li>
+          <li>Bloque A: Mail Mint condicional + enlace inicio inline.</li>
+          <li>Bloque B: WYSIWYG bajo logo en inline login/register/combined.</li>
+          <li>Bloque C: tab “Textos” con guardado separado por tab.</li>
+          <li>Bloque D: CSS propio con checkbox, sanitización, CodeMirror y presets.</li>
         </ul>
       </article>
 
       <article class="card wide">
         <h2>Áreas</h2>
         <div class="areas">
-          <div class="area"><strong>Funcional</strong><br><span class="badge ok">QA OK</span></div>
-          <div class="area"><strong>Arquitectura</strong><br><span class="badge ok">P1 mínima</span></div>
-          <div class="area"><strong>Desarrollo</strong><br><span class="badge ok">Pusheado</span></div>
-          <div class="area"><strong>QA</strong><br><span class="badge ok">OK</span></div>
+          <div class="area"><strong>Funcional</strong><br><span class="badge warn">Roadmap</span></div>
+          <div class="area"><strong>Arquitectura</strong><br><span class="badge warn">Por bloques</span></div>
+          <div class="area"><strong>Desarrollo</strong><br><span class="badge warn">Pendiente</span></div>
+          <div class="area"><strong>QA</strong><br><span class="badge warn">Por bloque</span></div>
           <div class="area"><strong>Seguridad</strong><br><span class="badge warn">Recomendado</span></div>
           <div class="area"><strong>MCP</strong><br><span class="badge ok">Woo OK</span></div>
-          <div class="area"><strong>Release</strong><br><span class="badge warn">Pendiente</span></div>
+          <div class="area"><strong>Release</strong><br><span class="badge bad">Bloqueada</span></div>
           <div class="area"><strong>Comercial</strong><br><span class="badge warn">No revisado</span></div>
         </div>
       </article>
@@ -97,6 +99,7 @@
       <article class="card">
         <h2>Riesgos abiertos</h2>
         <ul>
+          <li>CSS propio tiene mayor riesgo visual y de sanitización.</li>
           <li>Release debe excluir <code>_dev/</code> y <code>.kilo/</code>.</li>
           <li>Release estable aún no autorizada.</li>
         </ul>
@@ -105,15 +108,15 @@
       <article class="card">
         <h2>Últimas decisiones</h2>
         <ul>
-          <li>AuthGate gestiona <code>users_can_register</code>.</li>
-          <li>AuthGate gestiona <code>woocommerce_registration_generate_password</code>.</li>
-          <li>QA P1 OK.</li>
+          <li>WYSIWYG inline en login/register/combined.</li>
+          <li>Tab “Textos” guarda separado.</li>
+          <li>CSS propio con CodeMirror y sanitización.</li>
         </ul>
       </article>
 
       <article class="card">
         <h2>Próximo paso</h2>
-        <p>Preparar release estable solo si el usuario lo solicita explícitamente.</p>
+        <p>Ejecutar Bloque A en modo ahorro.</p>
       </article>
     </section>
   </main>

@@ -81,6 +81,14 @@ if (!$registration_allowed) {
                     </a>
                 </p>
             <?php endif; ?>
+
+            <?php if (!empty($show_home_link)) : ?>
+                <p class="authgate__switch authgate__switch--home">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="authgate__link">
+                        <?php esc_html_e('Ir a la página de inicio', 'authgate'); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
         </form>
 
         <div class="authgate__lost-panel" style="display:none;">
@@ -183,10 +191,12 @@ if (!$registration_allowed) {
                 <span><?php echo wp_kses($gdpr_label, $allowed); ?></span>
             </label>
 
-            <label class="authgate__consent">
-                <input type="checkbox" name="authgate_newsletter" value="1">
-                <span><?php echo esc_html(AuthGate_Settings::get_string('field_newsletter')); ?></span>
-            </label>
+            <?php if (AuthGate_Forms::is_mailmint_available()) : ?>
+                <label class="authgate__consent">
+                    <input type="checkbox" name="authgate_newsletter" value="1">
+                    <span><?php echo esc_html(AuthGate_Settings::get_string('field_newsletter')); ?></span>
+                </label>
+            <?php endif; ?>
 
             <button type="submit" class="authgate__btn btn btn-secondary alt">
                 <?php echo esc_html(AuthGate_Settings::get_string('btn_register')); ?>
@@ -205,6 +215,14 @@ if (!$registration_allowed) {
             </p>
 
             <?php do_action('authgate_register_form_fields'); ?>
+
+            <?php if (!empty($show_home_link)) : ?>
+                <p class="authgate__switch authgate__switch--home">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="authgate__link">
+                        <?php esc_html_e('Ir a la página de inicio', 'authgate'); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
         </form>
     </div>
     <?php endif; ?>
