@@ -24,7 +24,9 @@ class AuthGate_Forms
         add_shortcode('authgate_login',           array($this, 'shortcode_login'));
         add_shortcode('authgate_register',        array($this, 'shortcode_register'));
         add_shortcode('authgate_auth',            array($this, 'shortcode_auth'));
+        add_shortcode('authgate_combined',        array($this, 'shortcode_auth'));
         add_shortcode('authgate_reset_password',  array($this, 'shortcode_reset_password'));
+        add_shortcode('authgate_reset',           array($this, 'shortcode_reset_password'));
 
         add_action('init',                  array($this, 'register_rewrite_rules'));
         add_filter('query_vars',            array($this, 'register_query_vars'));
@@ -80,6 +82,12 @@ class AuthGate_Forms
             array('dashicons'),
             '1.0.0'
         );
+        if (AuthGate_Settings::custom_css_enabled()) {
+            $custom_css = AuthGate_Settings::get_custom_css();
+            if ($custom_css) {
+                wp_add_inline_style('authgate-forms', $custom_css);
+            }
+        }
         wp_enqueue_script(
             'authgate-forms',
             plugin_dir_url(dirname(__FILE__)) . 'assets/js/auth-forms.js',
@@ -237,7 +245,7 @@ class AuthGate_Forms
         if (in_array($action, array('logout', 'postpass'), true)) return;
 
         // Acción de reset password: redirigir a nuestra página
-        if (in_array($action, array('rp', 'resetpass'), true)) {
+        if (in_array($action, array('rp', 'resetpass', 'lostpassword'), true)) {
             $this->do_redirect_to_reset_page();
             return;
         }
@@ -330,7 +338,7 @@ class AuthGate_Forms
     public function shortcode_login($atts)
     {
         if (is_user_logged_in()) return '';
-        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => ''), $atts, 'authgate_login');
+        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => '', 'label' => ''), $atts, 'authgate_login');
         return $this->render_wrapper('login', $atts);
     }
 
@@ -341,7 +349,8 @@ class AuthGate_Forms
     public function shortcode_register($atts)
     {
         if (is_user_logged_in()) return '';
-        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => ''), $atts, 'authgate_register');
+        if (!$this->registration_allowed()) return '';
+        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => '', 'label' => ''), $atts, 'authgate_register');
         return $this->render_wrapper('register', $atts);
     }
 
@@ -352,7 +361,10 @@ class AuthGate_Forms
     public function shortcode_auth($atts)
     {
         if (is_user_logged_in()) return '';
-        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'default_tab' => 'login', 'button_class' => ''), $atts, 'authgate_auth');
+        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'default_tab' => 'login', 'button_class' => '', 'label' => ''), $atts, 'authgate_auth');
+        if (!$this->registration_allowed()) {
+            $atts['default_tab'] = 'login';
+        }
         return $this->render_wrapper('combined', $atts);
     }
 
@@ -374,10 +386,10 @@ class AuthGate_Forms
 
         if ($mode === 'popup') {
             $uid      = uniqid('authgate-popup-');
-            $btn_text = AuthGate_Settings::get_string('btn_popup');
+            $btn_text = !empty($atts['label']) ? sanitize_text_field($atts['label']) : AuthGate_Settings::get_string('btn_popup');
 
             // Solo el trigger va inline (puede estar dentro de un <form>)
-            $extra_class = !empty($atts['button_class']) ? ' ' . $atts['button_class'] : '';
+            $extra_class = !empty($atts['button_class']) ? ' ' . implode(' ', array_map('sanitize_html_class', preg_split('/\s+/', trim($atts['button_class'])))) : '';
             echo '<button type="button" class="authgate-popup-trigger button' . esc_attr($extra_class) . '" data-target="' . esc_attr($uid) . '">';
             echo esc_html($btn_text);
             echo '</button>';
@@ -387,11 +399,11 @@ class AuthGate_Forms
             echo '<div class="authgate-overlay" id="' . esc_attr($uid) . '" aria-modal="true" role="dialog">';
             echo '<div class="authgate-modal">';
             echo '<button type="button" class="authgate-close" aria-label="' . esc_attr__('Cerrar', 'authgate') . '">&times;</button>';
-            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login');
+            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login', false);
             echo '</div></div>';
             self::$footer_overlays[] = ob_get_clean();
         } else {
-            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login');
+            $this->render_form($type, $redirect, $atts['default_tab'] ?? 'login', true);
         }
 
         return ob_get_clean();
@@ -403,17 +415,30 @@ class AuthGate_Forms
      * @param string $default_tab
      * @return void
      */
-    private function render_form($type, $redirect, $default_tab = 'login')
+    private function render_form($type, $redirect, $default_tab = 'login', $show_home_link = false)
     {
         $tpl_dir = __DIR__ . '/templates/';
+        $registration_allowed = $this->registration_allowed();
+        $inline_intro_html = $show_home_link ? AuthGate_Settings::get_inline_intro_html() : '';
+
+        if (!$registration_allowed && $default_tab === 'register') {
+            $default_tab = 'login';
+        }
 
         if ($type === 'combined') {
             include $tpl_dir . 'form-combined.php';
         } elseif ($type === 'register') {
+            if (!$registration_allowed) return;
             include $tpl_dir . 'form-register.php';
         } else {
             include $tpl_dir . 'form-login.php';
         }
+    }
+
+    /** @return bool */
+    public static function is_mailmint_available()
+    {
+        return class_exists('Mint\\MRM\\DataBase\\Models\\ContactGroupModel');
     }
 
     // -------------------------------------------------------------------------
@@ -531,9 +556,7 @@ class AuthGate_Forms
     {
         check_ajax_referer('authgate_register', 'nonce');
 
-        $registration_allowed = (bool) get_option('users_can_register');
-        $registration_allowed = apply_filters('authgate_registration_allowed', $registration_allowed);
-        if (!$registration_allowed) {
+        if (!$this->registration_allowed()) {
             wp_send_json_error(array('message' => AuthGate_Settings::get_string('error_generic')));
         }
 
@@ -785,6 +808,21 @@ class AuthGate_Forms
     {
         check_ajax_referer('authgate_lost_password', 'nonce');
 
+        $ip = $this->get_client_ip();
+
+        // Blacklist
+        $blacklist = (array) AuthGate_Settings::get('blacklist', array());
+        if (in_array($ip, $blacklist, true)) {
+            $this->write_log(0, '', 'blocked', $ip);
+            wp_send_json_error(array('message' => AuthGate_Settings::get_string('error_blocked')));
+        }
+
+        // Rate limit
+        if ($this->is_rate_limited($ip)) {
+            $this->write_log(0, '', 'blocked', $ip);
+            wp_send_json_error(array('message' => AuthGate_Settings::get_string('error_blocked')));
+        }
+
         $email = sanitize_email(wp_unslash($_POST['lost_email'] ?? ''));
 
         if (!$email || !is_email($email)) {
@@ -805,11 +843,26 @@ class AuthGate_Forms
 
     /**
      * Devuelve la IP del cliente de forma segura.
+     * Por defecto solo confía en REMOTE_ADDR.
+     * Usa el filtro `authgate_trust_proxies` en `true` para permitir cabeceras de proxy (HTTP_CF_CONNECTING_IP, HTTP_X_FORWARDED_FOR, HTTP_X_REAL_IP).
      *
      * @return string
      */
     private function get_client_ip()
     {
+        $trust_proxies = (bool) apply_filters('authgate_trust_proxies', false);
+
+        if (!$trust_proxies) {
+            if (!empty($_SERVER['REMOTE_ADDR'])) {
+                $ip = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+                if (filter_var(trim($ip), FILTER_VALIDATE_IP)) {
+                    return trim($ip);
+                }
+            }
+
+            return '0.0.0.0';
+        }
+
         $candidates = array(
             'HTTP_CF_CONNECTING_IP',
             'HTTP_X_FORWARDED_FOR',
@@ -827,5 +880,11 @@ class AuthGate_Forms
         }
 
         return '0.0.0.0';
+    }
+
+    /** @return bool */
+    private function registration_allowed()
+    {
+        return (bool) apply_filters('authgate_registration_allowed', AuthGate_Settings::registration_enabled());
     }
 }

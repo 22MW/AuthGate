@@ -4,7 +4,7 @@
  * Plugin Name: AuthGate by 22MW
  * Plugin URI: https://wordpress.org/plugins/authgate
  * Description: Frontend authentication & access control for WordPress
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: 22MW
  * Author URI: http://22mw.online
  * License: GPLv2 o posterior
@@ -33,29 +33,6 @@ add_action('init', function () {
 // Ocultar barra de admin a no-admins
 add_filter('show_admin_bar', function ($show) {
     return current_user_can('manage_options') ? $show : false;
-});
-
-// Bloquear wp-admin, wp-login.php y wp-signup.php — redirigir al home si no es admin
-add_action('init', function () {
-    if (wp_doing_ajax()) return;
-
-    $uri    = $_SERVER['REQUEST_URI'] ?? '';
-    $action = $_GET['action'] ?? '';
-
-    // Permitir flujos de recuperación/reset de contraseña en wp-login.php
-    $is_password_flow = in_array($action, ['rp', 'resetpass', 'lostpassword'], true);
-
-    $is_restricted = (
-        strpos($uri, '/wp-admin') !== false ||
-        (strpos($uri, 'wp-login.php') !== false && !$is_password_flow) ||
-        strpos($uri, 'wp-signup.php') !== false ||
-        strpos($uri, 'wp-register.php') !== false
-    );
-
-    if ($is_restricted && !current_user_can('manage_options')) {
-        wp_safe_redirect(home_url('/'));
-        exit;
-    }
 });
 
 register_activation_hook(__FILE__, array('AuthGate_Install', 'activate'));

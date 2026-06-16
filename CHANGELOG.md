@@ -7,6 +7,43 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.1] — 2026-06-16
+
+### Added
+- Added admin controls for native WordPress registration and WooCommerce generated-password behavior.
+- Added `label` support for popup shortcode buttons.
+- Added inline home link for embedded forms.
+- Added WYSIWYG intro text for inline login, register and combined forms.
+- Added dedicated “Textos” settings tab with independent saving.
+- Added optional “CSS propio” settings tab with activation checkbox, CodeMirror editor, sanitization and white/dark presets.
+
+### Changed
+- Hidden registration UI when WordPress registration is disabled.
+- Hidden Mail Mint newsletter checkbox when Mail Mint is not available.
+- Improved protected-page card layout, logo handling, inputs, buttons, spacing and default CSS presets.
+- Synchronized white and dark CSS presets so only colors differ.
+
+### Security
+- Added conservative sanitization for custom CSS before saving.
+- Kept settings saves behind capability checks and nonces.
+
+### QA
+- Manual QA confirmed for Blocks A, B, C and D.
+
+## [1.1.0.1] — 2026-06-16
+
+### Added
+- Added AuthGate admin control for the native WordPress `users_can_register` option.
+- Added AuthGate admin control for WooCommerce `woocommerce_registration_generate_password` when WooCommerce is active.
+
+### Changed
+- Registration UI is hidden on frontend when WordPress registration is disabled.
+- Registration AJAX now respects the native WordPress registration setting.
+- WooCommerce integration no longer re-enables AuthGate registration when WordPress/AuthGate registration is disabled.
+
+### QA
+- P1 manual QA confirmed by user.
+
 ## [1.1.0] — 2026-05-26
 
 ### Added

@@ -1,5 +1,15 @@
-<?php defined('ABSPATH') || exit; ?>
+<?php
+defined('ABSPATH') || exit;
+
+if (!AuthGate_Settings::registration_enabled()) {
+    return;
+}
+?>
 <div class="authgate authgate--register">
+    <?php if (!empty($inline_intro_html)) : ?>
+        <div class="authgate__intro"><?php echo wp_kses_post(wpautop($inline_intro_html)); ?></div>
+    <?php endif; ?>
+
     <h2 class="authgate__title"><?php echo esc_html(AuthGate_Settings::get_string('register_title')); ?></h2>
 
     <div class="authgate__message" role="alert" aria-live="polite"></div>
@@ -101,10 +111,12 @@
             <span><?php echo wp_kses($gdpr_label, $allowed); ?></span>
         </label>
 
-        <label class="authgate__consent">
-            <input type="checkbox" name="authgate_newsletter" value="1">
-            <span><?php echo esc_html(AuthGate_Settings::get_string('field_newsletter')); ?></span>
-        </label>
+        <?php if (AuthGate_Forms::is_mailmint_available()) : ?>
+            <label class="authgate__consent">
+                <input type="checkbox" name="authgate_newsletter" value="1">
+                <span><?php echo esc_html(AuthGate_Settings::get_string('field_newsletter')); ?></span>
+            </label>
+        <?php endif; ?>
 
         <button type="submit" class="authgate__btn btn btn-secondary alt">
             <?php echo esc_html(AuthGate_Settings::get_string('btn_register')); ?>
@@ -118,4 +130,12 @@
 
         <?php do_action('authgate_register_form_fields'); ?>
     </form>
+
+    <?php if (!empty($show_home_link)) : ?>
+        <p class="authgate__switch authgate__switch--home">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="authgate__link">
+                <?php echo esc_html(AuthGate_Settings::get_string('link_to_home')); ?>
+            </a>
+        </p>
+    <?php endif; ?>
 </div>

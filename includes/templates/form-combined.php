@@ -1,8 +1,16 @@
 <?php
 defined('ABSPATH') || exit;
 $default_tab = $default_tab ?? 'login';
+$registration_allowed = isset($registration_allowed) ? (bool) $registration_allowed : AuthGate_Settings::registration_enabled();
+
+if (!$registration_allowed) {
+    $default_tab = 'login';
+}
 ?>
 <div class="authgate authgate--combined">
+    <?php if (!empty($inline_intro_html)) : ?>
+        <div class="authgate__intro"><?php echo wp_kses_post(wpautop($inline_intro_html)); ?></div>
+    <?php endif; ?>
 
     <!-- Tabs -->
     <div class="authgate__tabs" role="tablist">
@@ -13,13 +21,15 @@ $default_tab = $default_tab ?? 'login';
             data-tab="login">
             <?php echo esc_html(AuthGate_Settings::get_string('tab_login')); ?>
         </button>
-        <button type="button"
-            class="authgate__tab <?php echo $default_tab === 'register' ? 'is-active' : ''; ?>"
-            role="tab"
-            aria-selected="<?php echo $default_tab === 'register' ? 'true' : 'false'; ?>"
-            data-tab="register">
-            <?php echo esc_html(AuthGate_Settings::get_string('tab_register')); ?>
-        </button>
+        <?php if ($registration_allowed) : ?>
+            <button type="button"
+                class="authgate__tab <?php echo $default_tab === 'register' ? 'is-active' : ''; ?>"
+                role="tab"
+                aria-selected="<?php echo $default_tab === 'register' ? 'true' : 'false'; ?>"
+                data-tab="register">
+                <?php echo esc_html(AuthGate_Settings::get_string('tab_register')); ?>
+            </button>
+        <?php endif; ?>
     </div>
 
     <!-- Panel Login -->
@@ -67,11 +77,21 @@ $default_tab = $default_tab ?? 'login';
                 <?php echo esc_html(AuthGate_Settings::get_string('btn_login')); ?>
             </button>
 
-            <p class="authgate__switch">
-                <a href="#" class="authgate__switch-link" data-switch-to="register">
-                    <?php echo esc_html(AuthGate_Settings::get_string('link_to_register')); ?>
-                </a>
-            </p>
+            <?php if ($registration_allowed) : ?>
+                <p class="authgate__switch">
+                    <a href="#" class="authgate__switch-link" data-switch-to="register">
+                        <?php echo esc_html(AuthGate_Settings::get_string('link_to_register')); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
+
+            <?php if (!empty($show_home_link)) : ?>
+                <p class="authgate__switch authgate__switch--home">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="authgate__link">
+                        <?php echo esc_html(AuthGate_Settings::get_string('link_to_home')); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
         </form>
 
         <div class="authgate__lost-panel" style="display:none;">
@@ -97,6 +117,7 @@ $default_tab = $default_tab ?? 'login';
         </div>
     </div>
 
+    <?php if ($registration_allowed) : ?>
     <!-- Panel Registro -->
     <div class="authgate__panel <?php echo $default_tab === 'register' ? 'is-active' : ''; ?>" data-panel="register" role="tabpanel">
         <div class="authgate__message" role="alert" aria-live="polite"></div>
@@ -173,10 +194,12 @@ $default_tab = $default_tab ?? 'login';
                 <span><?php echo wp_kses($gdpr_label, $allowed); ?></span>
             </label>
 
-            <label class="authgate__consent">
-                <input type="checkbox" name="authgate_newsletter" value="1">
-                <span><?php echo esc_html(AuthGate_Settings::get_string('field_newsletter')); ?></span>
-            </label>
+            <?php if (AuthGate_Forms::is_mailmint_available()) : ?>
+                <label class="authgate__consent">
+                    <input type="checkbox" name="authgate_newsletter" value="1">
+                    <span><?php echo esc_html(AuthGate_Settings::get_string('field_newsletter')); ?></span>
+                </label>
+            <?php endif; ?>
 
             <button type="submit" class="authgate__btn btn btn-secondary alt">
                 <?php echo esc_html(AuthGate_Settings::get_string('btn_register')); ?>
@@ -195,7 +218,16 @@ $default_tab = $default_tab ?? 'login';
             </p>
 
             <?php do_action('authgate_register_form_fields'); ?>
+
+            <?php if (!empty($show_home_link)) : ?>
+                <p class="authgate__switch authgate__switch--home">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="authgate__link">
+                        <?php echo esc_html(AuthGate_Settings::get_string('link_to_home')); ?>
+                    </a>
+                </p>
+            <?php endif; ?>
         </form>
     </div>
+    <?php endif; ?>
 
 </div>

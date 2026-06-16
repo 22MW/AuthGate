@@ -23,6 +23,10 @@ class AuthGate_Settings {
         add_action('network_admin_enqueue_scripts',  array($this, 'enqueue_admin_assets'));
         add_action($post_pfx . 'authgate_save',          array($this, 'save_settings'));
         add_action('wp_ajax_authgate_save',              array($this, 'save_settings'));
+        add_action($post_pfx . 'authgate_save_strings',  array($this, 'save_strings'));
+        add_action('wp_ajax_authgate_save_strings',      array($this, 'save_strings'));
+        add_action($post_pfx . 'authgate_save_css',      array($this, 'save_css'));
+        add_action('wp_ajax_authgate_save_css',          array($this, 'save_css'));
         add_action($post_pfx . 'authgate_unblock',       array($this, 'handle_unblock'));
         add_action($post_pfx . 'authgate_blacklist_add', array($this, 'handle_blacklist_add'));
         add_action($post_pfx . 'authgate_blacklist_del', array($this, 'handle_blacklist_del'));
@@ -92,6 +96,9 @@ class AuthGate_Settings {
     public function enqueue_admin_assets($hook) {
         if (strpos($hook, 'authgate') === false) return;
         wp_enqueue_media();
+        wp_enqueue_code_editor(array('type' => 'text/css'));
+        wp_enqueue_script('wp-theme-plugin-editor');
+        wp_enqueue_style('wp-codemirror');
         $css = '.authgate-admin-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:2px;font-size:13px;line-height:1.4;z-index:999999;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:authgate-toast-in .2s ease;transition:opacity .35s;max-width:420px;white-space:nowrap}.authgate-admin-toast.is-error{background:#b33654}.authgate-admin-toast.is-hiding{opacity:0}@keyframes authgate-toast-in{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
         wp_add_inline_style('wp-admin', $css);
     }
@@ -132,6 +139,16 @@ class AuthGate_Settings {
         return get_option('authgate_' . $key, $default);
     }
 
+    /** @return bool */
+    public static function registration_enabled(): bool {
+        return (bool) get_option('users_can_register');
+    }
+
+    /** @return bool */
+    private static function is_woocommerce_active(): bool {
+        return class_exists('WooCommerce');
+    }
+
     /**
      * Definición de todos los strings públicos editables.
      *
@@ -158,6 +175,7 @@ class AuthGate_Settings {
             'forgot_password'   => __('¿Olvidaste tu contraseña?', 'authgate'),
             'link_to_register'  => __('¿No tienes cuenta? Regístrate', 'authgate'),
             'link_to_login'     => __('¿Ya tienes cuenta? Entra aquí', 'authgate'),
+            'link_to_home'      => __('Ir a la página de inicio', 'authgate'),
             'success_login'     => __('Sesión iniciada. Redirigiendo…', 'authgate'),
             'success_register'  => __('Cuenta creada. Redirigiendo…', 'authgate'),
             'error_invalid'     => __('Usuario o contraseña incorrectos.', 'authgate'),
@@ -192,6 +210,201 @@ class AuthGate_Settings {
      */
     public static function wysiwyg_string_keys() {
         return array('legal_text');
+    }
+
+    /** @return string */
+    public static function get_inline_intro_html(): string {
+        return (string) self::get('inline_intro_html', '');
+    }
+
+    /** @return string */
+    public static function get_custom_css(): string {
+        $presets = self::css_presets();
+        return (string) self::get('custom_css', $presets['white']);
+    }
+
+    /** @return bool */
+    public static function custom_css_enabled(): bool {
+        return (bool) self::get('custom_css_enabled', true);
+    }
+
+    /** @return array<string,string> */
+    private static function css_presets(): array {
+        $common = <<<'CSS'
+.authgate,
+.authgate-protected-page__inner.card {
+    padding: clamp(24px, 4vw, 36px);
+    border-radius: 24px;
+}
+
+.authgate-protected-page__inner .authgate {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.authgate-protected-page__logo {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.authgate-protected-page__logo img,
+.authgate-protected-page__logo .custom-logo {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    max-width: min(220px, 70%);
+    max-height: 110px;
+    object-fit: contain;
+}
+
+.authgate-protected-page__logo .custom-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authgate-protected-page__site-name {
+    font: inherit;
+    font-weight: 700;
+}
+
+.authgate-protected-page__title,
+.authgate-protected-page__desc,
+.authgate__title,
+.authgate__intro {
+    text-align: center;
+}
+
+.authgate-protected-page__title,
+.authgate__title {
+    margin: 0 0 10px;
+    font-size: clamp(1.35rem, 2vw, 1.75rem) !important;
+    line-height: 1.2;
+}
+
+.authgate-protected-page__desc,
+.authgate__intro {
+    margin-bottom: 24px;
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+.authgate__form {
+    display: grid;
+    gap: 12px;
+}
+
+.authgate__field,
+.authgate__row {
+    margin-bottom: 0;
+}
+
+.authgate__input {
+    min-height: 46px;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 1.5rem !important;
+    box-shadow: none;
+}
+
+.authgate__input:focus {
+    outline: none;
+}
+
+.authgate__btn {
+    min-height: 48px;
+    margin-top: 6px;
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 700;
+    font-size: var(--fs-body, 1.5rem) !important;
+}
+
+.authgate__tabs {
+    margin-bottom: 22px;
+}
+
+.authgate__tab {
+    padding: 10px 14px;
+    border-radius: 999px 999px 0 0 !important;
+    font-size: var(--fs-body, 1.5rem) !important;
+}
+
+.authgate__switch {
+    margin-top: 14px;
+}
+
+.authgate__legal {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.authgate__label {
+    font-size: var(--fs-small, 1.2rem);
+}
+CSS;
+
+        $white = <<<'CSS'
+.authgate,
+.authgate-protected-page__inner.card {
+    background: #ffffff;
+    color: inherit;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.10);
+}
+
+.authgate__input {
+    border: 1px solid rgba(15, 23, 42, 0.16);
+    background: #ffffff;
+    color: inherit;
+}
+
+.authgate__input:focus {
+    border-color: currentColor;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+}
+CSS;
+
+        $dark = <<<'CSS'
+.authgate,
+.authgate-protected-page__inner.card {
+    background: #111827;
+    color: #f9fafb;
+    border: 1px solid rgba(249, 250, 251, 0.12);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+
+.authgate-protected-page__title,
+.authgate-protected-page__desc,
+.authgate__title,
+.authgate__intro,
+.authgate__label,
+.authgate__check-label,
+.authgate__legal {
+    color: #f9fafb;
+}
+
+.authgate__input {
+    border: 1px solid rgba(249, 250, 251, 0.24);
+    background: #ffffff;
+    color: #111827;
+}
+
+.authgate__input:focus {
+    border-color: #f9fafb;
+    box-shadow: 0 0 0 3px rgba(249, 250, 251, 0.16);
+}
+CSS;
+
+        return array(
+            'white' => $common . "\n" . $white,
+            'dark'  => $common . "\n" . $dark,
+        );
     }
 
     /**
@@ -247,6 +460,8 @@ class AuthGate_Settings {
                 <?php
                 $tabs = array(
                     'general'    => __('General', 'authgate'),
+                    'strings'    => __('Textos', 'authgate'),
+                    'css'        => __('CSS propio', 'authgate'),
                     'shortcodes' => __('Shortcodes', 'authgate'),
                     'blocked'    => __('IPs bloqueadas', 'authgate'),
                     'log'        => __('Registro de accesos', 'authgate'),
@@ -264,6 +479,10 @@ class AuthGate_Settings {
             <?php
             if ($tab === 'general') {
                 $this->render_tab_general();
+            } elseif ($tab === 'strings') {
+                $this->render_tab_strings();
+            } elseif ($tab === 'css') {
+                $this->render_tab_css();
             } elseif ($tab === 'shortcodes') {
                 $this->render_tab_shortcodes();
             } elseif ($tab === 'blocked') {
@@ -281,7 +500,6 @@ class AuthGate_Settings {
         $max_attempts   = (int) self::get('max_attempts', 10);
         $excluded_pages = (array) self::get('excluded_pages', array());
         $all_pages      = get_pages(array('sort_column' => 'post_title'));
-        $string_defs    = self::string_definitions();
         ?>
         <form id="authgate-settings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
             <input type="hidden" name="action" value="authgate_save">
@@ -298,6 +516,38 @@ class AuthGate_Settings {
                             <p class="description"><?php esc_html_e('Bloqueo de 1 hora al superar este límite. Por defecto: 10.', 'authgate'); ?></p>
                         </td>
                     </tr>
+                </table>
+            </div>
+
+            <!-- Registro -->
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('Registro de usuarios', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;">
+                    <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
+                </p>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Permitir registro', 'authgate'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="users_can_register" value="1" <?php checked(self::registration_enabled()); ?>>
+                                <?php esc_html_e('Permitir que los visitantes creen una cuenta', 'authgate'); ?>
+                            </label>
+                            <p class="description"><?php esc_html_e('Equivale a la opción nativa de WordPress “Cualquiera puede registrarse”.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                    <?php if (self::is_woocommerce_active()) : ?>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Contraseña WooCommerce', 'authgate'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="woocommerce_registration_generate_password" value="1" <?php checked(get_option('woocommerce_registration_generate_password'), 'yes'); ?>>
+                                <?php esc_html_e('Enviar enlace de configuración de contraseña', 'authgate'); ?>
+                            </label>
+                            <p class="description"><?php esc_html_e('Equivale a la opción nativa de WooCommerce. Si está activa, AuthGate no mostrará campos de contraseña en el registro.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                    <?php endif; ?>
                 </table>
             </div>
 
@@ -321,60 +571,6 @@ class AuthGate_Settings {
                 </div>
             </div>
             <?php endif; ?>
-
-            <!-- Strings editables -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
-                <h2 style="margin-top:0;"><?php esc_html_e('Textos del formulario', 'authgate'); ?></h2>
-                <table class="form-table">
-                    <?php
-                    $textarea_keys = self::textarea_string_keys();
-                    $wysiwyg_keys  = self::wysiwyg_string_keys();
-                    foreach ($string_defs as $key => $default) :
-                        $is_wysiwyg  = in_array($key, $wysiwyg_keys, true);
-                        $is_textarea = !$is_wysiwyg && in_array($key, $textarea_keys, true);
-                    ?>
-                        <tr>
-                            <th scope="row">
-                                <label for="authgate_str_<?php echo esc_attr($key); ?>">
-                                    <code><?php echo esc_html($key); ?></code>
-                                </label>
-                            </th>
-                            <td>
-                                <?php if ($is_wysiwyg) :
-                                    wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
-                                        'textarea_name' => 'strings[' . $key . ']',
-                                        'media_buttons' => false,
-                                        'teeny'         => true,
-                                        'editor_height' => 150,
-                                        'tinymce'       => array(
-                                            'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
-                                        ),
-                                    ));
-                                elseif ($is_textarea) : ?>
-                                <textarea id="authgate_str_<?php echo esc_attr($key); ?>"
-                                          name="strings[<?php echo esc_attr($key); ?>]"
-                                          style="width:440px;height:80px;"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
-                                <?php else : ?>
-                                <input type="text"
-                                       id="authgate_str_<?php echo esc_attr($key); ?>"
-                                       name="strings[<?php echo esc_attr($key); ?>]"
-                                       value="<?php echo esc_attr(self::get_string($key)); ?>"
-                                       style="width:440px;">
-                                <?php endif; ?>
-                                <?php if ($default !== '') : ?>
-                                <p class="description">
-                                    <?php esc_html_e('Por defecto:', 'authgate'); ?>
-                                    <em><?php echo esc_html($default); ?></em>
-                                </p>
-                                <?php endif; ?>
-                                <?php if ($key === 'field_gdpr') : ?>
-                                <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
 
             <!-- URLs personalizadas -->
             <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
@@ -435,6 +631,24 @@ class AuthGate_Settings {
                             </div>
                             <?php endif; ?>
                             <p class="description"><?php esc_html_e('Logo que aparece en /acceder/ y /restablecer-contrasena/. Deja vacío para mostrar el nombre del sitio.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="authgate_inline_intro_html"><?php esc_html_e('Texto bajo el logo', 'authgate'); ?></label></th>
+                        <td>
+                            <?php
+                            wp_editor(self::get_inline_intro_html(), 'authgate_inline_intro_html', array(
+                                'textarea_name' => 'inline_intro_html',
+                                'media_buttons' => false,
+                                'teeny'         => false,
+                                'editor_height' => 140,
+                                'quicktags'     => true,
+                                'tinymce'       => array(
+                                    'toolbar1' => 'formatselect,bold,italic,underline,strikethrough,alignleft,aligncenter,alignright,bullist,numlist,blockquote,link,unlink,undo,redo,removeformat',
+                                ),
+                            ));
+                            ?>
+                            <p class="description"><?php esc_html_e('Se muestra bajo el logo en formularios inline de login, registro y combinado. Déjalo vacío para no mostrar nada.', 'authgate'); ?></p>
                         </td>
                     </tr>
                     <tr>
@@ -541,6 +755,112 @@ class AuthGate_Settings {
     }
 
     /** @return void */
+    private function render_tab_strings() {
+        $string_defs   = self::string_definitions();
+        $textarea_keys = self::textarea_string_keys();
+        $wysiwyg_keys  = self::wysiwyg_string_keys();
+        ?>
+        <form id="authgate-strings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
+            <input type="hidden" name="action" value="authgate_save_strings">
+            <?php wp_nonce_field('authgate_save_strings', '_authgate_nonce'); ?>
+
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('Textos del formulario', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;"><?php esc_html_e('Estos textos se guardan desde esta pestaña de forma independiente al resto de ajustes.', 'authgate'); ?></p>
+                <table class="form-table">
+                    <?php foreach ($string_defs as $key => $default) :
+                        $is_wysiwyg  = in_array($key, $wysiwyg_keys, true);
+                        $is_textarea = !$is_wysiwyg && in_array($key, $textarea_keys, true);
+                        ?>
+                        <tr>
+                            <th scope="row"><label for="authgate_str_<?php echo esc_attr($key); ?>"><code><?php echo esc_html($key); ?></code></label></th>
+                            <td>
+                                <?php if ($is_wysiwyg) :
+                                    wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
+                                        'textarea_name' => 'strings[' . $key . ']',
+                                        'media_buttons' => false,
+                                        'teeny'         => true,
+                                        'editor_height' => 150,
+                                        'tinymce'       => array(
+                                            'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
+                                        ),
+                                    ));
+                                elseif ($is_textarea) : ?>
+                                    <textarea id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" style="width:440px;height:80px;"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
+                                <?php else : ?>
+                                    <input type="text" id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr(self::get_string($key)); ?>" style="width:440px;">
+                                <?php endif; ?>
+                                <?php if ($default !== '') : ?>
+                                    <p class="description"><?php esc_html_e('Por defecto:', 'authgate'); ?> <em><?php echo esc_html($default); ?></em></p>
+                                <?php endif; ?>
+                                <?php if ($key === 'field_gdpr') : ?>
+                                    <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+
+            <?php submit_button(__('Guardar textos', 'authgate')); ?>
+        </form>
+        <?php
+    }
+
+    /** @return void */
+    private function render_tab_css() {
+        $presets = self::css_presets();
+        ?>
+        <form id="authgate-css-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
+            <input type="hidden" name="action" value="authgate_save_css">
+            <?php wp_nonce_field('authgate_save_css', '_authgate_nonce'); ?>
+
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('CSS propio', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;"><?php esc_html_e('CSS opcional para ajustar el aspecto de los formularios AuthGate. Se renderiza solo si está activado.', 'authgate'); ?></p>
+
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Activar CSS propio', 'authgate'); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="custom_css_enabled" value="1" <?php checked(self::custom_css_enabled()); ?>>
+                                <?php esc_html_e('Cargar este CSS en frontend', 'authgate'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="authgate_custom_css"><?php esc_html_e('Editor CSS', 'authgate'); ?></label></th>
+                        <td>
+                            <textarea id="authgate_custom_css" name="custom_css" rows="16" style="width:100%;font-family:monospace;"><?php echo esc_textarea(self::get_custom_css()); ?></textarea>
+                            <p class="description"><?php esc_html_e('No se permiten @import, javascript:, expression(), behavior ni -moz-binding.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('Presets copiables', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;"><?php esc_html_e('Copia un preset y pégalo en el editor CSS si quieres usarlo como punto de partida.', 'authgate'); ?></p>
+                <h3><?php esc_html_e('Preset blanco', 'authgate'); ?></h3>
+                <textarea readonly rows="10" style="width:100%;font-family:monospace;margin-bottom:16px;"><?php echo esc_textarea($presets['white']); ?></textarea>
+                <h3><?php esc_html_e('Preset oscuro', 'authgate'); ?></h3>
+                <textarea readonly rows="10" style="width:100%;font-family:monospace;"><?php echo esc_textarea($presets['dark']); ?></textarea>
+            </div>
+
+            <?php submit_button(__('Guardar CSS', 'authgate')); ?>
+        </form>
+        <script>
+        (function(){
+            if (window.wp && wp.codeEditor) {
+                wp.codeEditor.initialize('authgate_custom_css', { codemirror: { mode: 'css', lineNumbers: true, lineWrapping: true } });
+            }
+        })();
+        </script>
+        <?php
+    }
+
+    /** @return void */
     private function render_tab_shortcodes() {
         $login_slug = esc_html(trailingslashit(home_url()) . self::get('login_slug', 'acceder'));
         $reset_slug = esc_html(trailingslashit(home_url()) . self::get('reset_slug', 'restablecer-contrasena'));
@@ -563,10 +883,11 @@ class AuthGate_Settings {
                 <tr><td><code>mode</code></td><td><code>inline</code> · <code>popup</code></td><td><?php esc_html_e('inline: incrustado en la página. popup: muestra un botón que abre un modal.', 'authgate'); ?></td></tr>
                 <tr><td><code>default_tab</code></td><td><code>login</code> · <code>register</code></td><td><?php esc_html_e('Pestaña activa al cargar (solo mode=inline).', 'authgate'); ?></td></tr>
                 <tr><td><code>redirect</code></td><td><?php esc_html_e('URL', 'authgate'); ?></td><td><?php esc_html_e('URL a la que redirigir tras login o registro. Por defecto: Mi Cuenta.', 'authgate'); ?></td></tr>
+                <tr><td><code>label</code></td><td><?php esc_html_e('texto', 'authgate'); ?></td><td><?php esc_html_e('Texto del botón del popup (solo mode=popup).', 'authgate'); ?></td></tr>
                 <tr><td><code>button_class</code></td><td><?php esc_html_e('clases CSS', 'authgate'); ?></td><td><?php esc_html_e('Clases adicionales para el botón del popup (solo mode=popup).', 'authgate'); ?></td></tr>
             </table>
             <div class="authgate-sc-example">[authgate_auth]
-[authgate_auth mode="popup" button_class="btn btn-primary"]
+[authgate_auth mode="popup" label="Acceder ahora" button_class="btn btn-primary"]
 [authgate_auth mode="inline" default_tab="register" redirect="<?php echo esc_html(home_url('/gracias/')); ?>"]</div>
         </div>
 
@@ -577,10 +898,11 @@ class AuthGate_Settings {
                 <tr><th><?php esc_html_e('Parámetro', 'authgate'); ?></th><th><?php esc_html_e('Valores', 'authgate'); ?></th><th><?php esc_html_e('Descripción', 'authgate'); ?></th></tr>
                 <tr><td><code>mode</code></td><td><code>inline</code> · <code>popup</code></td><td><?php esc_html_e('inline: incrustado. popup: modal.', 'authgate'); ?></td></tr>
                 <tr><td><code>redirect</code></td><td><?php esc_html_e('URL', 'authgate'); ?></td><td><?php esc_html_e('URL tras login exitoso.', 'authgate'); ?></td></tr>
+                <tr><td><code>label</code></td><td><?php esc_html_e('texto', 'authgate'); ?></td><td><?php esc_html_e('Texto del botón del popup.', 'authgate'); ?></td></tr>
                 <tr><td><code>button_class</code></td><td><?php esc_html_e('clases CSS', 'authgate'); ?></td><td><?php esc_html_e('Clases adicionales para el botón del popup.', 'authgate'); ?></td></tr>
             </table>
             <div class="authgate-sc-example">[authgate_login]
-[authgate_login mode="popup" button_class="btn btn-secondary"]</div>
+[authgate_login mode="popup" label="Entrar" button_class="btn btn-secondary"]</div>
         </div>
 
         <div class="authgate-sc-block">
@@ -590,10 +912,11 @@ class AuthGate_Settings {
                 <tr><th><?php esc_html_e('Parámetro', 'authgate'); ?></th><th><?php esc_html_e('Valores', 'authgate'); ?></th><th><?php esc_html_e('Descripción', 'authgate'); ?></th></tr>
                 <tr><td><code>mode</code></td><td><code>inline</code> · <code>popup</code></td><td><?php esc_html_e('inline: incrustado. popup: modal.', 'authgate'); ?></td></tr>
                 <tr><td><code>redirect</code></td><td><?php esc_html_e('URL', 'authgate'); ?></td><td><?php esc_html_e('URL tras registro exitoso.', 'authgate'); ?></td></tr>
+                <tr><td><code>label</code></td><td><?php esc_html_e('texto', 'authgate'); ?></td><td><?php esc_html_e('Texto del botón del popup.', 'authgate'); ?></td></tr>
                 <tr><td><code>button_class</code></td><td><?php esc_html_e('clases CSS', 'authgate'); ?></td><td><?php esc_html_e('Clases adicionales para el botón del popup.', 'authgate'); ?></td></tr>
             </table>
             <div class="authgate-sc-example">[authgate_register]
-[authgate_register mode="popup"]</div>
+[authgate_register mode="popup" label="Crear cuenta"]</div>
         </div>
 
         <div class="authgate-sc-block">
@@ -852,10 +1175,16 @@ class AuthGate_Settings {
 
         self::update_setting('max_attempts',        max(1, (int) ($_POST['max_attempts'] ?? 10)));
         self::update_setting('login_logo_url',      esc_url_raw(wp_unslash($_POST['login_logo_url'] ?? '')));
+        self::update_setting('inline_intro_html',   wp_kses_post(wp_unslash($_POST['inline_intro_html'] ?? '')));
         self::update_setting('login_slug',          sanitize_title(wp_unslash($_POST['login_slug'] ?? 'acceder')));
         self::update_setting('login_slug_redirect', esc_url_raw(wp_unslash($_POST['login_slug_redirect'] ?? '')));
         self::update_setting('reset_slug',          sanitize_title(wp_unslash($_POST['reset_slug'] ?? 'restablecer-contrasena')));
         self::update_setting('block_wp_login',      !empty($_POST['block_wp_login']));
+        update_option('users_can_register', !empty($_POST['users_can_register']) ? 1 : 0);
+
+        if (self::is_woocommerce_active()) {
+            update_option('woocommerce_registration_generate_password', !empty($_POST['woocommerce_registration_generate_password']) ? 'yes' : 'no');
+        }
 
         if (!self::is_network()) {
             self::update_setting('mailmint_list_id', max(0, (int) ($_POST['mailmint_list_id'] ?? 0)));
@@ -865,6 +1194,72 @@ class AuthGate_Settings {
 
         AuthGate_Install::flush_custom_rewrite_rules();
 
+        if ($is_ajax) {
+            wp_send_json_success(array('message' => __('Ajustes guardados.', 'authgate')));
+        }
+
+        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'updated' => '1'), self::settings_base_url()));
+        exit;
+    }
+
+    /** @return void */
+    public function save_strings() {
+        $is_ajax = wp_doing_ajax();
+        if ($is_ajax) {
+            check_ajax_referer('authgate_save_strings', '_authgate_nonce');
+        } else {
+            check_admin_referer('authgate_save_strings', '_authgate_nonce');
+        }
+        if (!current_user_can(self::required_cap())) {
+            $is_ajax ? wp_send_json_error(array('message' => __('Sin permiso.', 'authgate'))) : wp_die();
+        }
+
+        $this->save_string_values();
+
+        if ($is_ajax) {
+            wp_send_json_success(array('message' => __('Textos guardados.', 'authgate')));
+        }
+
+        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'tab' => 'strings', 'updated' => '1'), self::settings_base_url()));
+        exit;
+    }
+
+    /** @return void */
+    public function save_css() {
+        $is_ajax = wp_doing_ajax();
+        if ($is_ajax) {
+            check_ajax_referer('authgate_save_css', '_authgate_nonce');
+        } else {
+            check_admin_referer('authgate_save_css', '_authgate_nonce');
+        }
+        if (!current_user_can(self::required_cap())) {
+            $is_ajax ? wp_send_json_error(array('message' => __('Sin permiso.', 'authgate'))) : wp_die();
+        }
+
+        self::update_setting('custom_css_enabled', !empty($_POST['custom_css_enabled']));
+        self::update_setting('custom_css', self::sanitize_custom_css(wp_unslash($_POST['custom_css'] ?? '')));
+
+        if ($is_ajax) {
+            wp_send_json_success(array('message' => __('CSS guardado.', 'authgate')));
+        }
+
+        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'tab' => 'css', 'updated' => '1'), self::settings_base_url()));
+        exit;
+    }
+
+    /** @param string $css */
+    private static function sanitize_custom_css(string $css): string {
+        $css = wp_strip_all_tags($css);
+        $css = preg_replace('/@import\b[^;]*;?/i', '', $css);
+        $css = preg_replace('/expression\s*\([^)]*\)/i', '', $css);
+        $css = preg_replace('/javascript\s*:/i', '', $css);
+        $css = preg_replace('/behavior\s*:/i', '', $css);
+        $css = preg_replace('/-moz-binding\s*:/i', '', $css);
+        return trim((string) $css);
+    }
+
+    /** @return void */
+    private function save_string_values(): void {
         $defs          = self::string_definitions();
         $textarea_keys = self::textarea_string_keys();
         $wysiwyg_keys  = self::wysiwyg_string_keys();
@@ -880,13 +1275,6 @@ class AuthGate_Settings {
             }
             self::update_setting('str_' . $key, $val);
         }
-
-        if ($is_ajax) {
-            wp_send_json_success(array('message' => __('Ajustes guardados.', 'authgate')));
-        }
-
-        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'updated' => '1'), self::settings_base_url()));
-        exit;
     }
 
     /** @return void */
