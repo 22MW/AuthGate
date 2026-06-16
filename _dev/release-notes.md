@@ -4,6 +4,12 @@
 
 2026-06-16
 
+## Dev 1.1.0.2 — 2026-06-16
+
+- Añadido atributo `label` para personalizar el texto del botón en shortcodes con `mode="popup"`.
+- Mantenido y saneado `button_class` para clases CSS adicionales del botón popup.
+- Añadidos ejemplos de `label` y `button_class` en la pestaña Shortcodes del backend.
+
 ## Dev 1.1.0.1 — 2026-06-10
 
 - Añadida gestión desde AuthGate de `users_can_register`.
@@ -17,7 +23,7 @@
 
 ## Entrará en la próxima release
 
-- `1.1.0.1` pendiente de consolidar en versión estable cuando el usuario autorice release.
+- `1.1.0.1` y `1.1.0.2` pendientes de consolidar en versión estable cuando el usuario autorice release.
 
 ## Queda fuera
 

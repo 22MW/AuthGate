@@ -605,10 +605,11 @@ class AuthGate_Settings {
                 <tr><td><code>mode</code></td><td><code>inline</code> · <code>popup</code></td><td><?php esc_html_e('inline: incrustado en la página. popup: muestra un botón que abre un modal.', 'authgate'); ?></td></tr>
                 <tr><td><code>default_tab</code></td><td><code>login</code> · <code>register</code></td><td><?php esc_html_e('Pestaña activa al cargar (solo mode=inline).', 'authgate'); ?></td></tr>
                 <tr><td><code>redirect</code></td><td><?php esc_html_e('URL', 'authgate'); ?></td><td><?php esc_html_e('URL a la que redirigir tras login o registro. Por defecto: Mi Cuenta.', 'authgate'); ?></td></tr>
+                <tr><td><code>label</code></td><td><?php esc_html_e('texto', 'authgate'); ?></td><td><?php esc_html_e('Texto del botón del popup (solo mode=popup).', 'authgate'); ?></td></tr>
                 <tr><td><code>button_class</code></td><td><?php esc_html_e('clases CSS', 'authgate'); ?></td><td><?php esc_html_e('Clases adicionales para el botón del popup (solo mode=popup).', 'authgate'); ?></td></tr>
             </table>
             <div class="authgate-sc-example">[authgate_auth]
-[authgate_auth mode="popup" button_class="btn btn-primary"]
+[authgate_auth mode="popup" label="Acceder ahora" button_class="btn btn-primary"]
 [authgate_auth mode="inline" default_tab="register" redirect="<?php echo esc_html(home_url('/gracias/')); ?>"]</div>
         </div>
 
@@ -619,10 +620,11 @@ class AuthGate_Settings {
                 <tr><th><?php esc_html_e('Parámetro', 'authgate'); ?></th><th><?php esc_html_e('Valores', 'authgate'); ?></th><th><?php esc_html_e('Descripción', 'authgate'); ?></th></tr>
                 <tr><td><code>mode</code></td><td><code>inline</code> · <code>popup</code></td><td><?php esc_html_e('inline: incrustado. popup: modal.', 'authgate'); ?></td></tr>
                 <tr><td><code>redirect</code></td><td><?php esc_html_e('URL', 'authgate'); ?></td><td><?php esc_html_e('URL tras login exitoso.', 'authgate'); ?></td></tr>
+                <tr><td><code>label</code></td><td><?php esc_html_e('texto', 'authgate'); ?></td><td><?php esc_html_e('Texto del botón del popup.', 'authgate'); ?></td></tr>
                 <tr><td><code>button_class</code></td><td><?php esc_html_e('clases CSS', 'authgate'); ?></td><td><?php esc_html_e('Clases adicionales para el botón del popup.', 'authgate'); ?></td></tr>
             </table>
             <div class="authgate-sc-example">[authgate_login]
-[authgate_login mode="popup" button_class="btn btn-secondary"]</div>
+[authgate_login mode="popup" label="Entrar" button_class="btn btn-secondary"]</div>
         </div>
 
         <div class="authgate-sc-block">
@@ -632,10 +634,11 @@ class AuthGate_Settings {
                 <tr><th><?php esc_html_e('Parámetro', 'authgate'); ?></th><th><?php esc_html_e('Valores', 'authgate'); ?></th><th><?php esc_html_e('Descripción', 'authgate'); ?></th></tr>
                 <tr><td><code>mode</code></td><td><code>inline</code> · <code>popup</code></td><td><?php esc_html_e('inline: incrustado. popup: modal.', 'authgate'); ?></td></tr>
                 <tr><td><code>redirect</code></td><td><?php esc_html_e('URL', 'authgate'); ?></td><td><?php esc_html_e('URL tras registro exitoso.', 'authgate'); ?></td></tr>
+                <tr><td><code>label</code></td><td><?php esc_html_e('texto', 'authgate'); ?></td><td><?php esc_html_e('Texto del botón del popup.', 'authgate'); ?></td></tr>
                 <tr><td><code>button_class</code></td><td><?php esc_html_e('clases CSS', 'authgate'); ?></td><td><?php esc_html_e('Clases adicionales para el botón del popup.', 'authgate'); ?></td></tr>
             </table>
             <div class="authgate-sc-example">[authgate_register]
-[authgate_register mode="popup"]</div>
+[authgate_register mode="popup" label="Crear cuenta"]</div>
         </div>
 
         <div class="authgate-sc-block">

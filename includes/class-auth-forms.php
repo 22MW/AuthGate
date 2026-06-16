@@ -332,7 +332,7 @@ class AuthGate_Forms
     public function shortcode_login($atts)
     {
         if (is_user_logged_in()) return '';
-        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => ''), $atts, 'authgate_login');
+        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => '', 'label' => ''), $atts, 'authgate_login');
         return $this->render_wrapper('login', $atts);
     }
 
@@ -344,7 +344,7 @@ class AuthGate_Forms
     {
         if (is_user_logged_in()) return '';
         if (!$this->registration_allowed()) return '';
-        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => ''), $atts, 'authgate_register');
+        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'button_class' => '', 'label' => ''), $atts, 'authgate_register');
         return $this->render_wrapper('register', $atts);
     }
 
@@ -355,7 +355,7 @@ class AuthGate_Forms
     public function shortcode_auth($atts)
     {
         if (is_user_logged_in()) return '';
-        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'default_tab' => 'login', 'button_class' => ''), $atts, 'authgate_auth');
+        $atts = shortcode_atts(array('mode' => 'inline', 'redirect' => '', 'default_tab' => 'login', 'button_class' => '', 'label' => ''), $atts, 'authgate_auth');
         if (!$this->registration_allowed()) {
             $atts['default_tab'] = 'login';
         }
@@ -380,10 +380,10 @@ class AuthGate_Forms
 
         if ($mode === 'popup') {
             $uid      = uniqid('authgate-popup-');
-            $btn_text = AuthGate_Settings::get_string('btn_popup');
+            $btn_text = !empty($atts['label']) ? sanitize_text_field($atts['label']) : AuthGate_Settings::get_string('btn_popup');
 
             // Solo el trigger va inline (puede estar dentro de un <form>)
-            $extra_class = !empty($atts['button_class']) ? ' ' . $atts['button_class'] : '';
+            $extra_class = !empty($atts['button_class']) ? ' ' . implode(' ', array_map('sanitize_html_class', preg_split('/\s+/', trim($atts['button_class'])))) : '';
             echo '<button type="button" class="authgate-popup-trigger button' . esc_attr($extra_class) . '" data-target="' . esc_attr($uid) . '">';
             echo esc_html($btn_text);
             echo '</button>';

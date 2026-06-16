@@ -6,52 +6,42 @@
 
 ## Resumen humano
 
-AuthGate está en rama dev `mishaAuthDev` con versión dev `1.1.0.1` ya pusheada. La P1 de control de registro quedó implementada: AuthGate puede gestionar `users_can_register`, duplicar la opción WooCommerce `woocommerce_registration_generate_password` y ocultar el registro frontend cuando WordPress no permite registros.
+AuthGate está en rama dev `mishaAuthDev`. La P1 de control de registro quedó implementada y QA OK. Se añadió una mejora de shortcodes popup con `label` para personalizar el texto del botón y `button_class` para clases.
 
 ## Estado general
 
-Dev implementada, pusheada y QA P1 confirmada por el usuario; pendiente decisión de release estable.
+Dev preparada como `1.1.0.2`; pendiente commit/push de la mejora popup.
 
 ## Hecho
 
 - Plugin localizado en `app/public/wp-content/plugins/AuthGate/`.
 - Archivo principal confirmado: `authgate.php`.
-- Versión dev actual declarada: `1.1.0.1`.
-- Text domain detectado: `authgate`.
-- Repo Git propio confirmado.
+- Versión dev actual declarada: `1.1.0.2`.
 - Rama actual confirmada: `mishaAuthDev`.
-- MCP WooCommerce operativo en lectura.
-- WooCommerce activo confirmado: `10.7.0`.
-- Entorno local confirmado: `wp_environment_type: local`.
-- P1 implementada: control backend para `users_can_register`.
-- P1 implementada: control backend para `woocommerce_registration_generate_password` si WooCommerce está activo.
-- P1 implementada: frontend oculta registro cuando WordPress no permite registro.
-- P1 implementada: AJAX `authgate_register` queda bloqueado si registro está desactivado.
-- Dev push realizado: commit `87216ff release: bump dev version to 1.1.0.1`.
-- QA P1 confirmado por el usuario el 2026-06-16.
-- `CHANGELOG.md` actualizado con entrada `1.1.0.1`.
+- P1 implementada y QA OK.
+- Mejora local: atributo `label` en popups de `[authgate_login]`, `[authgate_register]` y `[authgate_auth]`.
+- Mejora local: ejemplos añadidos en backend de Shortcodes.
+- Validación técnica de la mejora popup: `php -l` y `git diff --check` OK.
 
 ## En curso
 
-- Preparar release estable solo si QA queda OK y el usuario lo autoriza.
+- QA manual de shortcodes popup con `label` y `button_class`.
 
 ## Bloqueado
 
+- Push de la mejora popup pendiente de ejecutar.
 - Release estable bloqueada hasta permiso explícito.
 
 ## Próximo paso recomendado
 
-- Preparar release estable si el usuario lo solicita explícitamente.
+- Probar: `[authgate_login mode="popup" label="Entrar" button_class="btn btn-secondary"]`.
+- Probar: `[authgate_register mode="popup" label="Crear cuenta"]`.
+- Hacer commit y push de `1.1.0.2`.
 
 ## No volver a investigar
 
 - Ruta real del plugin: `app/public/wp-content/plugins/AuthGate/`.
-- Archivo principal: `authgate.php`.
 - Rama de trabajo: `mishaAuthDev`.
-- Versión dev actual: `1.1.0.1`.
-- QA P1 OK confirmado por el usuario.
-- Sitio local confirmado por MCP: `https://plugins.local`.
-- WooCommerce activo confirmado por MCP: `10.7.0`.
-- PHP entorno MCP: `8.3.30`.
-- Prefijo BD: `m22w_`.
+- Versión dev declarada: `1.1.0.2`.
+- Atributo elegido para texto de popup: `label`.
 - No hacer release estable, tag ni deploy sin autorización explícita.
