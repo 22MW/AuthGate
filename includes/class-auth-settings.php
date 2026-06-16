@@ -23,6 +23,8 @@ class AuthGate_Settings {
         add_action('network_admin_enqueue_scripts',  array($this, 'enqueue_admin_assets'));
         add_action($post_pfx . 'authgate_save',          array($this, 'save_settings'));
         add_action('wp_ajax_authgate_save',              array($this, 'save_settings'));
+        add_action($post_pfx . 'authgate_save_strings',  array($this, 'save_strings'));
+        add_action('wp_ajax_authgate_save_strings',      array($this, 'save_strings'));
         add_action($post_pfx . 'authgate_unblock',       array($this, 'handle_unblock'));
         add_action($post_pfx . 'authgate_blacklist_add', array($this, 'handle_blacklist_add'));
         add_action($post_pfx . 'authgate_blacklist_del', array($this, 'handle_blacklist_del'));
@@ -168,6 +170,7 @@ class AuthGate_Settings {
             'forgot_password'   => __('¿Olvidaste tu contraseña?', 'authgate'),
             'link_to_register'  => __('¿No tienes cuenta? Regístrate', 'authgate'),
             'link_to_login'     => __('¿Ya tienes cuenta? Entra aquí', 'authgate'),
+            'link_to_home'      => __('Ir a la página de inicio', 'authgate'),
             'success_login'     => __('Sesión iniciada. Redirigiendo…', 'authgate'),
             'success_register'  => __('Cuenta creada. Redirigiendo…', 'authgate'),
             'error_invalid'     => __('Usuario o contraseña incorrectos.', 'authgate'),
@@ -262,6 +265,7 @@ class AuthGate_Settings {
                 <?php
                 $tabs = array(
                     'general'    => __('General', 'authgate'),
+                    'strings'    => __('Textos', 'authgate'),
                     'shortcodes' => __('Shortcodes', 'authgate'),
                     'blocked'    => __('IPs bloqueadas', 'authgate'),
                     'log'        => __('Registro de accesos', 'authgate'),
@@ -279,6 +283,8 @@ class AuthGate_Settings {
             <?php
             if ($tab === 'general') {
                 $this->render_tab_general();
+            } elseif ($tab === 'strings') {
+                $this->render_tab_strings();
             } elseif ($tab === 'shortcodes') {
                 $this->render_tab_shortcodes();
             } elseif ($tab === 'blocked') {
@@ -296,7 +302,6 @@ class AuthGate_Settings {
         $max_attempts   = (int) self::get('max_attempts', 10);
         $excluded_pages = (array) self::get('excluded_pages', array());
         $all_pages      = get_pages(array('sort_column' => 'post_title'));
-        $string_defs    = self::string_definitions();
         ?>
         <form id="authgate-settings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
             <input type="hidden" name="action" value="authgate_save">
@@ -368,60 +373,6 @@ class AuthGate_Settings {
                 </div>
             </div>
             <?php endif; ?>
-
-            <!-- Strings editables -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
-                <h2 style="margin-top:0;"><?php esc_html_e('Textos del formulario', 'authgate'); ?></h2>
-                <table class="form-table">
-                    <?php
-                    $textarea_keys = self::textarea_string_keys();
-                    $wysiwyg_keys  = self::wysiwyg_string_keys();
-                    foreach ($string_defs as $key => $default) :
-                        $is_wysiwyg  = in_array($key, $wysiwyg_keys, true);
-                        $is_textarea = !$is_wysiwyg && in_array($key, $textarea_keys, true);
-                    ?>
-                        <tr>
-                            <th scope="row">
-                                <label for="authgate_str_<?php echo esc_attr($key); ?>">
-                                    <code><?php echo esc_html($key); ?></code>
-                                </label>
-                            </th>
-                            <td>
-                                <?php if ($is_wysiwyg) :
-                                    wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
-                                        'textarea_name' => 'strings[' . $key . ']',
-                                        'media_buttons' => false,
-                                        'teeny'         => true,
-                                        'editor_height' => 150,
-                                        'tinymce'       => array(
-                                            'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
-                                        ),
-                                    ));
-                                elseif ($is_textarea) : ?>
-                                <textarea id="authgate_str_<?php echo esc_attr($key); ?>"
-                                          name="strings[<?php echo esc_attr($key); ?>]"
-                                          style="width:440px;height:80px;"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
-                                <?php else : ?>
-                                <input type="text"
-                                       id="authgate_str_<?php echo esc_attr($key); ?>"
-                                       name="strings[<?php echo esc_attr($key); ?>]"
-                                       value="<?php echo esc_attr(self::get_string($key)); ?>"
-                                       style="width:440px;">
-                                <?php endif; ?>
-                                <?php if ($default !== '') : ?>
-                                <p class="description">
-                                    <?php esc_html_e('Por defecto:', 'authgate'); ?>
-                                    <em><?php echo esc_html($default); ?></em>
-                                </p>
-                                <?php endif; ?>
-                                <?php if ($key === 'field_gdpr') : ?>
-                                <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            </div>
 
             <!-- URLs personalizadas -->
             <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
@@ -602,6 +553,59 @@ class AuthGate_Settings {
             }
         })(jQuery);
         </script>
+        <?php
+    }
+
+    /** @return void */
+    private function render_tab_strings() {
+        $string_defs   = self::string_definitions();
+        $textarea_keys = self::textarea_string_keys();
+        $wysiwyg_keys  = self::wysiwyg_string_keys();
+        ?>
+        <form id="authgate-strings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
+            <input type="hidden" name="action" value="authgate_save_strings">
+            <?php wp_nonce_field('authgate_save_strings', '_authgate_nonce'); ?>
+
+            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                <h2 style="margin-top:0;"><?php esc_html_e('Textos del formulario', 'authgate'); ?></h2>
+                <p class="description" style="margin-bottom:16px;"><?php esc_html_e('Estos textos se guardan desde esta pestaña de forma independiente al resto de ajustes.', 'authgate'); ?></p>
+                <table class="form-table">
+                    <?php foreach ($string_defs as $key => $default) :
+                        $is_wysiwyg  = in_array($key, $wysiwyg_keys, true);
+                        $is_textarea = !$is_wysiwyg && in_array($key, $textarea_keys, true);
+                        ?>
+                        <tr>
+                            <th scope="row"><label for="authgate_str_<?php echo esc_attr($key); ?>"><code><?php echo esc_html($key); ?></code></label></th>
+                            <td>
+                                <?php if ($is_wysiwyg) :
+                                    wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
+                                        'textarea_name' => 'strings[' . $key . ']',
+                                        'media_buttons' => false,
+                                        'teeny'         => true,
+                                        'editor_height' => 150,
+                                        'tinymce'       => array(
+                                            'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
+                                        ),
+                                    ));
+                                elseif ($is_textarea) : ?>
+                                    <textarea id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" style="width:440px;height:80px;"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
+                                <?php else : ?>
+                                    <input type="text" id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr(self::get_string($key)); ?>" style="width:440px;">
+                                <?php endif; ?>
+                                <?php if ($default !== '') : ?>
+                                    <p class="description"><?php esc_html_e('Por defecto:', 'authgate'); ?> <em><?php echo esc_html($default); ?></em></p>
+                                <?php endif; ?>
+                                <?php if ($key === 'field_gdpr') : ?>
+                                    <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+
+            <?php submit_button(__('Guardar textos', 'authgate')); ?>
+        </form>
         <?php
     }
 
@@ -939,6 +943,38 @@ class AuthGate_Settings {
 
         AuthGate_Install::flush_custom_rewrite_rules();
 
+        if ($is_ajax) {
+            wp_send_json_success(array('message' => __('Ajustes guardados.', 'authgate')));
+        }
+
+        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'updated' => '1'), self::settings_base_url()));
+        exit;
+    }
+
+    /** @return void */
+    public function save_strings() {
+        $is_ajax = wp_doing_ajax();
+        if ($is_ajax) {
+            check_ajax_referer('authgate_save_strings', '_authgate_nonce');
+        } else {
+            check_admin_referer('authgate_save_strings', '_authgate_nonce');
+        }
+        if (!current_user_can(self::required_cap())) {
+            $is_ajax ? wp_send_json_error(array('message' => __('Sin permiso.', 'authgate'))) : wp_die();
+        }
+
+        $this->save_string_values();
+
+        if ($is_ajax) {
+            wp_send_json_success(array('message' => __('Textos guardados.', 'authgate')));
+        }
+
+        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'tab' => 'strings', 'updated' => '1'), self::settings_base_url()));
+        exit;
+    }
+
+    /** @return void */
+    private function save_string_values(): void {
         $defs          = self::string_definitions();
         $textarea_keys = self::textarea_string_keys();
         $wysiwyg_keys  = self::wysiwyg_string_keys();
@@ -954,13 +990,6 @@ class AuthGate_Settings {
             }
             self::update_setting('str_' . $key, $val);
         }
-
-        if ($is_ajax) {
-            wp_send_json_success(array('message' => __('Ajustes guardados.', 'authgate')));
-        }
-
-        wp_safe_redirect(add_query_arg(array('page' => 'authgate', 'updated' => '1'), self::settings_base_url()));
-        exit;
     }
 
     /** @return void */

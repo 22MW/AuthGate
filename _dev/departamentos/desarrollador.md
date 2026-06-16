@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B implementado y ajustado tras QA: WYSIWYG bajo logo/cabecera centrado para formularios inline login, registro y combinado.
+Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B quedó cerrado en `1.1.0.5`. Bloque C implementado localmente: pestaña “Textos” separada y guardado independiente.
 
 ## Descubierto
 
@@ -26,16 +26,20 @@ Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B implementado y ajustado tr
 - Bloque B: añadido campo `inline_intro_html` en ajustes.
 - Bloque B: renderizado solo en modo inline de login, registro y combinado.
 - Bloque B QA: centrado frontend y toolbar WYSIWYG ampliada.
+- Bloque C: añadida pestaña `Textos`.
+- Bloque C: quitado bloque de textos de la pestaña General.
+- Bloque C: añadido guardado independiente `authgate_save_strings` con nonce propio.
 
 ## Pendiente
 
-- Validar ajuste visual del Bloque B.
+- QA manual del Bloque C.
 
 ## No volver a investigar
 
 - Bloque A no toca settings de admin ni base de datos.
 - El enlace de inicio no debe aparecer en popup.
 - Bloque B guarda HTML permitido mediante `wp_kses_post()`.
+- Bloque C conserva sanitización previa por tipo de texto.
 
 ## Riesgos o bloqueos
 
@@ -43,4 +47,4 @@ Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B implementado y ajustado tr
 
 ## Próximo paso recomendado
 
-- Validar que el texto aparece en inline login/register/combined y no en popup.
+- Validar guardado de pestaña General y pestaña Textos por separado.

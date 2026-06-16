@@ -4,6 +4,12 @@
 
 2026-06-16
 
+## Dev 1.1.0.6 — 2026-06-16
+
+- Bloque C: separada la edición de “Textos del formulario” a una pestaña propia.
+- Bloque C: los textos se guardan con acción y nonce independientes.
+- Bloque C: añadido `link_to_home` a textos configurables.
+
 ## Dev 1.1.0.5 — 2026-06-16
 
 - Ajuste QA Bloque B: texto WYSIWYG centrado en frontend.
@@ -40,7 +46,7 @@
 
 ## Entrará en la próxima release
 
-- `1.1.0.1`, `1.1.0.2`, `1.1.0.3`, `1.1.0.4` y `1.1.0.5` pendientes de consolidar en versión estable cuando el usuario autorice release.
+- `1.1.0.1`, `1.1.0.2`, `1.1.0.3`, `1.1.0.4`, `1.1.0.5` y `1.1.0.6` pendientes de consolidar en versión estable cuando el usuario autorice release.
 
 ## Queda fuera
 

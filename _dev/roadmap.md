@@ -2,7 +2,7 @@
 
 ## Urgente
 
-- QA manual del Bloque B.
+- Bloque D pendiente: CSS propio opcional.
 
 ## Recomendado
 
@@ -13,15 +13,14 @@
 
 ### Bloque B — riesgo medio
 
-- Hecho local: añadido campo WYSIWYG “Texto bajo el logo”.
-- Hecho local: render solo en modo inline de login, register y combined.
-- Hecho local: si está vacío no renderiza nada.
-- Pendiente: QA manual.
+- Hecho y pusheado en dev `1.1.0.4`.
+- Ajuste QA hecho y pusheado en dev `1.1.0.5`.
+- QA OK confirmado por el usuario.
 
 ### Bloque C — riesgo medio
 
-- Separar “Textos del formulario” a un tab propio.
-- Cada tab debe guardar por separado.
+- Hecho y listo para push en dev `1.1.0.6`.
+- QA OK confirmado por el usuario.
 
 ### Bloque D — riesgo alto / ejecutar al final
 

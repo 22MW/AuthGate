@@ -86,7 +86,7 @@
     <?php if (!empty($show_home_link)) : ?>
         <p class="authgate__switch authgate__switch--home">
             <a href="<?php echo esc_url(home_url('/')); ?>" class="authgate__link">
-                <?php esc_html_e('Ir a la página de inicio', 'authgate'); ?>
+                <?php echo esc_html(AuthGate_Settings::get_string('link_to_home')); ?>
             </a>
         </p>
     <?php endif; ?>
