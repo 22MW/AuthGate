@@ -13,11 +13,12 @@
 - AuthGate debe poder cambiar directamente la opción nativa WordPress `users_can_register`.
 - Si el registro está desactivado, AuthGate oculta completamente la parte de registro en frontend.
 - Si WooCommerce está activo, AuthGate duplica en su backend la opción `woocommerce_registration_generate_password`.
-- Las versiones dev usan formato de cuatro números; la versión dev actual es `1.1.0.2`.
+- Las versiones dev usan formato de cuatro números; la versión dev actual es `1.1.0.4`.
 - `Stable tag` no se cambia en dev; queda para release estable.
 - QA P1 fue confirmado como OK por el usuario.
 - El atributo elegido para texto de botón popup es `label`.
 - En roadmap pre-release, el campo WYSIWYG bajo logo se mostrará en todas las variantes inline: login, register y combined.
+- Bloque B queda limitado a modo inline; no se muestra en popup.
 - El tab “Textos” guardará separado por tab, no con un único formulario global.
 - El CSS propio se guardará con sanitización.
 - El editor CSS debe ser tipo CodeMirror.

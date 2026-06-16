@@ -4,6 +4,12 @@
 
 2026-06-16
 
+## Dev 1.1.0.4 — 2026-06-16
+
+- Bloque B: añadido WYSIWYG “Texto bajo el logo” en ajustes.
+- Bloque B: el texto se muestra solo en render inline de login, registro y combinado.
+- Bloque B: si el campo está vacío no se renderiza nada.
+
 ## Dev 1.1.0.3 — 2026-06-16
 
 - Bloque A: ocultado checkbox newsletter cuando Mail Mint no está disponible.
@@ -29,7 +35,7 @@
 
 ## Entrará en la próxima release
 
-- `1.1.0.1`, `1.1.0.2` y `1.1.0.3` pendientes de consolidar en versión estable cuando el usuario autorice release.
+- `1.1.0.1`, `1.1.0.2`, `1.1.0.3` y `1.1.0.4` pendientes de consolidar en versión estable cuando el usuario autorice release.
 
 ## Queda fuera
 

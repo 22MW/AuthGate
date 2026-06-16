@@ -6,13 +6,14 @@
 
 ## Resumen humano
 
-Bloque A implementado localmente en modo ahorro. Tras revisión visual del usuario, el enlace “Ir a la página de inicio” se movió dentro del formulario inline para aparecer abajo, junto al estilo de enlaces del formulario.
+Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B implementado localmente: WYSIWYG bajo logo/cabecera para formularios inline login, registro y combinado.
 
 ## Descubierto
 
 - El checkbox newsletter estaba en `form-register.php` y en el panel registro de `form-combined.php`.
 - El render inline se controla desde `render_wrapper()` en `class-auth-forms.php`.
 - El enlace de inicio fuera del contenedor quedaba visualmente desplazado a la derecha.
+- Los textos WYSIWYG existentes usan `wp_editor()` y se guardan con `wp_kses_post()`.
 
 ## Hecho
 
@@ -22,16 +23,18 @@ Bloque A implementado localmente en modo ahorro. Tras revisión visual del usuar
 - Reubicado el enlace de inicio al final del contenido inline, usando clases de enlace del formulario.
 - Validado `php -l` en archivos PHP tocados.
 - Validado `git diff --check`.
+- Bloque B: añadido campo `inline_intro_html` en ajustes.
+- Bloque B: renderizado solo en modo inline de login, registro y combinado.
 
 ## Pendiente
 
-- QA manual del Bloque A después del ajuste visual.
-- Si QA OK, bump dev `1.1.0.3`, release notes, commit y push.
+- QA manual del Bloque B.
 
 ## No volver a investigar
 
 - Bloque A no toca settings de admin ni base de datos.
 - El enlace de inicio no debe aparecer en popup.
+- Bloque B guarda HTML permitido mediante `wp_kses_post()`.
 
 ## Riesgos o bloqueos
 
@@ -39,4 +42,4 @@ Bloque A implementado localmente en modo ahorro. Tras revisión visual del usuar
 
 ## Próximo paso recomendado
 
-- Validar frontend inline y popup.
+- Validar que el texto aparece en inline login/register/combined y no en popup.

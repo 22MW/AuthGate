@@ -8,6 +8,9 @@ if (!$registration_allowed) {
 }
 ?>
 <div class="authgate authgate--combined">
+    <?php if (!empty($inline_intro_html)) : ?>
+        <div class="authgate__intro"><?php echo wp_kses_post(wpautop($inline_intro_html)); ?></div>
+    <?php endif; ?>
 
     <!-- Tabs -->
     <div class="authgate__tabs" role="tablist">

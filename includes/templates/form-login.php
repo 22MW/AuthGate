@@ -1,5 +1,9 @@
 <?php defined('ABSPATH') || exit; ?>
 <div class="authgate authgate--login">
+    <?php if (!empty($inline_intro_html)) : ?>
+        <div class="authgate__intro"><?php echo wp_kses_post(wpautop($inline_intro_html)); ?></div>
+    <?php endif; ?>
+
     <h2 class="authgate__title"><?php echo esc_html(AuthGate_Settings::get_string('login_title')); ?></h2>
 
     <div class="authgate__message" role="alert" aria-live="polite"></div>

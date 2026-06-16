@@ -413,6 +413,7 @@ class AuthGate_Forms
     {
         $tpl_dir = __DIR__ . '/templates/';
         $registration_allowed = $this->registration_allowed();
+        $inline_intro_html = $show_home_link ? AuthGate_Settings::get_inline_intro_html() : '';
 
         if (!$registration_allowed && $default_tab === 'register') {
             $default_tab = 'login';

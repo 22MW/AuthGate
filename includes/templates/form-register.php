@@ -6,6 +6,10 @@ if (!AuthGate_Settings::registration_enabled()) {
 }
 ?>
 <div class="authgate authgate--register">
+    <?php if (!empty($inline_intro_html)) : ?>
+        <div class="authgate__intro"><?php echo wp_kses_post(wpautop($inline_intro_html)); ?></div>
+    <?php endif; ?>
+
     <h2 class="authgate__title"><?php echo esc_html(AuthGate_Settings::get_string('register_title')); ?></h2>
 
     <div class="authgate__message" role="alert" aria-live="polite"></div>

@@ -204,6 +204,11 @@ class AuthGate_Settings {
         return array('legal_text');
     }
 
+    /** @return string */
+    public static function get_inline_intro_html(): string {
+        return (string) self::get('inline_intro_html', '');
+    }
+
     /**
      * Claves de string que se renderizan como textarea (admiten HTML básico).
      *
@@ -477,6 +482,23 @@ class AuthGate_Settings {
                             </div>
                             <?php endif; ?>
                             <p class="description"><?php esc_html_e('Logo que aparece en /acceder/ y /restablecer-contrasena/. Deja vacío para mostrar el nombre del sitio.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="authgate_inline_intro_html"><?php esc_html_e('Texto bajo el logo', 'authgate'); ?></label></th>
+                        <td>
+                            <?php
+                            wp_editor(self::get_inline_intro_html(), 'authgate_inline_intro_html', array(
+                                'textarea_name' => 'inline_intro_html',
+                                'media_buttons' => false,
+                                'teeny'         => true,
+                                'editor_height' => 140,
+                                'tinymce'       => array(
+                                    'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
+                                ),
+                            ));
+                            ?>
+                            <p class="description"><?php esc_html_e('Se muestra bajo el logo en formularios inline de login, registro y combinado. Déjalo vacío para no mostrar nada.', 'authgate'); ?></p>
                         </td>
                     </tr>
                     <tr>
@@ -897,6 +919,7 @@ class AuthGate_Settings {
 
         self::update_setting('max_attempts',        max(1, (int) ($_POST['max_attempts'] ?? 10)));
         self::update_setting('login_logo_url',      esc_url_raw(wp_unslash($_POST['login_logo_url'] ?? '')));
+        self::update_setting('inline_intro_html',   wp_kses_post(wp_unslash($_POST['inline_intro_html'] ?? '')));
         self::update_setting('login_slug',          sanitize_title(wp_unslash($_POST['login_slug'] ?? 'acceder')));
         self::update_setting('login_slug_redirect', esc_url_raw(wp_unslash($_POST['login_slug_redirect'] ?? '')));
         self::update_setting('reset_slug',          sanitize_title(wp_unslash($_POST['reset_slug'] ?? 'restablecer-contrasena')));

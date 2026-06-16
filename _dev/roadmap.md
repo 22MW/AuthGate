@@ -2,23 +2,21 @@
 
 ## Urgente
 
-- QA manual del Bloque A.
+- QA manual del Bloque B.
 
 ## Recomendado
 
 ### Bloque A — bajo riesgo
 
-- Hecho local: ocultar checkbox newsletter si Mail Mint no está activo.
-- Hecho local: en modo inline, añadir enlace “Ir a la página de inicio” hacia `home_url()`.
-- Pendiente: QA manual.
-- Si QA OK: bump dev `1.1.0.3`, release notes, commit y push.
+- Hecho y pusheado en dev `1.1.0.3`.
+- QA OK confirmado por el usuario.
 
 ### Bloque B — riesgo medio
 
-- Añadir campo WYSIWYG bajo el logo/cabecera visual del formulario.
-- Mostrarlo solo en modo inline.
-- Mostrarlo en login, register y combined.
-- Si está vacío, no renderizar nada.
+- Hecho local: añadido campo WYSIWYG “Texto bajo el logo”.
+- Hecho local: render solo en modo inline de login, register y combined.
+- Hecho local: si está vacío no renderiza nada.
+- Pendiente: QA manual.
 
 ### Bloque C — riesgo medio
 
