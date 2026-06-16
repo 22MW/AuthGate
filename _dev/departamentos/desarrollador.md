@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B implementado localmente: WYSIWYG bajo logo/cabecera para formularios inline login, registro y combinado.
+Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B implementado y ajustado tras QA: WYSIWYG bajo logo/cabecera centrado para formularios inline login, registro y combinado.
 
 ## Descubierto
 
@@ -25,10 +25,11 @@ Bloque A quedó pusheado como dev `1.1.0.3`. Bloque B implementado localmente: W
 - Validado `git diff --check`.
 - Bloque B: añadido campo `inline_intro_html` en ajustes.
 - Bloque B: renderizado solo en modo inline de login, registro y combinado.
+- Bloque B QA: centrado frontend y toolbar WYSIWYG ampliada.
 
 ## Pendiente
 
-- QA manual del Bloque B.
+- Validar ajuste visual del Bloque B.
 
 ## No volver a investigar
 

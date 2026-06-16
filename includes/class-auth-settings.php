@@ -491,10 +491,11 @@ class AuthGate_Settings {
                             wp_editor(self::get_inline_intro_html(), 'authgate_inline_intro_html', array(
                                 'textarea_name' => 'inline_intro_html',
                                 'media_buttons' => false,
-                                'teeny'         => true,
+                                'teeny'         => false,
                                 'editor_height' => 140,
+                                'quicktags'     => true,
                                 'tinymce'       => array(
-                                    'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
+                                    'toolbar1' => 'formatselect,bold,italic,underline,strikethrough,alignleft,aligncenter,alignright,bullist,numlist,blockquote,link,unlink,undo,redo,removeformat',
                                 ),
                             ));
                             ?>

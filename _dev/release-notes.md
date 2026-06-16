@@ -4,6 +4,11 @@
 
 2026-06-16
 
+## Dev 1.1.0.5 — 2026-06-16
+
+- Ajuste QA Bloque B: texto WYSIWYG centrado en frontend.
+- Ajuste QA Bloque B: toolbar WYSIWYG ampliada con más controles de formato.
+
 ## Dev 1.1.0.4 — 2026-06-16
 
 - Bloque B: añadido WYSIWYG “Texto bajo el logo” en ajustes.
@@ -35,7 +40,7 @@
 
 ## Entrará en la próxima release
 
-- `1.1.0.1`, `1.1.0.2`, `1.1.0.3` y `1.1.0.4` pendientes de consolidar en versión estable cuando el usuario autorice release.
+- `1.1.0.1`, `1.1.0.2`, `1.1.0.3`, `1.1.0.4` y `1.1.0.5` pendientes de consolidar en versión estable cuando el usuario autorice release.
 
 ## Queda fuera
 

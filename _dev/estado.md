@@ -6,17 +6,17 @@
 
 ## Resumen humano
 
-AuthGate está en rama dev `mishaAuthDev`. La P1 de control de registro quedó implementada y QA OK. La mejora popup con `label` fue implementada y pusheada. Bloque A quedó pusheado como `1.1.0.3`. Bloque B está implementado como `1.1.0.4`, pendiente de QA manual.
+AuthGate está en rama dev `mishaAuthDev`. La P1 de control de registro quedó implementada y QA OK. La mejora popup con `label` fue implementada y pusheada. Bloque A quedó pusheado como `1.1.0.3`. Bloque B está ajustado como `1.1.0.5`: texto centrado y toolbar WYSIWYG ampliada.
 
 ## Estado general
 
-Dev `1.1.0.4` preparada con Bloque B; pendiente QA manual.
+Dev `1.1.0.5` preparada para commit y push del ajuste QA Bloque B.
 
 ## Hecho
 
 - Plugin localizado en `app/public/wp-content/plugins/AuthGate/`.
 - Archivo principal confirmado: `authgate.php`.
-- Versión dev actual declarada: `1.1.0.4`.
+- Versión dev actual declarada: `1.1.0.5`.
 - Rama actual confirmada: `mishaAuthDev`.
 - P1 implementada y QA OK.
 - Mejora popup pusheada con commit `58a9622 feat: add popup shortcode labels`.
@@ -25,10 +25,11 @@ Dev `1.1.0.4` preparada con Bloque B; pendiente QA manual.
 - QA Bloque A confirmado por el usuario.
 - Bloque A pusheado en commit `bdd7d6e`.
 - Bloque B: WYSIWYG “Texto bajo el logo” añadido para render inline.
+- QA Bloque B: texto centrado y más controles del editor aplicados localmente.
 
 ## En curso
 
-- QA manual del Bloque B.
+- Validación del ajuste visual del Bloque B.
 
 ## Bloqueado
 
@@ -37,13 +38,13 @@ Dev `1.1.0.4` preparada con Bloque B; pendiente QA manual.
 
 ## Próximo paso recomendado
 
-- Validar Bloque B en login, registro y combinado inline.
+- Validar texto centrado y toolbar ampliada del WYSIWYG.
 
 ## No volver a investigar
 
 - Ruta real del plugin: `app/public/wp-content/plugins/AuthGate/`.
 - Rama de trabajo: `mishaAuthDev`.
-- Versión dev actual declarada: `1.1.0.4`.
+- Versión dev actual declarada: `1.1.0.5`.
 - QA Bloque A OK confirmado por el usuario.
 - Bloque B no debe aparecer en popup.
 - Atributo elegido para texto de popup: `label`.
