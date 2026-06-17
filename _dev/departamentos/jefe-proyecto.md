@@ -16,13 +16,15 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 ## Hecho
 
-- Fase 2B implementada localmente: selector buscable para Exclusiones, sin tocar lógica de guardado.
+- Fase 2/Fase 2B commiteada y pusheada: componentes visuales, switches, tablas, notices y selector buscable de Exclusiones.
 
 
 - P1 implementada y QA OK.
 - Popup `label` implementado y pusheado como `1.1.0.2`.
 - Decisiones funcionales pre-release consolidadas.
 - Roadmap por bloques A/B/C/D creado.
+
+- Fase 3 implementada localmente en General: submenú vertical interno sin AJAX ni cambios funcionales.
 
 ## Pendiente
 
@@ -45,6 +47,6 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 ## Próximo paso recomendado
 
-- Fase 2 implementada localmente: componentes visuales, formularios, switches, botones, tablas y notices. No se tocó lógica funcional ni AJAX tabs.
+- Preparar Fase 3: submenús verticales internos por pantalla, sin AJAX tabs ni cambios de guardado.
 
 - No usar `plan-funcionalidad` para rediseños backend/admin; usar `22mw-back` o `plan-backend-plugin` según el nivel de detalle.

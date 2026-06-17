@@ -102,10 +102,102 @@
       renderResults();
     });
 
-    document.addEventListener('click', function (event) {
+
+
+  function enhanceSubnav(root) {
+    root.querySelectorAll('[data-authgate-subnav]').forEach(function (layout) {
+      var links = Array.prototype.slice.call(layout.querySelectorAll('.authgate-back-subnav a'));
+      var sections = links.map(function (link) {
+        return document.querySelector(link.getAttribute('href'));
+      }).filter(Boolean);
+
+      links.forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          var target = document.querySelector(link.getAttribute('href'));
+
+          if (!target) {
+            return;
+          }
+
+          event.preventDefault();
+          links.forEach(function (item) { item.classList.remove('is-active'); });
+          link.classList.add('is-active');
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      if (!('IntersectionObserver' in window) || !sections.length) {
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          links.forEach(function (link) {
+            link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        });
+      }, { rootMargin: '-20% 0px -65% 0px', threshold: 0.01 });
+
+      sections.forEach(function (section) {
+        observer.observe(section);
+      });
+    });
+  }
+
+  document.addEventListener('click', function (event) {
       if (!picker.contains(event.target)) {
         results.hidden = true;
       }
+    });
+  }
+
+
+
+  function enhanceSubnav(root) {
+    root.querySelectorAll('[data-authgate-subnav]').forEach(function (layout) {
+      var links = Array.prototype.slice.call(layout.querySelectorAll('.authgate-back-subnav a'));
+      var sections = links.map(function (link) {
+        return document.querySelector(link.getAttribute('href'));
+      }).filter(Boolean);
+
+      links.forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          var target = document.querySelector(link.getAttribute('href'));
+
+          if (!target) {
+            return;
+          }
+
+          event.preventDefault();
+          links.forEach(function (item) { item.classList.remove('is-active'); });
+          link.classList.add('is-active');
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      if (!('IntersectionObserver' in window) || !sections.length) {
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          links.forEach(function (link) {
+            link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        });
+      }, { rootMargin: '-20% 0px -65% 0px', threshold: 0.01 });
+
+      sections.forEach(function (section) {
+        observer.observe(section);
+      });
     });
   }
 
@@ -120,6 +212,7 @@
     applyTheme(root, stored);
     enhanceSwitches(root);
     enhancePagePicker(root);
+    enhanceSubnav(root);
 
     root.querySelectorAll('[data-authgate-theme]').forEach(function (button) {
       button.addEventListener('click', function () {

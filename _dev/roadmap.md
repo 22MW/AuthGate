@@ -48,11 +48,13 @@
 
 - Fase 1 validada, commiteada y pusheada: shell admin 22MW, header, menú horizontal tipo landing y dark/light por `localStorage`.
 - Fase 1 excluye frontend público, guardados, AJAX nuevo, submenús internos, switches avanzados y site-level multisite.
-- Fase 2 implementada localmente: componentes visuales, formularios, switches, botones, tablas y notices con estilo 22MW; sin cambiar lógica funcional.
-- Fase 3 futura: submenús verticales internos.
+- Fase 2 validada, commiteada y pusheada: componentes visuales, formularios, switches, botones, tablas y notices con estilo 22MW; sin cambiar lógica funcional.
+- Fase 3 preparada: submenús verticales internos por pantalla, sin AJAX y con navegación local por anclas/JS.
 - Fase 4 futura: carga dinámica por AJAX admin si aporta.
 
-- Fase 2B implementada localmente: selector buscable de páginas excluidas con chips removibles; mantiene guardado actual `excluded_pages[]`.
+- Fase 2B incluida en commit/push: selector buscable de páginas excluidas con chips removibles; mantiene guardado actual `excluded_pages[]`.
+
+- Fase 3 implementada localmente en General: submenú vertical interno por anclas/JS; pendiente validar antes de extender a otras pantallas.
 
 ## Bloqueado
 

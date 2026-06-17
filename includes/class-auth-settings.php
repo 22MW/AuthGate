@@ -541,8 +541,21 @@ CSS;
             <input type="hidden" name="action" value="authgate_save">
             <?php wp_nonce_field('authgate_save', '_authgate_nonce'); ?>
 
+            <div class="authgate-back-section-layout" data-authgate-subnav>
+                <aside class="authgate-back-subnav" aria-label="<?php echo esc_attr__('Opciones generales', 'authgate'); ?>">
+                    <a href="#authgate-section-rate" class="is-active"><?php esc_html_e('Rate limiting', 'authgate'); ?></a>
+                    <a href="#authgate-section-registration"><?php esc_html_e('Registro', 'authgate'); ?></a>
+                    <?php if (!self::is_network()) : ?>
+                        <a href="#authgate-section-exclusions"><?php esc_html_e('Exclusiones', 'authgate'); ?></a>
+                    <?php endif; ?>
+                    <a href="#authgate-section-urls"><?php esc_html_e('URLs y login', 'authgate'); ?></a>
+                    <?php if (!self::is_network()) : ?>
+                        <a href="#authgate-section-mailmint"><?php esc_html_e('Mail Mint', 'authgate'); ?></a>
+                    <?php endif; ?>
+                </aside>
+                <div class="authgate-back-section-content">
             <!-- Rate limiting -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-rate" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Rate limiting', 'authgate'); ?></h2>
                 <table class="form-table">
                     <tr>
@@ -556,7 +569,7 @@ CSS;
             </div>
 
             <!-- Registro -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-registration" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Registro de usuarios', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
@@ -589,7 +602,7 @@ CSS;
 
             <?php if (!self::is_network()) : ?>
             <!-- Exclusiones -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-exclusions" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Exclusiones', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('El plugin intercepta automáticamente cualquier página que requiera login y muestra su formulario. Marca aquí las páginas donde NO debe actuar (quedará el comportamiento nativo de WP/WooCommerce).', 'authgate'); ?>
@@ -628,7 +641,7 @@ CSS;
             <?php endif; ?>
 
             <!-- URLs personalizadas -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-urls" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('URLs personalizadas', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('Sustituye wp-login.php por tus propias URLs. Guarda y luego visita Ajustes › Permalinks para activar los cambios.', 'authgate'); ?>
@@ -723,7 +736,7 @@ CSS;
 
             <?php if (!self::is_network()) : ?>
             <!-- Mail Mint -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-mailmint" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Mail Mint — Suscripción al registro', 'authgate'); ?></h2>
                 <?php if (!class_exists('Mint\MRM\DataBase\Models\ContactGroupModel')) : ?>
                     <p><?php esc_html_e('Mail Mint no está activo.', 'authgate'); ?></p>
@@ -757,6 +770,8 @@ CSS;
             </div>
             <?php endif; // !is_network ?>
 
+                </div>
+            </div>
             <?php submit_button(__('Guardar ajustes', 'authgate')); ?>
         </form>
         <script>
@@ -822,39 +837,40 @@ CSS;
             <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Textos del formulario', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;"><?php esc_html_e('Estos textos se guardan desde esta pestaña de forma independiente al resto de ajustes.', 'authgate'); ?></p>
-                <table class="form-table">
+                <div class="authgate-strings-grid">
                     <?php foreach ($string_defs as $key => $default) :
                         $is_wysiwyg  = in_array($key, $wysiwyg_keys, true);
                         $is_textarea = !$is_wysiwyg && in_array($key, $textarea_keys, true);
+                        $field_class = ($is_wysiwyg || $is_textarea) ? ' authgate-string-field--wide' : '';
                         ?>
-                        <tr>
-                            <th scope="row"><label for="authgate_str_<?php echo esc_attr($key); ?>"><code><?php echo esc_html($key); ?></code></label></th>
-                            <td>
-                                <?php if ($is_wysiwyg) :
-                                    wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
-                                        'textarea_name' => 'strings[' . $key . ']',
-                                        'media_buttons' => false,
-                                        'teeny'         => true,
-                                        'editor_height' => 150,
-                                        'tinymce'       => array(
-                                            'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
-                                        ),
-                                    ));
-                                elseif ($is_textarea) : ?>
-                                    <textarea id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" style="width:440px;height:80px;"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
-                                <?php else : ?>
-                                    <input type="text" id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr(self::get_string($key)); ?>" style="width:440px;">
-                                <?php endif; ?>
-                                <?php if ($default !== '') : ?>
-                                    <p class="description"><?php esc_html_e('Por defecto:', 'authgate'); ?> <em><?php echo esc_html($default); ?></em></p>
-                                <?php endif; ?>
-                                <?php if ($key === 'field_gdpr') : ?>
-                                    <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
+                        <div class="authgate-string-field<?php echo esc_attr($field_class); ?>">
+                            <label for="authgate_str_<?php echo esc_attr($key); ?>">
+                                <code><?php echo esc_html($key); ?></code>
+                            </label>
+                            <?php if ($is_wysiwyg) :
+                                wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
+                                    'textarea_name' => 'strings[' . $key . ']',
+                                    'media_buttons' => false,
+                                    'teeny'         => true,
+                                    'editor_height' => 150,
+                                    'tinymce'       => array(
+                                        'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
+                                    ),
+                                ));
+                            elseif ($is_textarea) : ?>
+                                <textarea id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" rows="4"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
+                            <?php else : ?>
+                                <input type="text" id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr(self::get_string($key)); ?>">
+                            <?php endif; ?>
+                            <?php if ($default !== '') : ?>
+                                <p class="description"><?php esc_html_e('Por defecto:', 'authgate'); ?> <em><?php echo esc_html($default); ?></em></p>
+                            <?php endif; ?>
+                            <?php if ($key === 'field_gdpr') : ?>
+                                <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
+                            <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
-                </table>
+                </div>
             </div>
 
             <?php submit_button(__('Guardar textos', 'authgate')); ?>

@@ -52,7 +52,9 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 - Landing definitiva de trabajo en `_dev/comercial/authgate-landing.html` sigue en revisión visual.
 - Fase 1 validada, commiteada y pusheada: backend/admin AuthGate con shell visual `22mw-back`, menú horizontal y dark/light por `localStorage`.
 
-- Fase 2B implementada localmente: Exclusiones cambia de lista de switches a selector buscable con chips, manteniendo `excluded_pages[]`.
+- Fase 2/Fase 2B validada como bloque técnico, commiteada y pusheada: componentes visuales, switches, tablas, notices y selector buscable de Exclusiones.
+
+- Fase 3 implementada localmente en General: submenú vertical interno por anclas/JS, sin AJAX ni cambios de guardado.
 
 ## Bloqueado
 
@@ -60,7 +62,7 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 
 ## Próximo paso recomendado
 
-- Fase 2 implementada localmente: componentes visuales, formularios, switches, botones, tablas, notices y editores con estilo 22MW, sin tocar lógica funcional.
+- Preparar Fase 3 `22mw-back`: submenús verticales internos por sección, sin AJAX y sin cambiar guardado.
 
 ## No volver a investigar
 
