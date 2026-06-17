@@ -50,7 +50,9 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 - Landing comercial de trabajo creada en `_dev/comercial/landing-authgate.html`.
 - Web de desarrollo comercial definida: `https://22mw.online/`.
 - Landing definitiva de trabajo en `_dev/comercial/authgate-landing.html` sigue en revisión visual.
-- Fase 1 implementada localmente: backend/admin AuthGate con shell visual `22mw-back`, menú horizontal y dark/light por `localStorage`.
+- Fase 1 validada, commiteada y pusheada: backend/admin AuthGate con shell visual `22mw-back`, menú horizontal y dark/light por `localStorage`.
+
+- Fase 2B implementada localmente: Exclusiones cambia de lista de switches a selector buscable con chips, manteniendo `excluded_pages[]`.
 
 ## Bloqueado
 
@@ -58,7 +60,7 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 
 ## Próximo paso recomendado
 
-- Validar visualmente Fase 1 de `22mw-back` en Ajustes > AuthGate antes de avanzar a componentes/formularios.
+- Fase 2 implementada localmente: componentes visuales, formularios, switches, botones, tablas, notices y editores con estilo 22MW, sin tocar lógica funcional.
 
 ## No volver a investigar
 

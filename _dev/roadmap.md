@@ -46,11 +46,13 @@
 
 ### Backend/admin visual 22MW
 
-- Fase 1 implementada localmente: shell admin 22MW, header, menú horizontal tipo landing y dark/light por `localStorage`.
+- Fase 1 validada, commiteada y pusheada: shell admin 22MW, header, menú horizontal tipo landing y dark/light por `localStorage`.
 - Fase 1 excluye frontend público, guardados, AJAX nuevo, submenús internos, switches avanzados y site-level multisite.
-- Fase 2 futura: componentes, formularios y switches.
+- Fase 2 implementada localmente: componentes visuales, formularios, switches, botones, tablas y notices con estilo 22MW; sin cambiar lógica funcional.
 - Fase 3 futura: submenús verticales internos.
 - Fase 4 futura: carga dinámica por AJAX admin si aporta.
+
+- Fase 2B implementada localmente: selector buscable de páginas excluidas con chips removibles; mantiene guardado actual `excluded_pages[]`.
 
 ## Bloqueado
 

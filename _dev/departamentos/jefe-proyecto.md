@@ -16,6 +16,9 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 ## Hecho
 
+- Fase 2B implementada localmente: selector buscable para Exclusiones, sin tocar lógica de guardado.
+
+
 - P1 implementada y QA OK.
 - Popup `label` implementado y pusheado como `1.1.0.2`.
 - Decisiones funcionales pre-release consolidadas.
@@ -23,7 +26,7 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 ## Pendiente
 
-- Fase 1 `22mw-back` implementada localmente: shell admin, menú horizontal tipo landing y dark/light por `localStorage`.
+- Fase 1 `22mw-back` validada, commiteada y pusheada: shell admin, menú horizontal tipo landing y dark/light por `localStorage`.
 - Separar rediseño admin de frontend público y de cambios funcionales.
 - Mantener cada bloque separado para evitar mezclar riesgos.
 - Versionar dev por bloque si se hace push.
@@ -42,6 +45,6 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 ## Próximo paso recomendado
 
-- Validar Fase 1 en admin antes de pasar a Fase 2: componentes, formularios y switches.
+- Fase 2 implementada localmente: componentes visuales, formularios, switches, botones, tablas y notices. No se tocó lógica funcional ni AJAX tabs.
 
 - No usar `plan-funcionalidad` para rediseños backend/admin; usar `22mw-back` o `plan-backend-plugin` según el nivel de detalle.

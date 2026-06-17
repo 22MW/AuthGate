@@ -594,16 +594,35 @@ CSS;
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('El plugin intercepta automáticamente cualquier página que requiera login y muestra su formulario. Marca aquí las páginas donde NO debe actuar (quedará el comportamiento nativo de WP/WooCommerce).', 'authgate'); ?>
                 </p>
-                <div style="columns:2;column-gap:32px;">
-                    <?php foreach ($all_pages as $page) : ?>
-                        <label style="display:flex;align-items:center;gap:8px;padding:4px 0;break-inside:avoid;">
-                            <input type="checkbox"
-                                   name="excluded_pages[]"
-                                   value="<?php echo esc_attr($page->ID); ?>"
-                                   <?php checked(in_array($page->ID, $excluded_pages, true)); ?>>
-                            <?php echo esc_html($page->post_title); ?>
-                        </label>
-                    <?php endforeach; ?>
+                <div class="authgate-page-picker" data-authgate-page-picker>
+                    <label class="screen-reader-text" for="authgate_page_picker_search"><?php esc_html_e('Buscar página para excluir', 'authgate'); ?></label>
+                    <input type="search"
+                           id="authgate_page_picker_search"
+                           class="authgate-page-picker__search"
+                           placeholder="<?php echo esc_attr__('Empieza a escribir para buscar páginas…', 'authgate'); ?>"
+                           autocomplete="off"
+                           data-authgate-page-search>
+                    <div class="authgate-page-picker__results" data-authgate-page-results hidden>
+                        <?php foreach ($all_pages as $page) : ?>
+                            <button type="button"
+                                    class="authgate-page-picker__result"
+                                    data-page-id="<?php echo esc_attr($page->ID); ?>"
+                                    data-page-title="<?php echo esc_attr($page->post_title); ?>">
+                                <?php echo esc_html($page->post_title); ?>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="authgate-page-picker__selected" data-authgate-page-selected>
+                        <?php foreach ($all_pages as $page) : ?>
+                            <?php if (in_array($page->ID, $excluded_pages, true)) : ?>
+                                <span class="authgate-page-picker__chip" data-page-id="<?php echo esc_attr($page->ID); ?>">
+                                    <input type="hidden" name="excluded_pages[]" value="<?php echo esc_attr($page->ID); ?>">
+                                    <?php echo esc_html($page->post_title); ?>
+                                    <button type="button" aria-label="<?php echo esc_attr(sprintf(__('Quitar %s', 'authgate'), $page->post_title)); ?>" data-authgate-remove-page>×</button>
+                                </span>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>

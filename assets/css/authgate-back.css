@@ -469,3 +469,258 @@ body.settings_page_authgate #wpcontent {
   letter-spacing: -.02em;
   margin-top: 10px;
 }
+
+
+/* Fase 2 - componentes 22MW-BACK */
+.authgate-back__content .form-table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.authgate-back__content .form-table tr {
+  background: var(--ag-bg-soft);
+  border-radius: 18px;
+}
+
+.authgate-back__content .form-table th,
+.authgate-back__content .form-table td {
+  display: table-cell;
+  vertical-align: middle;
+  background: transparent !important;
+}
+
+.authgate-back__content .form-table th {
+  width: 230px;
+  padding-left: 18px;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+}
+
+.authgate-back__content .form-table td {
+  padding-right: 18px;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+.authgate-back input[type="text"],
+.authgate-back input[type="url"],
+.authgate-back input[type="number"],
+.authgate-back select,
+.authgate-back textarea {
+  min-height: 42px;
+  padding: 8px 13px !important;
+  font-size: 15px;
+}
+
+.authgate-back textarea {
+  line-height: 1.45;
+}
+
+.authgate-back input[type="checkbox"] {
+  accent-color: var(--ag-purple);
+}
+
+.authgate-back .authgate-back-switch {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 38px;
+  cursor: pointer;
+  color: var(--ag-text) !important;
+  font-weight: 700;
+}
+
+.authgate-back .authgate-back-switch input[type="checkbox"] {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+}
+
+.authgate-back .authgate-back-switch__track {
+  position: relative;
+  display: inline-flex;
+  width: 56px;
+  height: 32px;
+  flex: 0 0 56px;
+  border-radius: 999px;
+  background: var(--ag-bg-soft);
+  transition: background .2s ease;
+}
+
+.authgate-back .authgate-back-switch__track::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--ag-text-dim);
+  transition: transform .2s ease, background .2s ease;
+}
+
+.authgate-back .authgate-back-switch input[type="checkbox"]:checked + .authgate-back-switch__track {
+  background: var(--ag-purple);
+}
+
+.authgate-back .authgate-back-switch input[type="checkbox"]:checked + .authgate-back-switch__track::after {
+  transform: translateX(24px);
+  background: #0A0A0A;
+}
+
+.authgate-back .button,
+.authgate-back .button-primary,
+.authgate-back .submit .button {
+  min-height: 42px !important;
+  padding: 0 18px !important;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.authgate-back .button:hover,
+.authgate-back .button-primary:hover,
+.authgate-back .submit .button:hover {
+  transform: translateY(-1px);
+  opacity: .92;
+}
+
+.authgate-back .button-link-delete,
+.authgate-back .submitdelete {
+  color: var(--ag-red) !important;
+}
+
+.authgate-back .widefat,
+.authgate-back table.widefat {
+  border: 0 !important;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--ag-card) !important;
+  color: var(--ag-text) !important;
+}
+
+.authgate-back .widefat thead th,
+.authgate-back .widefat tfoot th {
+  background: var(--ag-bg-soft) !important;
+  color: var(--ag-text) !important;
+  border: 0 !important;
+  font-weight: 800;
+}
+
+.authgate-back .widefat td,
+.authgate-back .widefat th {
+  border-color: var(--ag-bg-soft) !important;
+  color: var(--ag-text-dim) !important;
+}
+
+.authgate-back .notice,
+.authgate-back .updated,
+.authgate-back .error {
+  padding: 14px 18px;
+}
+
+.authgate-back .notice-success,
+.authgate-back .updated {
+  box-shadow: inset 5px 0 0 var(--ag-green) !important;
+}
+
+.authgate-back .notice-error,
+.authgate-back .error {
+  box-shadow: inset 5px 0 0 var(--ag-red) !important;
+}
+
+.authgate-back .notice-warning {
+  box-shadow: inset 5px 0 0 var(--ag-amber) !important;
+}
+
+.authgate-back .CodeMirror,
+.authgate-back .wp-editor-container {
+  border: 0 !important;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--ag-bg-soft);
+}
+
+.authgate-back .wp-editor-tools,
+.authgate-back .quicktags-toolbar {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+
+.authgate-page-picker {
+  position: relative;
+  max-width: 720px;
+}
+
+.authgate-page-picker__search {
+  width: 100% !important;
+  min-height: 48px !important;
+  margin-bottom: 10px;
+}
+
+.authgate-page-picker__results {
+  position: absolute;
+  top: 58px;
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 18px;
+  background: var(--ag-card);
+  box-shadow: 0 24px 80px rgba(0,0,0,.35);
+  z-index: 30;
+}
+
+.authgate-page-picker__result {
+  display: flex;
+  width: 100%;
+  min-height: 38px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ag-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.authgate-page-picker__result:hover,
+.authgate-page-picker__result:focus {
+  background: var(--ag-bg-soft);
+  outline: none;
+}
+
+.authgate-page-picker__selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 38px;
+}
+
+.authgate-page-picker__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px 7px 12px;
+  border-radius: 999px;
+  background: rgba(127,139,236,.18);
+  color: var(--ag-text);
+  font-weight: 800;
+}
+
+.authgate-page-picker__chip button {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ag-purple);
+  color: #000;
+  cursor: pointer;
+  font-weight: 900;
+  line-height: 1;
+}
