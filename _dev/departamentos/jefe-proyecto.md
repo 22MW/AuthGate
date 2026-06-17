@@ -6,51 +6,45 @@
 
 ## Resumen humano
 
-Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 cerrada, popup `label` en dev `1.1.0.2` y un nuevo paquete de mejoras antes de release ordenado por bloques.
+AuthGate cerró y publicó release `1.2.0`. El bloque backend/admin 22MW quedó consolidado, con base `22mw-back` reutilizable y overrides específicos de AuthGate. El trabajo comercial permanece como interno en `_dev/` y fuera del release público.
 
 ## Descubierto
 
-- El usuario quiere varias mejoras antes de release, no preparar release todavía.
-- Las mejoras afectan frontend, admin, WYSIWYG, tabs y CSS propio.
-- El orden debe minimizar riesgo: primero UX simple, después WYSIWYG/tabs, CSS al final.
+- AuthGate funciona como piloto del sistema visual `22mw-back`.
+- El patrón correcto es base común `22mw-back.*` + overrides específicos por plugin.
+- `_dev/` puede vivir en `mishaAuthDev`, pero debe excluirse siempre de release/ZIP.
 
 ## Hecho
 
-- Fase 2/Fase 2B commiteada y pusheada: componentes visuales, switches, tablas, notices y selector buscable de Exclusiones.
-
-
-- P1 implementada y QA OK.
-- Popup `label` implementado y pusheado como `1.1.0.2`.
-- Decisiones funcionales pre-release consolidadas.
-- Roadmap por bloques A/B/C/D creado.
-
-- Fase 3 implementada localmente en General: submenú vertical interno sin AJAX ni cambios funcionales.
-
-- AuthGate sincronizado localmente con la base portable de la skill `22mw-back`; pendiente validar y commitear si procede.
-
-- Aplicada opción A: AuthGate usa clases/data attributes `mw22-back`; se evita mantener dos sistemas visuales paralelos.
+- Release `1.1.1` publicada previamente.
+- Fases 1, 2, 2B y 3 del backend/admin visual completadas.
+- Opción A aplicada: markup admin usa clases/data attributes `mw22-back`.
+- Duplicación de estilos eliminada entre base `22mw-back` y AuthGate.
+- Fondo blanco en Textos/Estilo modo oscuro corregido.
+- QA manual confirmado por el usuario.
+- Release `1.2.0` publicada en GitHub.
+- ZIP `authgate.zip` publicado para `v1.2.0`.
+- `visual.html`, `estado.md` y `roadmap.md` consolidados post-release.
 
 ## Pendiente
 
-- Fase 1 `22mw-back` validada, commiteada y pusheada: shell admin, menú horizontal tipo landing y dark/light por `localStorage`.
-- Separar rediseño admin de frontend público y de cambios funcionales.
-- Mantener cada bloque separado para evitar mezclar riesgos.
-- Versionar dev por bloque si se hace push.
+- Seguimiento post-release `1.2.0`.
+- Validar updater desde versión anterior si se quiere comprobar flujo real.
+- Mantener landing/comercial como trabajo interno hasta decisión de publicación.
 
 ## No volver a investigar
 
-- Siguiente bloque recomendado: Bloque A.
-- CSS propio queda al final por mayor riesgo.
-- Tab “Textos” debe guardar separado por tab.
-- WYSIWYG inline aplica a login, register y combined.
+- No usar `plan-funcionalidad` para rediseños backend/admin; usar `22mw-back` o `plan-backend-plugin`.
+- Fase 4 AJAX admin queda futura y no debe ejecutarse sin decisión nueva.
+- `_dev/` no debe entrar en rama `release` ni ZIP.
+- Comercial interno en `_dev/comercial/` no forma parte del plugin público.
 
 ## Riesgos o bloqueos
 
-- Release estable bloqueada hasta cerrar mejoras pre-release elegidas.
-- CSS propio requiere sanitización y editor tipo CodeMirror.
+- Updater no validado en esta tarea desde instalación real anterior.
+- AJAX admin tendría riesgo medio-alto por WP Editor, CodeMirror y guardados existentes.
 
 ## Próximo paso recomendado
 
-- Preparar Fase 3: submenús verticales internos por pantalla, sin AJAX tabs ni cambios de guardado.
-
-- No usar `plan-funcionalidad` para rediseños backend/admin; usar `22mw-back` o `plan-backend-plugin` según el nivel de detalle.
+- Si se continúa técnicamente: validar updater en entorno seguro.
+- Si se continúa comercialmente: preparar publicación externa de landing desde `_dev/comercial/`, sin mezclar con release del plugin.

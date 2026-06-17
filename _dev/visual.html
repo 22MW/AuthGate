@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AuthGate - Estado operativo</title>
   <style>
-    :root { color-scheme: dark; --ok: #2DBD8E; --warn: #F2A83B; --bad: #B33654; --bg: #0A0A0A; --card: #111111; --card2: #161616; --text: #F0EEE9; --muted: #9A9690; --line: #1E1E1E; --purple: #7F8BEC; }
+    :root { color-scheme: dark; --ok: #2DBD8E; --warn: #F2A83B; --bad: #B33654; --bg: #0A0A0A; --card: #111111; --text: #F0EEE9; --muted: #9A9690; --purple: #7F8BEC; }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at 20% 0%, rgba(127,139,236,.18), transparent 34%), var(--bg); color: var(--text); }
     main { max-width: 1180px; margin: 0 auto; padding: 36px 20px; }
@@ -13,8 +13,9 @@
     h1 { margin: 0 0 8px; font-size: clamp(34px, 5vw, 64px); line-height: .92; letter-spacing: -.06em; }
     h2 { margin: 0 0 14px; font-size: 22px; letter-spacing: -.02em; }
     h3 { margin: 0 0 8px; font-size: 18px; }
-    p { margin: 0 0 10px; color: var(--muted); }
+    p { margin: 0 0 10px; color: var(--muted); line-height: 1.5; }
     code { background: rgba(255,255,255,.06); border-radius: 6px; padding: 2px 6px; color: var(--text); }
+    a { color: var(--ok); }
     .muted { color: var(--muted); }
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .card { background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.025)); border-radius: 24px; padding: 20px; }
@@ -41,87 +42,95 @@
   <main>
     <header>
       <div>
-        <h1>AuthGate<br><em>22MW-BACK</em></h1>
+        <h1>AuthGate<br><em>1.2.0</em></h1>
         <p class="muted">Última actualización: 2026-06-17</p>
       </div>
-      <span class="badge purple">Fase 3 preparada</span>
+      <span class="badge ok">Release publicada</span>
     </header>
 
     <section class="grid">
       <article class="card wide">
         <h2>Resumen humano</h2>
-        <p>AuthGate mantiene release <code>1.1.1</code> publicada y prepara el siguiente bloque como piloto de backend visual <code>22mw-back</code>. Fase 1 y Fase 2 ya están commiteadas y pusheadas. El siguiente bloque preparado es Fase 3: submenús verticales internos sin AJAX y sin cambiar lógica funcional.</p>
+        <p>AuthGate tiene release pública <code>1.2.0</code> publicada en GitHub. La versión consolida el backend/admin visual 22MW, la base reusable <code>22mw-back</code>, dark/light, submenús verticales, selector buscable de exclusiones y la separación correcta entre estilos base y overrides específicos.</p>
+        <p><a href="https://github.com/22MW/AuthGate/releases/tag/v1.2.0">Release v1.2.0</a> · <a href="https://github.com/22MW/AuthGate/releases/download/v1.2.0/authgate.zip">authgate.zip</a></p>
       </article>
 
       <article class="card span2">
-        <h2>Fase 1 - Scope aprobado</h2>
+        <h2>Checklist release 1.2.0</h2>
         <ul class="checklist">
-          <li class="done">Shell visual admin 22MW.</li>
-          <li class="done">Header con branding AuthGate/22MW.</li>
-          <li class="done">Menú principal horizontal, inspirado en landing/web.</li>
-          <li class="done">Dark/light con <code>localStorage</code>.</li>
-          <li class="done">Tabs siguen por URL <code>?tab=</code>; AJAX queda para Fase 4.</li>
-          <li class="done">No aplicar todavía a pantalla site-level multisite.</li>
-          <li class="done">Fase 2: componentes, switches, tablas y selector de exclusiones.</li>
+          <li class="done">Versión actualizada a <code>1.2.0</code>.</li>
+          <li class="done"><code>CHANGELOG.md</code> actualizado.</li>
+          <li class="done"><code>readme.txt</code> actualizado con stable tag <code>1.2.0</code>.</li>
+          <li class="done">QA manual confirmado por el usuario.</li>
+          <li class="done">Rama <code>release</code> creada limpia.</li>
+          <li class="done">ZIP público generado sin <code>_dev/</code>.</li>
+          <li class="done">GitHub Release <code>v1.2.0</code> publicada.</li>
+          <li class="done">Rama <code>main</code> actualizada.</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>No tocar en Fase 1</h2>
+        <h2>No entra en release</h2>
         <ul>
-          <li>Frontend público.</li>
-          <li>Lógica de login/registro.</li>
-          <li>Guardados existentes.</li>
-          <li>AJAX nuevo de tabs.</li>
-          <li>Versionado/release.</li>
+          <li><code>_dev/</code></li>
+          <li><code>_dev/comercial/</code></li>
+          <li><code>.kilo/</code></li>
+          <li><code>.git/</code></li>
+          <li><code>.env</code> o tokens</li>
+          <li>logs, backups o dumps</li>
         </ul>
       </article>
 
       <article class="card wide">
         <h2>Fases 22MW-BACK</h2>
         <div class="flow">
-          <div><strong>1</strong><br>Shell + menú + dark/light</div>
-          <div><strong>2</strong><br>Componentes, formularios y switches</div>
-          <div><strong>3</strong><br>Submenús verticales internos preparado</div>
-          <div><strong>4</strong><br>Carga AJAX de secciones</div>
+          <div><strong>1</strong><br>Shell + menú + dark/light<br><span class="badge ok">cerrado</span></div>
+          <div><strong>2</strong><br>Componentes, formularios y switches<br><span class="badge ok">cerrado</span></div>
+          <div><strong>3</strong><br>Submenús verticales internos<br><span class="badge ok">cerrado</span></div>
+          <div><strong>4</strong><br>Carga AJAX de secciones<br><span class="badge warn">futuro</span></div>
         </div>
       </article>
 
       <article class="card wide">
         <h2>Áreas</h2>
         <div class="areas">
-          <div class="area"><strong>Funcional</strong><br><span class="badge ok">Cerrado 1.1.1</span></div>
-          <div class="area"><strong>Backend</strong><br><span class="badge warn">Fase 3 preparada</span></div>
-          <div class="area"><strong>Frontend</strong><br><span class="badge ok">No tocar</span></div>
-          <div class="area"><strong>AJAX admin</strong><br><span class="badge warn">Fase 4</span></div>
-          <div class="area"><strong>Dark/light</strong><br><span class="badge purple">localStorage</span></div>
-          <div class="area"><strong>Multisite site-level</strong><br><span class="badge warn">Fase 1B</span></div>
-          <div class="area"><strong>QA</strong><br><span class="badge warn">Pendiente</span></div>
-          <div class="area"><strong>Release</strong><br><span class="badge ok">Publicada</span></div>
+          <div class="area"><strong>Funcional</strong><br><span class="badge ok">estable</span></div>
+          <div class="area"><strong>Backend</strong><br><span class="badge ok">1.2.0</span></div>
+          <div class="area"><strong>Frontend</strong><br><span class="badge ok">sin cambios</span></div>
+          <div class="area"><strong>AJAX admin</strong><br><span class="badge warn">futuro</span></div>
+          <div class="area"><strong>Dark/light</strong><br><span class="badge ok">localStorage</span></div>
+          <div class="area"><strong>Multisite site-level</strong><br><span class="badge warn">pendiente futuro</span></div>
+          <div class="area"><strong>QA</strong><br><span class="badge ok">OK usuario</span></div>
+          <div class="area"><strong>Release</strong><br><span class="badge ok">publicada</span></div>
         </div>
       </article>
 
       <article class="card">
-        <h2>Archivos previstos</h2>
+        <h2>Archivos clave publicados</h2>
         <ul>
+          <li><code>authgate.php</code></li>
           <li><code>includes/class-auth-settings.php</code></li>
+          <li><code>assets/css/22mw-back.css</code></li>
           <li><code>assets/css/authgate-back.css</code></li>
+          <li><code>assets/js/22mw-back.js</code></li>
           <li><code>assets/js/authgate-back.js</code></li>
+          <li><code>CHANGELOG.md</code></li>
+          <li><code>readme.txt</code></li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>Riesgos</h2>
+        <h2>Riesgos abiertos</h2>
         <ul>
-          <li>Clase admin grande; evitar refactor.</li>
-          <li>WP Editor/CodeMirror pueden requerir ajuste visual posterior.</li>
-          <li>Multisite queda fuera de Fase 1 para reducir riesgo.</li>
+          <li>Updater no validado desde instalación real anterior en esta tarea.</li>
+          <li>AJAX admin sigue aplazado por riesgo con WP Editor/CodeMirror.</li>
+          <li>Comercial pendiente de publicación externa si se decide.</li>
         </ul>
       </article>
 
       <article class="card">
         <h2>Próximo paso</h2>
-        <p>Implementar Fase 3 solo si el usuario autoriza tocar código: submenús verticales internos por pantalla, sin AJAX y sin tocar guardado.</p>
+        <p>Seguimiento post-release <code>1.2.0</code>. Si se continúa técnicamente, validar updater en entorno seguro. Si se continúa comercialmente, trabajar desde <code>_dev/comercial/</code> sin mezclar con release público.</p>
       </article>
     </section>
   </main>

@@ -2,63 +2,31 @@
 
 ## Urgente
 
-- Seguimiento post-release `1.1.1`.
+- Seguimiento post-release `1.2.0`.
 
 ## Recomendado
 
-### Bloque A — bajo riesgo
-
-- Hecho y pusheado en dev `1.1.0.3`.
-- QA OK confirmado por el usuario.
-
-### Bloque B — riesgo medio
-
-- Hecho y pusheado en dev `1.1.0.4`.
-- Ajuste QA hecho y pusheado en dev `1.1.0.5`.
-- QA OK confirmado por el usuario.
-
-### Bloque C — riesgo medio
-
-- Hecho y listo para push en dev `1.1.0.6`.
-- QA OK confirmado por el usuario.
-
-### Bloque D — riesgo alto / ejecutar al final
-
-- Hecho local: CSS propio opcional desde admin.
-- Hecho local: checkbox de activación.
-- Hecho local: editor CodeMirror.
-- Hecho local: sanitización conservadora antes de guardar.
-- Hecho local: presets copiables blanco y oscuro.
-- Hecho local: preset blanco activo/cargado por defecto.
-- QA OK confirmado por el usuario.
-
-### Antes de release
-
-- Release GitHub `v1.1.1` publicada.
-- ZIP `authgate.zip` generado y subido.
-- Rama `main` actualizada.
+- Validar updater/instalación desde una versión anterior con el ZIP `1.2.0` en entorno seguro.
+- Revisar documentación pública solo si aparecen dudas de soporte tras la publicación.
+- Mantener la landing comercial interna en `_dev/comercial/` hasta decidir publicación externa.
 
 ## Futuro
 
-- Definir soporte explícito para proxy/CDN si se necesita confiar en cabeceras de IP.
-- Revisar documentación pública tras release si se detectan dudas de soporte.
-- Revisar documentación pública y changelog antes de release.
-
 ### Backend/admin visual 22MW
 
-- Fase 1 validada, commiteada y pusheada: shell admin 22MW, header, menú horizontal tipo landing y dark/light por `localStorage`.
-- Fase 1 excluye frontend público, guardados, AJAX nuevo, submenús internos, switches avanzados y site-level multisite.
-- Fase 2 validada, commiteada y pusheada: componentes visuales, formularios, switches, botones, tablas y notices con estilo 22MW; sin cambiar lógica funcional.
-- Fase 3 preparada: submenús verticales internos por pantalla, sin AJAX y con navegación local por anclas/JS.
-- Fase 4 futura: carga dinámica por AJAX admin si aporta.
+- Fase 4 futura: carga dinámica por AJAX admin solo si aporta valor real.
+- Extender el patrón `22mw-back` a otros plugins después de validar AuthGate como piloto.
+- Revisar site-level multisite si se decide dar soporte visual específico en una fase posterior.
 
-- Fase 2B incluida en commit/push: selector buscable de páginas excluidas con chips removibles; mantiene guardado actual `excluded_pages[]`.
+### Comercial
 
-- Fase 3 implementada localmente en General: submenú vertical interno por anclas/JS; pendiente validar antes de extender a otras pantallas.
+- Añadir pantallazos/GIFs reales a `_dev/comercial/`.
+- Decidir si la landing comercial pasa a `https://22mw.online/`.
+- Validar demanda antes de fijar pricing definitivo.
 
-- Sincronización local con base reusable `22mw-back`: assets base copiados al plugin y overrides específicos mantenidos en `authgate-back.*`.
+### Técnico
 
-- Duplicación de estilos base eliminada en AuthGate: base común en `22mw-back.*`, overrides específicos en `authgate-back.*`.
+- Definir soporte explícito para proxy/CDN si se necesita confiar en cabeceras de IP.
 
 ## Bloqueado
 
@@ -67,5 +35,16 @@
 
 ## Descartado
 
-- No hacer refactor general dentro de estas mejoras pre-release.
-- No mezclar release estable, tag o deploy con bloques pendientes.
+- No hacer refactor general dentro de estas mejoras.
+- No mezclar cambios comerciales internos con el ZIP/release público.
+- No incluir `_dev/`, `.kilo/`, secretos, logs ni backups en ZIP/release.
+- No avanzar con AJAX admin como “ya que estamos”.
+
+## Cerrado
+
+- Release `1.1.1` publicada.
+- Release `1.2.0` publicada.
+- Backend/admin visual 22MW Fases 1, 2, 2B y 3 consolidadas en `1.2.0`.
+- Base reusable `22mw-back` sincronizada dentro de AuthGate.
+- Duplicación de estilos base eliminada: base común en `22mw-back.*`, overrides específicos en `authgate-back.*`.
+- QA manual confirmado por el usuario antes de release `1.2.0`.
