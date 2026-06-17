@@ -10,7 +10,7 @@ Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.
 
 ## Descubierto
 
-- Script real de release: `deploy-release.sh`.
+- Script real de release: `_dev/deploy-release.sh`.
 - El script publica GitHub release, sube `authgate.zip`, mergea `release` en `main` y crea tag.
 - El script necesitaba excluir `_dev/` y `.kilo/` antes de crear rama/ZIP de release.
 
@@ -19,11 +19,13 @@ Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.
 - Versión estable preparada: `1.1.1`.
 - `readme.txt` preparado con `Stable tag: 1.1.1`.
 - `CHANGELOG.md` preparado con entrada `1.1.1`.
-- `deploy-release.sh` ajustado para excluir `_dev/` y `.kilo/`.
+- `_dev/deploy-release.sh` ajustado para excluir `_dev/` y `.kilo/`.
 - Bloques A/B/C/D consolidados para release.
 - GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.1.1`.
 - ZIP `authgate.zip` subido como asset.
 - Rama `main` actualizada.
+
+- Preparación `1.2.0`: versionado, changelog/readme y exclusión de `_dev/`/comercial revisados; pendiente commit/tag/release final.
 
 ## Pendiente
 
@@ -32,8 +34,9 @@ Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.
 ## No volver a investigar
 
 - `_dev/` y `.kilo/` no deben ir en ZIP/release pública.
-- `deploy-release.sh` requiere working tree limpio antes de ejecutarse.
-- `deploy-release.sh` requiere `GITHUB_TOKEN` disponible en `.env.local` o entorno.
+- `_dev/deploy-release.sh` requiere working tree limpio antes de ejecutarse.
+- `_dev/deploy-release.sh` requiere `GITHUB_TOKEN` disponible en `_dev/.env`, `.env.local` o entorno.
+- `_dev/.env` puede contener el token local, pero no debe incluirse en ZIP/release pública.
 
 ## Riesgos o bloqueos
 

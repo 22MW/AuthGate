@@ -4,7 +4,7 @@ Tags: login, register, authentication, access control, woocommerce
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,14 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 
 == Changelog ==
 
+= 1.2.0 =
+* Added the 22MW visual admin shell for the AuthGate settings area.
+* Added reusable 22MW admin CSS/JS base assets.
+* Added dark/light admin mode, horizontal navigation and vertical internal subnavigation.
+* Added searchable excluded-pages selector with removable chips.
+* Improved settings cards, controls, tables, CodeMirror styling and save notifications.
+* Normalized AuthGate admin CSS/JS so plugin-specific files only contain AuthGate-specific overrides.
+
 = 1.1.1 =
 * Added registration controls for native WordPress registration and WooCommerce generated passwords.
 * Added popup shortcode `label` and improved popup button class support.
@@ -114,6 +122,9 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 * Full i18n readiness (text domain `authgate`, `languages/` folder).
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Admin UI refresh and settings experience improvements. No migration required.
 
 = 1.0.0 =
 Initial release — no upgrade steps required.

@@ -4,11 +4,20 @@
 
 2026-06-16
 
+
+## Release 1.2.0 — 2026-06-17
+
+- Preparada versión estable `1.2.0` para consolidar el rediseño backend/admin 22MW.
+- Incluye shell visual 22MW, navegación horizontal, submenús verticales, dark/light, selector buscable de exclusiones y normalización `22mw-back`.
+- QA manual confirmado por el usuario antes de preparar release.
+- No entra contenido comercial en el ZIP/release público; todo lo comercial permanece en `_dev/` y debe quedar excluido.
+
 ## Release 1.1.1 — 2026-06-16
 
 - Consolidación de devs `1.1.0.1` a `1.1.0.7`.
 - Release production autorizado por el usuario.
 - `deploy-release.sh` revisado y ajustado para excluir `_dev/` y `.kilo/` del ZIP/rama release.
+- Script movido a `_dev/deploy-release.sh` y adaptado para leer `_dev/.env`.
 - Release publicada en GitHub: `https://github.com/22MW/AuthGate/releases/tag/v1.1.1`.
 - ZIP `authgate.zip` subido como asset.
 - Rama `main` actualizada.
@@ -69,7 +78,7 @@
 
 ## Entrará en la próxima release
 
-- Devs `1.1.0.1` a `1.1.0.7` pendientes de consolidar en versión estable cuando el usuario autorice release.
+- Release `1.2.0` pendiente de commit/tag/publicación cuando el usuario autorice el paso final.
 
 ## Queda fuera
 
@@ -87,7 +96,7 @@
 
 ## Riesgos antes de publicar
 
-- Release estable pendiente de autorización explícita.
+- Release `1.2.0` pendiente de autorización explícita para tag/publicación.
 - `_dev/` debe excluirse de cualquier ZIP/deploy público.
 
 ## Limpieza post-release

@@ -12,19 +12,27 @@ set -e
 #   5. Crea un ZIP con la carpeta authgate/ dentro
 #   6. Crea la release en GitHub y sube el ZIP como asset
 #
-# Requisito: GITHUB_TOKEN en .env.local (no se sube al repo)
-# Uso: cd .../authgate && ./deploy-release.sh
+# Requisito: GITHUB_TOKEN en _dev/.env, .env.local o variable de entorno
+# Uso recomendado: cd .../AuthGate && ./_dev/deploy-release.sh
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── Cargar token ──────────────────────────────────────────────────────────────
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_DIR"
+
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    export $(grep -v '^#' "$SCRIPT_DIR/.env" | xargs)
+fi
 
 if [ -f ".env.local" ]; then
     export $(grep -v '^#' ".env.local" | xargs)
 fi
 
 if [ -z "$GITHUB_TOKEN" ]; then
-    echo "Error: define GITHUB_TOKEN en .env.local"
-    echo "  echo 'GITHUB_TOKEN=ghp_xxx' > .env.local"
+    echo "Error: define GITHUB_TOKEN en _dev/.env, .env.local o variable de entorno"
+    echo "  echo 'GITHUB_TOKEN=ghp_xxx' > _dev/.env"
     exit 1
 fi
 
@@ -32,7 +40,6 @@ REPO="22MW/AuthGate"
 BRANCH_DEV="mishaAuthDev"
 BRANCH_RELEASE="release"
 PLUGIN_FOLDER="authgate"
-REPO_DIR="$(pwd)"
 
 # ── Leer versión del header del plugin ───────────────────────────────────────
 
