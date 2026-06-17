@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AuthGate - Acceso frontend profesional para tu web</title>
+  <style>
+    :root {
+      --bg: #f6f3ef;
+      --card: #ffffff;
+      --text: #18212f;
+      --muted: #667085;
+      --line: #e4ded7;
+      --accent: #7f8bec;
+      --accent-dark: #4f5fc7;
+      --soft: #eef0ff;
+      --dark: #111827;
+      --ok: #12805c;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    main { max-width: 1120px; margin: 0 auto; padding: 48px 20px 72px; }
+    section { margin: 28px 0; }
+    h1, h2, h3 { line-height: 1.15; margin: 0 0 16px; }
+    h1 { font-size: clamp(40px, 7vw, 76px); letter-spacing: -0.055em; max-width: 940px; }
+    h2 { font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.035em; }
+    h3 { font-size: 22px; }
+    p { margin: 0 0 16px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; padding: 7px 12px; border-radius: 999px; background: var(--soft); color: var(--accent-dark); font-weight: 700; font-size: 14px; }
+    .hero { padding: clamp(36px, 6vw, 72px); background: linear-gradient(135deg, #fff 0%, #f8f6ff 100%); border: 1px solid var(--line); border-radius: 36px; box-shadow: 0 24px 70px rgba(24, 33, 47, 0.08); }
+    .hero-subtitle { font-size: clamp(20px, 2.4vw, 28px); max-width: 760px; color: var(--muted); margin-bottom: 28px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; text-decoration: none; font-weight: 800; }
+    .btn-primary { background: var(--dark); color: #fff; }
+    .btn-secondary { background: #fff; color: var(--dark); border: 1px solid var(--line); }
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 28px; box-shadow: 0 8px 28px rgba(24, 33, 47, 0.05); }
+    .muted { color: var(--muted); }
+    .problem { background: #fff7f2; }
+    .solution { background: #f3f5ff; }
+    .list { margin: 0; padding: 0; list-style: none; }
+    .list li { margin: 12px 0; padding-left: 30px; position: relative; }
+    .list li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); position: absolute; left: 4px; top: 10px; }
+    .check li::before { content: "✓"; width: auto; height: auto; background: none; color: var(--ok); font-weight: 900; top: 0; }
+    .quote { font-size: clamp(24px, 3vw, 36px); line-height: 1.25; letter-spacing: -0.03em; }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .before { background: #fff; border-color: #f0c7c0; }
+    .after { background: #f0fff8; border-color: #bdebd4; }
+    .pill { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 13px; font-weight: 800; margin-bottom: 12px; }
+    .pill-bad { background: #fff0ed; color: #b42318; }
+    .pill-good { background: #e9fbf2; color: #087443; }
+    .feature-title { display: flex; align-items: center; gap: 10px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); flex: 0 0 auto; }
+    .cta { text-align: center; padding: clamp(36px, 6vw, 68px); background: var(--dark); color: #fff; border-radius: 36px; }
+    .cta p { color: rgba(255,255,255,.75); max-width: 720px; margin-left: auto; margin-right: auto; }
+    .small { font-size: 14px; }
+    @media (max-width: 820px) { .grid-2, .grid-3, .compare { grid-template-columns: 1fr; } .hero { border-radius: 26px; padding: 32px 22px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="eyebrow">AuthGate · Desarrollo comercial en 22mw.online</span>
+      <h1>El acceso a tu web también debería parecer parte de tu marca.</h1>
+      <p class="hero-subtitle">AuthGate convierte el login, registro y acceso restringido en una experiencia frontend cuidada, personalizable y coherente con el diseño de tu sitio.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#beneficios">Ver beneficios</a>
+        <a class="btn btn-secondary" href="#casos">Casos de uso</a>
+      </div>
+    </section>
+
+    <section class="grid grid-2">
+      <article class="card problem">
+        <h2>El problema</h2>
+        <p>Muchas webs están cuidadas hasta el último detalle… pero cuando el usuario tiene que iniciar sesión acaba en una pantalla fría, técnica o desconectada del diseño.</p>
+        <ul class="list">
+          <li>El login nativo rompe la experiencia visual.</li>
+          <li>Personalizar registro, textos y estilos suele requerir código.</li>
+          <li>Proteger páginas puede obligar a instalar sistemas demasiado grandes.</li>
+          <li>WooCommerce y el sistema de usuarios reparten ajustes de registro en varios sitios.</li>
+        </ul>
+      </article>
+      <article class="card solution">
+        <h2>La solución</h2>
+        <p>AuthGate centraliza la experiencia de acceso en formularios frontend bonitos, editables y preparados para integrarse con tu marca.</p>
+        <ul class="list check">
+          <li>Login, registro y recuperación desde el frontend.</li>
+          <li>Páginas protegidas sin enviar al usuario a pantallas técnicas.</li>
+          <li>Textos y estilos editables desde el panel.</li>
+          <li>Compatible con WooCommerce y flujos de cliente.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="beneficios">
+      <h2>Qué consigue AuthGate</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3 class="feature-title"><span class="dot"></span>Más confianza</h3>
+          <p class="muted">El usuario permanece en una experiencia visual coherente, sin saltar a pantallas que parecen ajenas a la web.</p>
+        </article>
+        <article class="card">
+          <h3 class="feature-title"><span class="dot"></span>Más control</h3>
+          <p class="muted">Puedes ajustar textos, registro, enlaces y estilo visual sin depender de snippets para cada cambio.</p>
+        </article>
+        <article class="card">
+          <h3 class="feature-title"><span class="dot"></span>Menos fricción</h3>
+          <p class="muted">Login, registro y recuperación se presentan de forma más clara, ordenada y adaptada al proyecto.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="card">
+      <p class="quote">“Tu web no termina en la home. También cuenta cómo el usuario entra, se registra y accede a su zona privada.”</p>
+    </section>
+
+    <section id="casos">
+      <h2>Ideal para</h2>
+      <div class="grid grid-3">
+        <article class="card"><h3>WooCommerce</h3><p class="muted">Mejora el acceso a la cuenta de cliente y controla mejor la experiencia de registro.</p></article>
+        <article class="card"><h3>Academias</h3><p class="muted">Crea un acceso más cuidado para alumnos, contenidos privados o zonas formativas.</p></article>
+        <article class="card"><h3>Membresías ligeras</h3><p class="muted">Protege páginas simples sin montar una estructura compleja de membership.</p></article>
+        <article class="card"><h3>Agencias</h3><p class="muted">Entrega a clientes una experiencia de login más profesional y fácil de reutilizar.</p></article>
+        <article class="card"><h3>Zonas cliente</h3><p class="muted">Mantén el acceso privado dentro de una experiencia alineada con la marca.</p></article>
+        <article class="card"><h3>Intranets simples</h3><p class="muted">Restringe contenido y presenta el acceso de forma limpia y directa.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Antes y después</h2>
+      <div class="compare">
+        <article class="card before">
+          <span class="pill pill-bad">Antes</span>
+          <h3>Acceso frío y técnico</h3>
+          <p class="muted">El usuario se encuentra con pantallas genéricas, textos poco cuidados y una experiencia que no parece parte del sitio.</p>
+        </article>
+        <article class="card after">
+          <span class="pill pill-good">Después</span>
+          <h3>Acceso integrado y personalizable</h3>
+          <p class="muted">Login, registro, recuperación y páginas protegidas aparecen como parte natural de la marca y del recorrido del usuario.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Funcionalidades explicadas sin complicaciones</h2>
+      <div class="grid grid-2">
+        <article class="card"><h3>Formularios frontend</h3><p class="muted">Login, registro y recuperación de contraseña sin depender de una pantalla técnica o genérica.</p></article>
+        <article class="card"><h3>Acceso restringido</h3><p class="muted">Cuando una página requiere iniciar sesión, AuthGate muestra una pantalla de acceso cuidada.</p></article>
+        <article class="card"><h3>Textos editables</h3><p class="muted">Cambia títulos, botones, mensajes y enlaces desde el panel de ajustes.</p></article>
+        <article class="card"><h3>Estilo visual propio</h3><p class="muted">Activa CSS personalizado, usa presets blanco/oscuro y adapta la apariencia a tu marca.</p></article>
+        <article class="card"><h3>WooCommerce</h3><p class="muted">Respeta flujos de cuenta de cliente y ajustes clave de registro.</p></article>
+        <article class="card"><h3>Shortcodes y popup</h3><p class="muted">Inserta formularios donde quieras y abre accesos en formato popup cuando encaje mejor.</p></article>
+      </div>
+    </section>
+
+    <section class="grid grid-2">
+      <article class="card">
+        <h2>Seguridad y control de acceso</h2>
+        <p>AuthGate ayuda a controlar cómo entran los usuarios y qué ven cuando intentan acceder a contenido privado.</p>
+        <ul class="list check">
+          <li>Protege páginas que requieren iniciar sesión.</li>
+          <li>Mantiene al usuario fuera de pantallas técnicas como <code>wp-login.php</code>.</li>
+          <li>Incluye protección antispam con campo oculto y tiempo mínimo de envío.</li>
+          <li>Añade límite de intentos para reducir accesos repetidos sospechosos.</li>
+          <li>Permite bloquear IPs desde el panel si hace falta.</li>
+          <li>Respeta el registro nativo del sitio y los ajustes clave de WooCommerce.</li>
+        </ul>
+        <p class="muted small">No promete sustituir una suite de seguridad completa. Su objetivo es mejorar y controlar la experiencia de acceso.</p>
+      </article>
+      <article class="card">
+        <h2>Personalización sin depender de código</h2>
+        <p>El administrador puede adaptar la experiencia de acceso desde el panel, sin pedir un cambio técnico para cada texto o ajuste visual.</p>
+        <ul class="list check">
+          <li>Cambiar títulos, botones, mensajes y enlaces.</li>
+          <li>Añadir un texto visual bajo el logo o cabecera.</li>
+          <li>Configurar logo, página de acceso y redirecciones.</li>
+          <li>Activar CSS propio desde el panel.</li>
+          <li>Usar presets blanco u oscuro como punto de partida.</li>
+          <li>Editar estilos de inputs, botones, espaciados y card de acceso.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Qué puede cambiar el usuario desde el panel</h2>
+      <div class="grid grid-3">
+        <article><h3>Textos</h3><p class="muted">Títulos, botones, mensajes de error, enlaces y textos legales del formulario.</p></article>
+        <article><h3>Registro</h3><p class="muted">Permitir o cerrar registro, y adaptar el comportamiento cuando WooCommerce está activo.</p></article>
+        <article><h3>Diseño</h3><p class="muted">Logo, texto introductorio, estilos personalizados, presets blanco/oscuro y apariencia de la card.</p></article>
+        <article><h3>Acceso</h3><p class="muted">Página personalizada de login, recuperación de contraseña y redirección tras iniciar sesión.</p></article>
+        <article><h3>Protección</h3><p class="muted">Experiencia visual para usuarios que intentan ver contenido privado sin iniciar sesión.</p></article>
+        <article><h3>Integraciones</h3><p class="muted">WooCommerce y Mail Mint cuando están presentes, sin obligar a usarlos.</p></article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Mensajes para campaña</h2>
+      <ul class="list check">
+        <li>Deja de enviar a tus usuarios a un login frío y desconectado de tu marca.</li>
+        <li>Convierte el acceso de tu web en una experiencia de marca.</li>
+        <li>Login, registro y páginas privadas sin romper el diseño de tu sitio.</li>
+        <li>Un acceso frontend profesional para WooCommerce, academias y zonas cliente.</li>
+        <li>Controla el acceso, los textos y el aspecto visual desde el panel.</li>
+        <li>Una zona privada más cuidada sin montar un sistema complejo.</li>
+      </ul>
+    </section>
+
+    <section class="cta">
+      <h2>AuthGate hace que entrar en tu web también se sienta profesional.</h2>
+      <p>Una solución para proyectos que necesitan acceso privado, registro frontend y una experiencia visual cuidada sin convertirlo todo en un sistema complejo.</p>
+      <div class="actions" style="justify-content:center;">
+        <a class="btn btn-secondary" href="https://22mw.online/">Ver desarrollo comercial</a>
+      </div>
+      <p class="small" style="margin-top:18px;">Landing comercial de trabajo para revisar y evolucionar en https://22mw.online/.</p>
+    </section>
+  </main>
+</body>
+</html>
