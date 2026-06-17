@@ -26,6 +26,10 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 - Fase 3 implementada localmente en General: submenú vertical interno sin AJAX ni cambios funcionales.
 
+- AuthGate sincronizado localmente con la base portable de la skill `22mw-back`; pendiente validar y commitear si procede.
+
+- Aplicada opción A: AuthGate usa clases/data attributes `mw22-back`; se evita mantener dos sistemas visuales paralelos.
+
 ## Pendiente
 
 - Fase 1 `22mw-back` validada, commiteada y pusheada: shell admin, menú horizontal tipo landing y dark/light por `localStorage`.

@@ -56,6 +56,10 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 
 - Fase 3 implementada localmente en General: submenú vertical interno por anclas/JS, sin AJAX ni cambios de guardado.
 
+- AuthGate sincronizado localmente con assets base de la skill `22mw-back`: `assets/css/22mw-back.css` y `assets/js/22mw-back.js`; overrides siguen en `authgate-back.*`.
+
+- AuthGate normalizado con opción A: markup backend usa base `.mw22-back*`; `authgate-back.css/js` quedan para piezas específicas.
+
 ## Bloqueado
 
 - No hay bloqueo de release abierto.

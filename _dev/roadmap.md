@@ -56,6 +56,10 @@
 
 - Fase 3 implementada localmente en General: submenú vertical interno por anclas/JS; pendiente validar antes de extender a otras pantallas.
 
+- Sincronización local con base reusable `22mw-back`: assets base copiados al plugin y overrides específicos mantenidos en `authgate-back.*`.
+
+- Duplicación de estilos base eliminada en AuthGate: base común en `22mw-back.*`, overrides específicos en `authgate-back.*`.
+
 ## Bloqueado
 
 - Ningún bloqueo de release abierto.

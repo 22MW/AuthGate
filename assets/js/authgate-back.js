@@ -1,34 +1,4 @@
 (function () {
-  function applyTheme(root, theme) {
-    root.setAttribute('data-theme', theme);
-    root.querySelectorAll('[data-authgate-theme]').forEach(function (button) {
-      button.classList.toggle('is-active', button.getAttribute('data-authgate-theme') === theme);
-    });
-  }
-
-
-
-  function enhanceSwitches(root) {
-    root.querySelectorAll('label input[type="checkbox"]').forEach(function (input) {
-      var label = input.closest('label');
-
-      if (!label || label.classList.contains('authgate-back-switch')) {
-        return;
-      }
-
-      if (label.querySelector('.authgate-back-switch__track')) {
-        return;
-      }
-
-      var track = document.createElement('span');
-      track.className = 'authgate-back-switch__track';
-      input.insertAdjacentElement('afterend', track);
-      label.classList.add('authgate-back-switch');
-    });
-  }
-
-
-
   function enhancePagePicker(root) {
     var picker = root.querySelector('[data-authgate-page-picker]');
 
@@ -102,124 +72,20 @@
       renderResults();
     });
 
-
-
-  function enhanceSubnav(root) {
-    root.querySelectorAll('[data-authgate-subnav]').forEach(function (layout) {
-      var links = Array.prototype.slice.call(layout.querySelectorAll('.authgate-back-subnav a'));
-      var sections = links.map(function (link) {
-        return document.querySelector(link.getAttribute('href'));
-      }).filter(Boolean);
-
-      links.forEach(function (link) {
-        link.addEventListener('click', function (event) {
-          var target = document.querySelector(link.getAttribute('href'));
-
-          if (!target) {
-            return;
-          }
-
-          event.preventDefault();
-          links.forEach(function (item) { item.classList.remove('is-active'); });
-          link.classList.add('is-active');
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      });
-
-      if (!('IntersectionObserver' in window) || !sections.length) {
-        return;
-      }
-
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          links.forEach(function (link) {
-            link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
-          });
-        });
-      }, { rootMargin: '-20% 0px -65% 0px', threshold: 0.01 });
-
-      sections.forEach(function (section) {
-        observer.observe(section);
-      });
-    });
-  }
-
-  document.addEventListener('click', function (event) {
+    document.addEventListener('click', function (event) {
       if (!picker.contains(event.target)) {
         results.hidden = true;
       }
     });
   }
 
-
-
-  function enhanceSubnav(root) {
-    root.querySelectorAll('[data-authgate-subnav]').forEach(function (layout) {
-      var links = Array.prototype.slice.call(layout.querySelectorAll('.authgate-back-subnav a'));
-      var sections = links.map(function (link) {
-        return document.querySelector(link.getAttribute('href'));
-      }).filter(Boolean);
-
-      links.forEach(function (link) {
-        link.addEventListener('click', function (event) {
-          var target = document.querySelector(link.getAttribute('href'));
-
-          if (!target) {
-            return;
-          }
-
-          event.preventDefault();
-          links.forEach(function (item) { item.classList.remove('is-active'); });
-          link.classList.add('is-active');
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      });
-
-      if (!('IntersectionObserver' in window) || !sections.length) {
-        return;
-      }
-
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          links.forEach(function (link) {
-            link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
-          });
-        });
-      }, { rootMargin: '-20% 0px -65% 0px', threshold: 0.01 });
-
-      sections.forEach(function (section) {
-        observer.observe(section);
-      });
-    });
-  }
-
   document.addEventListener('DOMContentLoaded', function () {
-    var root = document.querySelector('[data-authgate-back]');
+    var root = document.querySelector('[data-mw22-back].authgate-back');
 
     if (!root) {
       return;
     }
 
-    var stored = window.localStorage.getItem('authgateBackTheme') || 'dark';
-    applyTheme(root, stored);
-    enhanceSwitches(root);
     enhancePagePicker(root);
-    enhanceSubnav(root);
-
-    root.querySelectorAll('[data-authgate-theme]').forEach(function (button) {
-      button.addEventListener('click', function () {
-        var theme = button.getAttribute('data-authgate-theme') || 'dark';
-        window.localStorage.setItem('authgateBackTheme', theme);
-        applyTheme(root, theme);
-      });
-    });
   });
 })();

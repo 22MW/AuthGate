@@ -103,15 +103,28 @@ class AuthGate_Settings {
         $version   = '1.1.1';
 
         wp_enqueue_style(
-            'authgate-back',
-            $asset_url . 'assets/css/authgate-back.css',
+            'mw22-back',
+            $asset_url . 'assets/css/22mw-back.css',
             array(),
             $version
+        );
+        wp_enqueue_style(
+            'authgate-back',
+            $asset_url . 'assets/css/authgate-back.css',
+            array('mw22-back'),
+            $version
+        );
+        wp_enqueue_script(
+            'mw22-back',
+            $asset_url . 'assets/js/22mw-back.js',
+            array(),
+            $version,
+            true
         );
         wp_enqueue_script(
             'authgate-back',
             $asset_url . 'assets/js/authgate-back.js',
-            array(),
+            array('mw22-back'),
             $version,
             true
         );
@@ -468,10 +481,10 @@ CSS;
 
         $tab = sanitize_key($_GET['tab'] ?? 'general');
         ?>
-        <div class="authgate-back" data-authgate-back>
-            <header class="authgate-back__header">
-                <a class="authgate-back__brand" href="https://22mw.online/" target="_blank" rel="noopener noreferrer">
-                    <span class="authgate-back__mark" aria-hidden="true">
+        <div class="mw22-back authgate-back" data-mw22-back data-mw22-theme-key="authgateBackTheme" data-mw22-updated-message="Ajustes guardados.">
+            <header class="mw22-back__header">
+                <a class="mw22-back__brand" href="https://22mw.online/" target="_blank" rel="noopener noreferrer">
+                    <span class="mw22-back__mark" aria-hidden="true">
                         <svg viewBox="0 0 45 56" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <polygon points="0 20 44.9189011 20 44.9189011 15 4.48417582 15 4.48417582 12.5 44.9189011 12.5 45 12.5 45 0 0.0810989011 0 0.0810989011 5 40.5168132 5 40.5168132 7.5 0 7.5 0 20"/>
                             <polygon points="0.0810989011 42 44.9189011 42 44.9189011 37 4.48417582 37 4.48417582 34.5 45 34.5 45 22 0.0810989011 22 0.0810989011 27 40.5168132 27 40.5168132 29.5 0 29.5 0 42"/>
@@ -479,18 +492,18 @@ CSS;
                             <polygon transform="translate(34.5,50) rotate(-180) translate(-34.5,-50)" points="24 44 24 56 29.372093 56 29.372093 48.8 31.8139535 48.8 31.8139535 56 37.1860465 56 37.1860465 48.8 39.627907 48.8 39.627907 56 45 56 45 44"/>
                         </svg>
                     </span>
-                    <div class="authgate-back__title-row">
+                    <div class="mw22-back__title-row">
                         <h1><?php esc_html_e('AuthGate', 'authgate'); ?></h1>
-                        <span class="authgate-back__version"><?php echo esc_html__('by 22mw.online', 'authgate') . ' · v' . esc_html(get_file_data(dirname(__DIR__) . '/authgate.php', array('Version' => 'Version'))['Version']); ?></span>
+                        <span class="mw22-back__version"><?php echo esc_html__('by 22mw.online', 'authgate') . ' · v' . esc_html(get_file_data(dirname(__DIR__) . '/authgate.php', array('Version' => 'Version'))['Version']); ?></span>
                     </div>
                 </a>
-                <div class="authgate-back__actions">
-                    <button type="button" class="authgate-back__theme" data-authgate-theme="dark"><?php esc_html_e('Oscuro', 'authgate'); ?></button>
-                    <button type="button" class="authgate-back__theme" data-authgate-theme="light"><?php esc_html_e('Claro', 'authgate'); ?></button>
+                <div class="mw22-back__actions">
+                    <button type="button" class="mw22-back__theme" data-mw22-back-theme="dark"><?php esc_html_e('Oscuro', 'authgate'); ?></button>
+                    <button type="button" class="mw22-back__theme" data-mw22-back-theme="light"><?php esc_html_e('Claro', 'authgate'); ?></button>
                 </div>
             </header>
 
-            <nav class="authgate-back__menu" aria-label="<?php echo esc_attr__('Secciones de AuthGate', 'authgate'); ?>">
+            <nav class="mw22-back__menu" aria-label="<?php echo esc_attr__('Secciones de AuthGate', 'authgate'); ?>">
                 <?php
                 $tabs = array(
                     'general'    => __('General', 'authgate'),
@@ -504,13 +517,13 @@ CSS;
                     $active = $tab === $slug ? 'is-active' : '';
                     $url    = add_query_arg(array('page' => 'authgate', 'tab' => $slug), self::settings_base_url());
                     ?>
-                    <a href="<?php echo esc_url($url); ?>" class="authgate-back__menu-item <?php echo esc_attr($active); ?>">
+                    <a href="<?php echo esc_url($url); ?>" class="mw22-back__menu-item <?php echo esc_attr($active); ?>">
                         <span><?php echo esc_html($label); ?></span>
                     </a>
                 <?php endforeach; ?>
             </nav>
 
-            <main class="authgate-back__content">
+            <main class="mw22-back__content">
             <?php
             if ($tab === 'general') {
                 $this->render_tab_general();
@@ -541,8 +554,8 @@ CSS;
             <input type="hidden" name="action" value="authgate_save">
             <?php wp_nonce_field('authgate_save', '_authgate_nonce'); ?>
 
-            <div class="authgate-back-section-layout" data-authgate-subnav>
-                <aside class="authgate-back-subnav" aria-label="<?php echo esc_attr__('Opciones generales', 'authgate'); ?>">
+            <div class="mw22-back-section-layout" data-mw22-back-subnav>
+                <aside class="mw22-back-subnav" aria-label="<?php echo esc_attr__('Opciones generales', 'authgate'); ?>">
                     <a href="#authgate-section-rate" class="is-active"><?php esc_html_e('Rate limiting', 'authgate'); ?></a>
                     <a href="#authgate-section-registration"><?php esc_html_e('Registro', 'authgate'); ?></a>
                     <?php if (!self::is_network()) : ?>
@@ -553,9 +566,9 @@ CSS;
                         <a href="#authgate-section-mailmint"><?php esc_html_e('Mail Mint', 'authgate'); ?></a>
                     <?php endif; ?>
                 </aside>
-                <div class="authgate-back-section-content">
+                <div class="mw22-back-section-content">
             <!-- Rate limiting -->
-            <div id="authgate-section-rate" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-rate" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Rate limiting', 'authgate'); ?></h2>
                 <table class="form-table">
                     <tr>
@@ -569,7 +582,7 @@ CSS;
             </div>
 
             <!-- Registro -->
-            <div id="authgate-section-registration" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-registration" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Registro de usuarios', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
@@ -602,7 +615,7 @@ CSS;
 
             <?php if (!self::is_network()) : ?>
             <!-- Exclusiones -->
-            <div id="authgate-section-exclusions" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-exclusions" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Exclusiones', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('El plugin intercepta automáticamente cualquier página que requiera login y muestra su formulario. Marca aquí las páginas donde NO debe actuar (quedará el comportamiento nativo de WP/WooCommerce).', 'authgate'); ?>
@@ -641,7 +654,7 @@ CSS;
             <?php endif; ?>
 
             <!-- URLs personalizadas -->
-            <div id="authgate-section-urls" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-urls" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('URLs personalizadas', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('Sustituye wp-login.php por tus propias URLs. Guarda y luego visita Ajustes › Permalinks para activar los cambios.', 'authgate'); ?>
@@ -736,7 +749,7 @@ CSS;
 
             <?php if (!self::is_network()) : ?>
             <!-- Mail Mint -->
-            <div id="authgate-section-mailmint" class="authgate-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-mailmint" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Mail Mint — Suscripción al registro', 'authgate'); ?></h2>
                 <?php if (!class_exists('Mint\MRM\DataBase\Models\ContactGroupModel')) : ?>
                     <p><?php esc_html_e('Mail Mint no está activo.', 'authgate'); ?></p>
@@ -814,7 +827,7 @@ CSS;
             });
 
             function authgateToast(msg, type) {
-                var $t = $('<div class="authgate-admin-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
+                var $t = $('<div class="mw22-back-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
                 $('body').append($t);
                 setTimeout(function(){ $t.addClass('is-hiding'); }, 2800);
                 setTimeout(function(){ $t.remove(); }, 3200);
@@ -1510,7 +1523,7 @@ CSS;
                         .finally(function(){ $btn.prop('disabled', false); });
                 });
                 function authgateSiteToast(msg, type) {
-                    var $t = $('<div class="authgate-admin-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
+                    var $t = $('<div class="mw22-back-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
                     $('body').append($t);
                     setTimeout(function(){ $t.addClass('is-hiding'); }, 2800);
                     setTimeout(function(){ $t.remove(); }, 3200);

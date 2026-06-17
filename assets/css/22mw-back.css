@@ -1,0 +1,440 @@
+/*
+ * 22MW-BACK base CSS
+ * Copiar a cada plugin como assets/css/22mw-back.css y extender con CSS propio del plugin.
+ * Mantener este archivo como base común portable.
+ */
+
+:root {
+  --mw22-bg: #0a0a0a;
+  --mw22-bg-elev: #111111;
+  --mw22-card: #151515;
+  --mw22-bg-soft: rgba(255, 255, 255, 0.065);
+  --mw22-text: #f0eee9;
+  --mw22-text-dim: #9a9690;
+  --mw22-text-mute: #6a665f;
+  --mw22-purple: #7f8bec;
+  --mw22-green: #2dbd8e;
+  --mw22-amber: #f2a83b;
+  --mw22-red: #b33654;
+  --mw22-font:
+    "Afacad", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --mw22-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --mw22-max: 1000px;
+}
+
+.mw22-back {
+  width: auto;
+  max-width: none;
+  min-height: calc(100vh - 72px);
+  margin: 0;
+  padding: 34px clamp(20px, 4vw, 56px);
+  overflow-x: visible;
+  border-radius: 0;
+  color: var(--mw22-text);
+  background: var(--mw22-bg);
+  font-family: var(--mw22-font);
+  font-size: 16px;
+}
+
+.mw22-back[data-theme="light"] {
+  --mw22-bg: #f6f3ef;
+  --mw22-bg-elev: #ffffff;
+  --mw22-card: #ffffff;
+  --mw22-bg-soft: rgba(10, 10, 10, 0.06);
+  --mw22-text: #111827;
+  --mw22-text-dim: #667085;
+  --mw22-text-mute: #8a8178;
+}
+
+.mw22-back * {
+  box-sizing: border-box;
+}
+
+.mw22-back__header,
+.mw22-back__menu,
+.mw22-back__content {
+  width: min(100%, var(--mw22-max));
+  max-width: var(--mw22-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mw22-back__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.mw22-back__brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.mw22-back__brand:hover,
+.mw22-back__brand:focus {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+.mw22-back__mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background: var(--mw22-text);
+  color: var(--mw22-bg);
+  font-family: var(--mw22-mono);
+  font-weight: 800;
+}
+
+.mw22-back__mark svg {
+  width: 32px;
+  height: 40px;
+  display: block;
+}
+
+.mw22-back__title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mw22-back h1 {
+  margin: 0;
+  color: var(--mw22-text);
+  font-size: clamp(34px, 4vw, 65px);
+  line-height: 0.92;
+  font-weight: 100;
+}
+
+.mw22-back__version {
+  display: inline-flex;
+  align-items: center;
+  min-height: 27px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--mw22-purple);
+  color: #000000;
+  font-family: var(--mw22-mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-top: 10px;
+}
+
+.mw22-back__actions {
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--mw22-bg-soft);
+}
+
+.mw22-back__theme {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--mw22-text-dim);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.mw22-back__theme.is-active {
+  background: var(--mw22-text);
+  color: var(--mw22-bg);
+}
+
+.mw22-back__menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 auto 22px;
+}
+
+.mw22-back__menu-item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--mw22-bg-soft);
+  color: var(--mw22-text-dim);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 800;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.mw22-back__menu-item:hover,
+.mw22-back__menu-item:focus {
+  color: var(--mw22-text);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.mw22-back__menu-item.is-active {
+  background: var(--mw22-purple);
+  color: #0a0a0a;
+}
+
+.mw22-back__content {
+  width: min(100%, var(--mw22-max));
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.mw22-back__panel,
+.mw22-back__content form > div:not(.mw22-back-section-layout),
+.mw22-back__content > div:not(.mw22-back-section-layout) {
+  max-width: var(--mw22-max);
+  padding: 24px;
+  margin-bottom: 18px;
+  border: 0;
+  border-radius: 24px;
+  background: var(--mw22-card);
+  box-shadow: none;
+}
+
+.mw22-back h2,
+.mw22-back h3 {
+  color: var(--mw22-text);
+  letter-spacing: -0.035em;
+}
+
+.mw22-back h2 {
+  font-size: clamp(26px, 2.4vw, 38px);
+  line-height: 1;
+}
+
+.mw22-back h3 {
+  font-size: clamp(20px, 1.7vw, 28px);
+  line-height: 1.05;
+}
+
+.mw22-back__content h2 {
+  color: var(--mw22-purple);
+}
+
+.mw22-back__content h3 {
+  color: var(--mw22-green);
+}
+
+.mw22-back p,
+.mw22-back .description {
+  color: var(--mw22-text-dim);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.mw22-back input[type="text"],
+.mw22-back input[type="url"],
+.mw22-back input[type="number"],
+.mw22-back input[type="search"],
+.mw22-back select,
+.mw22-back textarea {
+  min-height: 42px;
+  padding: 8px 13px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--mw22-bg-soft);
+  color: var(--mw22-text);
+  box-shadow: none;
+  font-size: 15px;
+}
+
+.mw22-back .button,
+.mw22-back .button-primary,
+.mw22-back__button {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mw22-text);
+  color: var(--mw22-bg);
+  font-weight: 800;
+  box-shadow: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mw22-back .button:hover,
+.mw22-back .button-primary:hover,
+.mw22-back__button:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.mw22-back-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 38px;
+  cursor: pointer;
+  color: var(--mw22-text);
+  font-weight: 700;
+}
+
+.mw22-back-switch input[type="checkbox"] {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+}
+
+.mw22-back-switch__track {
+  position: relative;
+  display: inline-flex;
+  width: 56px;
+  height: 32px;
+  flex: 0 0 56px;
+  border-radius: 999px;
+  background: var(--mw22-bg-soft);
+  transition: background 0.2s ease;
+}
+
+.mw22-back-switch__track::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--mw22-text-dim);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.mw22-back-switch input[type="checkbox"]:checked + .mw22-back-switch__track {
+  background: var(--mw22-purple);
+}
+
+.mw22-back-switch input[type="checkbox"]:checked + .mw22-back-switch__track::after {
+  transform: translateX(24px);
+  background: #0a0a0a;
+}
+
+.mw22-back-section-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  overflow: visible;
+}
+
+.mw22-back-subnav {
+  position: sticky;
+  top: 100px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 24px;
+  background: var(--mw22-card);
+}
+
+.mw22-back-subnav a {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--mw22-text-dim);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.mw22-back-subnav a:hover,
+.mw22-back-subnav a:focus {
+  color: var(--mw22-text);
+  outline: none;
+}
+
+.mw22-back-subnav a.is-active {
+  background: var(--mw22-purple);
+  color: #0a0a0a;
+}
+
+.mw22-back-section-content {
+  min-width: 0;
+  overflow: visible;
+}
+
+.mw22-back-section {
+  scroll-margin-top: 36px;
+}
+
+.mw22-back-toast {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  left: auto;
+  transform: none;
+  max-width: 420px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--mw22-card);
+  color: var(--mw22-text);
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: nowrap;
+  z-index: 20;
+  box-shadow: inset 5px 0 0 var(--mw22-green), 0 18px 60px rgba(0, 0, 0, 0.35);
+  animation: mw22-back-toast-in 0.2s ease;
+  transition: opacity 0.35s;
+}
+
+.mw22-back-toast.is-error {
+  background: var(--mw22-red);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+}
+
+.mw22-back-toast.is-hiding {
+  opacity: 0;
+}
+
+@keyframes mw22-back-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 960px) {
+  .mw22-back-section-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .mw22-back-subnav {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 782px) {
+  .mw22-back {
+    padding: 24px 16px;
+  }
+
+  .mw22-back__header {
+    display: block;
+  }
+
+  .mw22-back__actions {
+    margin-top: 18px;
+  }
+}
