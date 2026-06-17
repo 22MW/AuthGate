@@ -1,0 +1,471 @@
+:root {
+  --ag-bg: #0A0A0A;
+  --ag-bg-elev: #111111;
+  --ag-card: #151515;
+  --ag-bg-soft: rgba(255,255,255,.065);
+  --ag-text: #F0EEE9;
+  --ag-text-dim: #9A9690;
+  --ag-text-mute: #6A665F;
+  --ag-purple: #7F8BEC;
+  --ag-green: #2DBD8E;
+  --ag-amber: #F2A83B;
+  --ag-red: #B33654;
+  --ag-font: 'Afacad', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ag-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+.authgate-back {
+  width: auto;
+  max-width: none;
+  min-height: calc(100vh - 72px);
+  margin: 0;
+  padding: 34px clamp(20px, 4vw, 56px);
+  overflow-x: hidden;
+  border-radius: 0;
+  color: var(--ag-text);
+  background: var(--ag-bg);
+  font-family: var(--ag-font);
+}
+
+.authgate-back[data-theme="light"] {
+  --ag-bg: #F6F3EF;
+  --ag-bg-elev: #FFFFFF;
+  --ag-card: #FFFFFF;
+  --ag-bg-soft: rgba(10,10,10,.06);
+  --ag-text: #111827;
+  --ag-text-dim: #667085;
+  --ag-text-mute: #8A8178;
+}
+
+body.settings_page_authgate #wpcontent {
+  padding-left: 0;
+}
+
+.authgate-back * { box-sizing: border-box; }
+
+.authgate-back__header,
+.authgate-back__menu,
+.authgate-back__content {
+  width: min(100%, 1000px);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.authgate-back__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.authgate-back__brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.authgate-back__mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background: var(--ag-text);
+  color: var(--ag-bg);
+  font-family: var(--ag-mono);
+  font-weight: 800;
+  letter-spacing: -.06em;
+}
+
+.authgate-back__eyebrow {
+  margin: 0 0 4px;
+  color: var(--ag-text-dim);
+  font-family: var(--ag-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.authgate-back h1 {
+  margin: 0;
+  color: var(--ag-text);
+  font-size: clamp(34px, 4vw, 65px);
+  line-height: .92;
+  font-weight: 100;
+}
+
+.authgate-back {
+  font-size: 16px;
+}
+
+.authgate-back h2,
+.authgate-back h3 {
+  color: var(--ag-text);
+  letter-spacing: -.035em;
+}
+
+.authgate-back h2 {
+  font-size: clamp(26px, 2.4vw, 38px);
+  line-height: 1;
+}
+
+.authgate-back h3 {
+  font-size: clamp(20px, 1.7vw, 28px);
+  line-height: 1.05;
+}
+
+.authgate-back__content h2 {
+  color: var(--ag-purple);
+}
+
+.authgate-back__content h3 {
+  color: var(--ag-green);
+}
+
+.authgate-back__actions {
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--ag-bg-soft);
+}
+
+.authgate-back__theme {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ag-text-dim);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.authgate-back__theme.is-active {
+  background: var(--ag-text);
+  color: var(--ag-bg);
+}
+
+.authgate-back__menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 auto 22px;
+}
+
+.authgate-back__menu-item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--ag-bg-soft);
+  color: var(--ag-text-dim);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 800;
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+
+.authgate-back__menu-item:hover,
+.authgate-back__menu-item:focus {
+  color: var(--ag-text);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.authgate-back__menu-item.is-active {
+  background: var(--ag-purple);
+  color: #0A0A0A;
+}
+
+.authgate-back__content {
+  width: min(100%, 1000px);
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.authgate-back__content form > div,
+.authgate-back__content > div {
+  max-width: 1000px;
+  border: 0 !important;
+  border-radius: 24px !important;
+  background: var(--ag-card) !important;
+  box-shadow: none !important;
+}
+
+.authgate-back__content > form,
+.authgate-back__content > div:not(.notice):not(.updated):not(.error) {
+  color: var(--ag-text);
+}
+
+.authgate-back .form-table th,
+.authgate-back .form-table td,
+.authgate-back .description,
+.authgate-back p {
+  color: var(--ag-text-dim);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.authgate-back .form-table th {
+  color: var(--ag-text);
+  font-size: 16px;
+}
+
+.authgate-back input[type="text"],
+.authgate-back input[type="url"],
+.authgate-back input[type="number"],
+.authgate-back select,
+.authgate-back textarea {
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: var(--ag-bg-soft) !important;
+  color: var(--ag-text) !important;
+  box-shadow: none !important;
+}
+
+.authgate-back .button,
+.authgate-back .button-primary,
+.authgate-back .submit .button {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: var(--ag-text) !important;
+  color: var(--ag-bg) !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+}
+
+.authgate-admin-toast {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  left: auto;
+  transform: none;
+  max-width: 420px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #111111;
+  color: #F0EEE9;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: nowrap;
+  z-index: 20;
+  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  animation: authgate-toast-in .2s ease;
+  transition: opacity .35s;
+}
+
+.authgate-admin-toast.is-error { background: var(--ag-red); }
+.authgate-admin-toast.is-hiding { opacity: 0; }
+
+@keyframes authgate-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 782px) {
+  .authgate-back { margin: 0 10px 0 0; padding: 24px 16px; }
+  .authgate-back__header { display: block; }
+  .authgate-back__actions { margin-top: 18px; }
+  .authgate-back__content { width: 100%; }
+}
+
+.authgate-back__content form > div,
+.authgate-back__content > div {
+  padding: 24px !important;
+  margin-bottom: 18px !important;
+}
+
+.authgate-back__content form > div h2,
+.authgate-back__content > div h2 {
+  margin-top: 0 !important;
+  margin-bottom: 14px !important;
+}
+
+.authgate-back .form-table {
+  margin-top: 10px;
+}
+
+.authgate-back .form-table th,
+.authgate-back .form-table td {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.authgate-back .submit {
+  max-width: 1000px;
+  margin: 22px 0 0;
+  padding: 0;
+}
+
+.authgate-back .notice,
+.authgate-back .updated,
+.authgate-back .error {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0;
+  border-radius: 18px;
+  background: var(--ag-card);
+  color: var(--ag-text);
+}
+
+.authgate-back .authgate-sc-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--ag-bg-soft);
+}
+
+.authgate-back .authgate-sc-table th,
+.authgate-back .authgate-sc-table td {
+  border: 0 !important;
+  border-bottom: 1px solid var(--ag-bg-soft) !important;
+  background: transparent !important;
+  color: var(--ag-text) !important;
+}
+
+.authgate-back .authgate-sc-table th {
+  background: var(--ag-bg-soft) !important;
+  color: var(--ag-text) !important;
+  font-weight: 800;
+}
+
+.authgate-back code,
+.authgate-back .authgate-sc-table code,
+.authgate-back .authgate-sc-block h3 {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: var(--ag-text) !important;
+  color: var(--ag-green) !important;
+  font-family: var(--ag-mono);
+  font-weight: 800;
+}
+
+.authgate-back .authgate-sc-example {
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: var(--ag-bg-soft) !important;
+  color: var(--ag-text) !important;
+  font-family: var(--ag-mono);
+}
+
+.authgate-back .authgate-sc-block p {
+  color: var(--ag-text-dim) !important;
+}
+
+.authgate-back .authgate-sc-block {
+  border: 0 !important;
+  border-radius: 26px !important;
+  background: var(--ag-card) !important;
+  padding: 26px !important;
+  margin-bottom: 18px !important;
+}
+
+.authgate-back .authgate-sc-block > h3 {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  margin: 0 0 14px !important;
+  padding: 8px 12px !important;
+  border-radius: 999px !important;
+  background: rgba(45,189,142,.16) !important;
+  color: var(--ag-green) !important;
+  font-family: var(--ag-mono);
+  font-size: 14px !important;
+  line-height: 1 !important;
+  letter-spacing: -.02em;
+}
+
+.authgate-back .authgate-sc-table code {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  padding: 4px 8px !important;
+  border-radius: 999px !important;
+  background: rgba(127,139,236,.18) !important;
+  color: var(--ag-purple) !important;
+  font-family: var(--ag-mono);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.authgate-back .authgate-sc-example {
+  margin-top: 14px !important;
+  padding: 16px 18px !important;
+  border-radius: 18px !important;
+  background: #0A0A0A !important;
+  color: var(--ag-text) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+.authgate-back[data-theme="light"] .authgate-sc-example {
+  background: #F2EFEA !important;
+  color: #111827 !important;
+}
+
+.authgate-back .form-table th code {
+  display: inline-flex;
+  width: auto;
+  padding: 4px 8px !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.07) !important;
+  color: var(--ag-text-dim) !important;
+  font-family: var(--ag-mono);
+  font-size: 12px !important;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.authgate-back[data-theme="light"] .form-table th code {
+  background: rgba(10,10,10,.06) !important;
+  color: var(--ag-text-dim) !important;
+}
+
+.authgate-back__brand {
+  color: inherit;
+  text-decoration: none;
+}
+
+.authgate-back__brand:hover,
+.authgate-back__brand:focus {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+.authgate-back__mark svg {
+  width: 32px;
+  height: 40px;
+  display: block;
+}
+
+.authgate-back__title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.authgate-back__version {
+  display: inline-flex;
+  align-items: center;
+  min-height: 27px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--ag-purple);
+  color: #000000;
+  font-family: var(--ag-mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-top: 10px;
+}

@@ -2,7 +2,7 @@
 
 ## Última actualización
 
-2026-06-16
+2026-06-17
 
 ## Resumen humano
 
@@ -23,7 +23,8 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 ## Pendiente
 
-- Ejecutar Bloque A si el usuario lo autoriza.
+- Fase 1 `22mw-back` implementada localmente: shell admin, menú horizontal tipo landing y dark/light por `localStorage`.
+- Separar rediseño admin de frontend público y de cambios funcionales.
 - Mantener cada bloque separado para evitar mezclar riesgos.
 - Versionar dev por bloque si se hace push.
 
@@ -41,4 +42,6 @@ Roadmap pre-release consolidado automáticamente en `_dev/`. AuthGate tiene P1 c
 
 ## Próximo paso recomendado
 
-- Ejecutar Bloque A: Mail Mint condicional + enlace de inicio inline.
+- Validar Fase 1 en admin antes de pasar a Fase 2: componentes, formularios y switches.
+
+- No usar `plan-funcionalidad` para rediseños backend/admin; usar `22mw-back` o `plan-backend-plugin` según el nivel de detalle.

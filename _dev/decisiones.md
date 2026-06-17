@@ -37,6 +37,9 @@
 
 - Si el sitio debe confiar en cabeceras de proxy/CDN para IP real.
 - Confirmar resultado final del script de release.
+- Fase 1 `22mw-back` aprobada: solo shell admin, header, menú horizontal tipo landing y dark/light por `localStorage`.
+- AJAX de tabs queda para Fase 4.
+- Site-level multisite queda fuera de Fase 1 y pasa a Fase 1B tras validar la pantalla principal.
 
 ## No reabrir sin motivo
 
@@ -45,3 +48,5 @@
 - No publicar `_dev/` en release pública.
 - No modificar settings WooCommerce/WordPress fuera del alcance aprobado.
 - No hacer release estable, tag ni deploy sin autorización explícita.
+
+- El sistema visual 22MW acordado en esta fase se replantea para backend/admin, no frontend público.

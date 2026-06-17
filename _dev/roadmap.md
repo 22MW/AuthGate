@@ -44,6 +44,14 @@
 - Revisar documentación pública tras release si se detectan dudas de soporte.
 - Revisar documentación pública y changelog antes de release.
 
+### Backend/admin visual 22MW
+
+- Fase 1 implementada localmente: shell admin 22MW, header, menú horizontal tipo landing y dark/light por `localStorage`.
+- Fase 1 excluye frontend público, guardados, AJAX nuevo, submenús internos, switches avanzados y site-level multisite.
+- Fase 2 futura: componentes, formularios y switches.
+- Fase 3 futura: submenús verticales internos.
+- Fase 4 futura: carga dinámica por AJAX admin si aporta.
+
 ## Bloqueado
 
 - Ningún bloqueo de release abierto.

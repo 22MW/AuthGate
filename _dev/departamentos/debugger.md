@@ -44,3 +44,26 @@ Incidencia abierta: el registro frontend muestra `Se ha producido un error. Int�
 ## Próximo paso recomendado
 
 - Capturar la petición `admin-ajax.php` con `action=authgate_register` en Network y contrastarla con `ajax_register`.
+
+---
+
+## Incidencia 2026-06-17 — Fatal en admin tras Fase 1 22MW-BACK
+
+## Error
+
+- Fatal: `Undefined constant "AUTHGATE_URL"` en `includes/class-auth-settings.php`.
+
+## Hechos confirmados
+
+- `authgate.php` no define `AUTHGATE_URL` ni `AUTHGATE_VERSION`.
+- Fase 1 encoló `authgate-back.css` y `authgate-back.js` usando esas constantes inexistentes.
+
+## Hecho
+
+- Corregido el encolado para usar `$asset_url = plugin_dir_url(dirname(__FILE__))` y versión local `1.1.1`.
+- Validado `php -l includes/class-auth-settings.php`: ok.
+- Validado `git diff --check`: ok.
+
+## No volver a investigar
+
+- AuthGate 1.1.1 no tiene constantes globales `AUTHGATE_URL` / `AUTHGATE_VERSION`; no usarlas sin definirlas antes.

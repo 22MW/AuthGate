@@ -99,8 +99,22 @@ class AuthGate_Settings {
         wp_enqueue_code_editor(array('type' => 'text/css'));
         wp_enqueue_script('wp-theme-plugin-editor');
         wp_enqueue_style('wp-codemirror');
-        $css = '.authgate-admin-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:2px;font-size:13px;line-height:1.4;z-index:999999;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:authgate-toast-in .2s ease;transition:opacity .35s;max-width:420px;white-space:nowrap}.authgate-admin-toast.is-error{background:#b33654}.authgate-admin-toast.is-hiding{opacity:0}@keyframes authgate-toast-in{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
-        wp_add_inline_style('wp-admin', $css);
+        $asset_url = plugin_dir_url(dirname(__FILE__));
+        $version   = '1.1.1';
+
+        wp_enqueue_style(
+            'authgate-back',
+            $asset_url . 'assets/css/authgate-back.css',
+            array(),
+            $version
+        );
+        wp_enqueue_script(
+            'authgate-back',
+            $asset_url . 'assets/js/authgate-back.js',
+            array(),
+            $version,
+            true
+        );
     }
 
     /** @return void */
@@ -454,28 +468,49 @@ CSS;
 
         $tab = sanitize_key($_GET['tab'] ?? 'general');
         ?>
-        <div class="wrap">
-            <h1><?php esc_html_e('AuthGate by 22MW', 'authgate'); ?></h1>
-            <nav class="nav-tab-wrapper" style="margin-bottom:20px;">
+        <div class="authgate-back" data-authgate-back>
+            <header class="authgate-back__header">
+                <a class="authgate-back__brand" href="https://22mw.online/" target="_blank" rel="noopener noreferrer">
+                    <span class="authgate-back__mark" aria-hidden="true">
+                        <svg viewBox="0 0 45 56" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="0 20 44.9189011 20 44.9189011 15 4.48417582 15 4.48417582 12.5 44.9189011 12.5 45 12.5 45 0 0.0810989011 0 0.0810989011 5 40.5168132 5 40.5168132 7.5 0 7.5 0 20"/>
+                            <polygon points="0.0810989011 42 44.9189011 42 44.9189011 37 4.48417582 37 4.48417582 34.5 45 34.5 45 22 0.0810989011 22 0.0810989011 27 40.5168132 27 40.5168132 29.5 0 29.5 0 42"/>
+                            <polygon points="21 44 0 44 0 56 5.37209302 56 5.37209302 48.8 7.81395349 48.8 7.81395349 56 13.1860465 56 13.1860465 48.8 15.627907 48.8 15.627907 56 21 56"/>
+                            <polygon transform="translate(34.5,50) rotate(-180) translate(-34.5,-50)" points="24 44 24 56 29.372093 56 29.372093 48.8 31.8139535 48.8 31.8139535 56 37.1860465 56 37.1860465 48.8 39.627907 48.8 39.627907 56 45 56 45 44"/>
+                        </svg>
+                    </span>
+                    <div class="authgate-back__title-row">
+                        <h1><?php esc_html_e('AuthGate', 'authgate'); ?></h1>
+                        <span class="authgate-back__version"><?php echo esc_html__('by 22mw.online', 'authgate') . ' · v' . esc_html(get_file_data(dirname(__DIR__) . '/authgate.php', array('Version' => 'Version'))['Version']); ?></span>
+                    </div>
+                </a>
+                <div class="authgate-back__actions">
+                    <button type="button" class="authgate-back__theme" data-authgate-theme="dark"><?php esc_html_e('Oscuro', 'authgate'); ?></button>
+                    <button type="button" class="authgate-back__theme" data-authgate-theme="light"><?php esc_html_e('Claro', 'authgate'); ?></button>
+                </div>
+            </header>
+
+            <nav class="authgate-back__menu" aria-label="<?php echo esc_attr__('Secciones de AuthGate', 'authgate'); ?>">
                 <?php
                 $tabs = array(
                     'general'    => __('General', 'authgate'),
                     'strings'    => __('Textos', 'authgate'),
-                    'css'        => __('CSS propio', 'authgate'),
+                    'css'        => __('Estilo', 'authgate'),
                     'shortcodes' => __('Shortcodes', 'authgate'),
-                    'blocked'    => __('IPs bloqueadas', 'authgate'),
-                    'log'        => __('Registro de accesos', 'authgate'),
+                    'blocked'    => __('Seguridad', 'authgate'),
+                    'log'        => __('Accesos', 'authgate'),
                 );
                 foreach ($tabs as $slug => $label) :
-                    $active = $tab === $slug ? 'nav-tab-active' : '';
+                    $active = $tab === $slug ? 'is-active' : '';
                     $url    = add_query_arg(array('page' => 'authgate', 'tab' => $slug), self::settings_base_url());
                     ?>
-                    <a href="<?php echo esc_url($url); ?>" class="nav-tab <?php echo esc_attr($active); ?>">
-                        <?php echo esc_html($label); ?>
+                    <a href="<?php echo esc_url($url); ?>" class="authgate-back__menu-item <?php echo esc_attr($active); ?>">
+                        <span><?php echo esc_html($label); ?></span>
                     </a>
                 <?php endforeach; ?>
             </nav>
 
+            <main class="authgate-back__content">
             <?php
             if ($tab === 'general') {
                 $this->render_tab_general();
@@ -491,6 +526,7 @@ CSS;
                 $this->render_tab_log();
             }
             ?>
+            </main>
         </div>
         <?php
     }

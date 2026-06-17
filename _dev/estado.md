@@ -2,7 +2,7 @@
 
 ## Última actualización
 
-2026-06-16
+2026-06-17
 
 ## Resumen humano
 
@@ -38,7 +38,7 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 - Bloque D: ajustes manuales de tamaño aplicados también al preset blanco.
 - Bloque D: presets blanco y oscuro sincronizados; solo cambian colores.
 - QA Bloque D OK confirmado por el usuario.
-- `deploy-release.sh` revisado y ajustado para excluir `_dev/` y `.kilo/`.
+- `_dev/deploy-release.sh` revisado y ajustado para excluir `_dev/` y `.kilo/`.
 - GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.1.1`.
 - ZIP `authgate.zip` subido como asset de release.
 - Rama `main` actualizada por el script.
@@ -46,6 +46,11 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 ## En curso
 
 - Seguimiento post-release.
+- Fase comercial inicial: posicionamiento, anuncios y landing mínima.
+- Landing comercial de trabajo creada en `_dev/comercial/landing-authgate.html`.
+- Web de desarrollo comercial definida: `https://22mw.online/`.
+- Landing definitiva de trabajo en `_dev/comercial/authgate-landing.html` sigue en revisión visual.
+- Fase 1 implementada localmente: backend/admin AuthGate con shell visual `22mw-back`, menú horizontal y dark/light por `localStorage`.
 
 ## Bloqueado
 
@@ -53,14 +58,14 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 
 ## Próximo paso recomendado
 
-- Si no hay incidencias, continuar solo con seguimiento post-release.
+- Validar visualmente Fase 1 de `22mw-back` en Ajustes > AuthGate antes de avanzar a componentes/formularios.
 
 ## No volver a investigar
 
 - Ruta real del plugin: `app/public/wp-content/plugins/AuthGate/`.
 - Rama de trabajo: `mishaAuthDev`.
 - Versión estable preparada: `1.1.1`.
-- Release production autorizado por el usuario el 2026-06-16.
+- Release production autorizado por el usuario el 2026-06-17.
 - Release GitHub `v1.1.1` publicada correctamente.
 - Bloque D solo carga CSS si está activado.
 - Bloque C separa guardado de textos del guardado general.
@@ -70,3 +75,7 @@ Release `1.1.1` publicada en GitHub. Rama `main` actualizada y tag remoto `v1.1.
 - Atributo elegido para texto de popup: `label`.
 - Bloque A: Mail Mint condicional + enlace inicio inline.
 - No hacer release estable, tag ni deploy sin autorización explícita.
+- Script de release interno movido a `_dev/deploy-release.sh`.
+- Token local permitido en `_dev/.env`; nunca incluirlo en ZIP/release.
+
+- El rediseño visual 22MW acordado ahora aplica al backend/admin, no al frontend público.
