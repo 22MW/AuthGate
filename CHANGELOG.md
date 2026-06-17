@@ -7,6 +7,22 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.0] — 2026-06-17
+
+### Added
+- Added the 22MW visual admin shell for the AuthGate settings area.
+- Added reusable `22mw-back` base CSS and JavaScript assets for the plugin admin UI.
+- Added dark/light admin mode, horizontal section navigation and vertical internal subnavigation.
+- Added searchable excluded-pages selector with removable chips.
+
+### Changed
+- Normalized the AuthGate admin markup to use the shared `mw22-back` base classes.
+- Reduced AuthGate-specific admin CSS and JavaScript to plugin-specific overrides only.
+- Improved settings cards, controls, tables, CodeMirror styling and save notifications in the admin area.
+
+### QA
+- Manual QA confirmed by user for the updated admin UI, settings save flow, Textos, Estilo, General and protected-page frontend checks.
+
 ## [1.1.1] — 2026-06-16
 
 ### Added

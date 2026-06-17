@@ -99,8 +99,35 @@ class AuthGate_Settings {
         wp_enqueue_code_editor(array('type' => 'text/css'));
         wp_enqueue_script('wp-theme-plugin-editor');
         wp_enqueue_style('wp-codemirror');
-        $css = '.authgate-admin-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#1e1e1e;color:#fff;padding:12px 20px;border-radius:2px;font-size:13px;line-height:1.4;z-index:999999;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:authgate-toast-in .2s ease;transition:opacity .35s;max-width:420px;white-space:nowrap}.authgate-admin-toast.is-error{background:#b33654}.authgate-admin-toast.is-hiding{opacity:0}@keyframes authgate-toast-in{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
-        wp_add_inline_style('wp-admin', $css);
+        $asset_url = plugin_dir_url(dirname(__FILE__));
+        $version   = '1.1.1';
+
+        wp_enqueue_style(
+            'mw22-back',
+            $asset_url . 'assets/css/22mw-back.css',
+            array(),
+            $version
+        );
+        wp_enqueue_style(
+            'authgate-back',
+            $asset_url . 'assets/css/authgate-back.css',
+            array('mw22-back'),
+            $version
+        );
+        wp_enqueue_script(
+            'mw22-back',
+            $asset_url . 'assets/js/22mw-back.js',
+            array(),
+            $version,
+            true
+        );
+        wp_enqueue_script(
+            'authgate-back',
+            $asset_url . 'assets/js/authgate-back.js',
+            array('mw22-back'),
+            $version,
+            true
+        );
     }
 
     /** @return void */
@@ -454,28 +481,49 @@ CSS;
 
         $tab = sanitize_key($_GET['tab'] ?? 'general');
         ?>
-        <div class="wrap">
-            <h1><?php esc_html_e('AuthGate by 22MW', 'authgate'); ?></h1>
-            <nav class="nav-tab-wrapper" style="margin-bottom:20px;">
+        <div class="mw22-back authgate-back" data-mw22-back data-mw22-theme-key="authgateBackTheme" data-mw22-updated-message="Ajustes guardados.">
+            <header class="mw22-back__header">
+                <a class="mw22-back__brand" href="https://22mw.online/" target="_blank" rel="noopener noreferrer">
+                    <span class="mw22-back__mark" aria-hidden="true">
+                        <svg viewBox="0 0 45 56" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="0 20 44.9189011 20 44.9189011 15 4.48417582 15 4.48417582 12.5 44.9189011 12.5 45 12.5 45 0 0.0810989011 0 0.0810989011 5 40.5168132 5 40.5168132 7.5 0 7.5 0 20"/>
+                            <polygon points="0.0810989011 42 44.9189011 42 44.9189011 37 4.48417582 37 4.48417582 34.5 45 34.5 45 22 0.0810989011 22 0.0810989011 27 40.5168132 27 40.5168132 29.5 0 29.5 0 42"/>
+                            <polygon points="21 44 0 44 0 56 5.37209302 56 5.37209302 48.8 7.81395349 48.8 7.81395349 56 13.1860465 56 13.1860465 48.8 15.627907 48.8 15.627907 56 21 56"/>
+                            <polygon transform="translate(34.5,50) rotate(-180) translate(-34.5,-50)" points="24 44 24 56 29.372093 56 29.372093 48.8 31.8139535 48.8 31.8139535 56 37.1860465 56 37.1860465 48.8 39.627907 48.8 39.627907 56 45 56 45 44"/>
+                        </svg>
+                    </span>
+                    <div class="mw22-back__title-row">
+                        <h1><?php esc_html_e('AuthGate', 'authgate'); ?></h1>
+                        <span class="mw22-back__version"><?php echo esc_html__('by 22mw.online', 'authgate') . ' · v' . esc_html(get_file_data(dirname(__DIR__) . '/authgate.php', array('Version' => 'Version'))['Version']); ?></span>
+                    </div>
+                </a>
+                <div class="mw22-back__actions">
+                    <button type="button" class="mw22-back__theme" data-mw22-back-theme="dark"><?php esc_html_e('Oscuro', 'authgate'); ?></button>
+                    <button type="button" class="mw22-back__theme" data-mw22-back-theme="light"><?php esc_html_e('Claro', 'authgate'); ?></button>
+                </div>
+            </header>
+
+            <nav class="mw22-back__menu" aria-label="<?php echo esc_attr__('Secciones de AuthGate', 'authgate'); ?>">
                 <?php
                 $tabs = array(
                     'general'    => __('General', 'authgate'),
                     'strings'    => __('Textos', 'authgate'),
-                    'css'        => __('CSS propio', 'authgate'),
+                    'css'        => __('Estilo', 'authgate'),
                     'shortcodes' => __('Shortcodes', 'authgate'),
-                    'blocked'    => __('IPs bloqueadas', 'authgate'),
-                    'log'        => __('Registro de accesos', 'authgate'),
+                    'blocked'    => __('Seguridad', 'authgate'),
+                    'log'        => __('Accesos', 'authgate'),
                 );
                 foreach ($tabs as $slug => $label) :
-                    $active = $tab === $slug ? 'nav-tab-active' : '';
+                    $active = $tab === $slug ? 'is-active' : '';
                     $url    = add_query_arg(array('page' => 'authgate', 'tab' => $slug), self::settings_base_url());
                     ?>
-                    <a href="<?php echo esc_url($url); ?>" class="nav-tab <?php echo esc_attr($active); ?>">
-                        <?php echo esc_html($label); ?>
+                    <a href="<?php echo esc_url($url); ?>" class="mw22-back__menu-item <?php echo esc_attr($active); ?>">
+                        <span><?php echo esc_html($label); ?></span>
                     </a>
                 <?php endforeach; ?>
             </nav>
 
+            <main class="mw22-back__content">
             <?php
             if ($tab === 'general') {
                 $this->render_tab_general();
@@ -491,6 +539,7 @@ CSS;
                 $this->render_tab_log();
             }
             ?>
+            </main>
         </div>
         <?php
     }
@@ -505,8 +554,21 @@ CSS;
             <input type="hidden" name="action" value="authgate_save">
             <?php wp_nonce_field('authgate_save', '_authgate_nonce'); ?>
 
+            <div class="mw22-back-section-layout" data-mw22-back-subnav>
+                <aside class="mw22-back-subnav" aria-label="<?php echo esc_attr__('Opciones generales', 'authgate'); ?>">
+                    <a href="#authgate-section-rate" class="is-active"><?php esc_html_e('Rate limiting', 'authgate'); ?></a>
+                    <a href="#authgate-section-registration"><?php esc_html_e('Registro', 'authgate'); ?></a>
+                    <?php if (!self::is_network()) : ?>
+                        <a href="#authgate-section-exclusions"><?php esc_html_e('Exclusiones', 'authgate'); ?></a>
+                    <?php endif; ?>
+                    <a href="#authgate-section-urls"><?php esc_html_e('URLs y login', 'authgate'); ?></a>
+                    <?php if (!self::is_network()) : ?>
+                        <a href="#authgate-section-mailmint"><?php esc_html_e('Mail Mint', 'authgate'); ?></a>
+                    <?php endif; ?>
+                </aside>
+                <div class="mw22-back-section-content">
             <!-- Rate limiting -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-rate" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Rate limiting', 'authgate'); ?></h2>
                 <table class="form-table">
                     <tr>
@@ -520,7 +582,7 @@ CSS;
             </div>
 
             <!-- Registro -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-registration" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Registro de usuarios', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
@@ -553,27 +615,46 @@ CSS;
 
             <?php if (!self::is_network()) : ?>
             <!-- Exclusiones -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-exclusions" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Exclusiones', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('El plugin intercepta automáticamente cualquier página que requiera login y muestra su formulario. Marca aquí las páginas donde NO debe actuar (quedará el comportamiento nativo de WP/WooCommerce).', 'authgate'); ?>
                 </p>
-                <div style="columns:2;column-gap:32px;">
-                    <?php foreach ($all_pages as $page) : ?>
-                        <label style="display:flex;align-items:center;gap:8px;padding:4px 0;break-inside:avoid;">
-                            <input type="checkbox"
-                                   name="excluded_pages[]"
-                                   value="<?php echo esc_attr($page->ID); ?>"
-                                   <?php checked(in_array($page->ID, $excluded_pages, true)); ?>>
-                            <?php echo esc_html($page->post_title); ?>
-                        </label>
-                    <?php endforeach; ?>
+                <div class="authgate-page-picker" data-authgate-page-picker>
+                    <label class="screen-reader-text" for="authgate_page_picker_search"><?php esc_html_e('Buscar página para excluir', 'authgate'); ?></label>
+                    <input type="search"
+                           id="authgate_page_picker_search"
+                           class="authgate-page-picker__search"
+                           placeholder="<?php echo esc_attr__('Empieza a escribir para buscar páginas…', 'authgate'); ?>"
+                           autocomplete="off"
+                           data-authgate-page-search>
+                    <div class="authgate-page-picker__results" data-authgate-page-results hidden>
+                        <?php foreach ($all_pages as $page) : ?>
+                            <button type="button"
+                                    class="authgate-page-picker__result"
+                                    data-page-id="<?php echo esc_attr($page->ID); ?>"
+                                    data-page-title="<?php echo esc_attr($page->post_title); ?>">
+                                <?php echo esc_html($page->post_title); ?>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="authgate-page-picker__selected" data-authgate-page-selected>
+                        <?php foreach ($all_pages as $page) : ?>
+                            <?php if (in_array($page->ID, $excluded_pages, true)) : ?>
+                                <span class="authgate-page-picker__chip" data-page-id="<?php echo esc_attr($page->ID); ?>">
+                                    <input type="hidden" name="excluded_pages[]" value="<?php echo esc_attr($page->ID); ?>">
+                                    <?php echo esc_html($page->post_title); ?>
+                                    <button type="button" aria-label="<?php echo esc_attr(sprintf(__('Quitar %s', 'authgate'), $page->post_title)); ?>" data-authgate-remove-page>×</button>
+                                </span>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>
 
             <!-- URLs personalizadas -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-urls" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('URLs personalizadas', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
                     <?php esc_html_e('Sustituye wp-login.php por tus propias URLs. Guarda y luego visita Ajustes › Permalinks para activar los cambios.', 'authgate'); ?>
@@ -668,7 +749,7 @@ CSS;
 
             <?php if (!self::is_network()) : ?>
             <!-- Mail Mint -->
-            <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <div id="authgate-section-mailmint" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Mail Mint — Suscripción al registro', 'authgate'); ?></h2>
                 <?php if (!class_exists('Mint\MRM\DataBase\Models\ContactGroupModel')) : ?>
                     <p><?php esc_html_e('Mail Mint no está activo.', 'authgate'); ?></p>
@@ -702,6 +783,8 @@ CSS;
             </div>
             <?php endif; // !is_network ?>
 
+                </div>
+            </div>
             <?php submit_button(__('Guardar ajustes', 'authgate')); ?>
         </form>
         <script>
@@ -744,7 +827,7 @@ CSS;
             });
 
             function authgateToast(msg, type) {
-                var $t = $('<div class="authgate-admin-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
+                var $t = $('<div class="mw22-back-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
                 $('body').append($t);
                 setTimeout(function(){ $t.addClass('is-hiding'); }, 2800);
                 setTimeout(function(){ $t.remove(); }, 3200);
@@ -767,39 +850,40 @@ CSS;
             <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Textos del formulario', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;"><?php esc_html_e('Estos textos se guardan desde esta pestaña de forma independiente al resto de ajustes.', 'authgate'); ?></p>
-                <table class="form-table">
+                <div class="authgate-strings-grid">
                     <?php foreach ($string_defs as $key => $default) :
                         $is_wysiwyg  = in_array($key, $wysiwyg_keys, true);
                         $is_textarea = !$is_wysiwyg && in_array($key, $textarea_keys, true);
+                        $field_class = ($is_wysiwyg || $is_textarea) ? ' authgate-string-field--wide' : '';
                         ?>
-                        <tr>
-                            <th scope="row"><label for="authgate_str_<?php echo esc_attr($key); ?>"><code><?php echo esc_html($key); ?></code></label></th>
-                            <td>
-                                <?php if ($is_wysiwyg) :
-                                    wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
-                                        'textarea_name' => 'strings[' . $key . ']',
-                                        'media_buttons' => false,
-                                        'teeny'         => true,
-                                        'editor_height' => 150,
-                                        'tinymce'       => array(
-                                            'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
-                                        ),
-                                    ));
-                                elseif ($is_textarea) : ?>
-                                    <textarea id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" style="width:440px;height:80px;"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
-                                <?php else : ?>
-                                    <input type="text" id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr(self::get_string($key)); ?>" style="width:440px;">
-                                <?php endif; ?>
-                                <?php if ($default !== '') : ?>
-                                    <p class="description"><?php esc_html_e('Por defecto:', 'authgate'); ?> <em><?php echo esc_html($default); ?></em></p>
-                                <?php endif; ?>
-                                <?php if ($key === 'field_gdpr') : ?>
-                                    <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
+                        <div class="authgate-string-field<?php echo esc_attr($field_class); ?>">
+                            <label for="authgate_str_<?php echo esc_attr($key); ?>">
+                                <code><?php echo esc_html($key); ?></code>
+                            </label>
+                            <?php if ($is_wysiwyg) :
+                                wp_editor(self::get_string($key), 'authgate_str_' . $key, array(
+                                    'textarea_name' => 'strings[' . $key . ']',
+                                    'media_buttons' => false,
+                                    'teeny'         => true,
+                                    'editor_height' => 150,
+                                    'tinymce'       => array(
+                                        'toolbar1' => 'bold,italic,underline,link,unlink,bullist,numlist,removeformat',
+                                    ),
+                                ));
+                            elseif ($is_textarea) : ?>
+                                <textarea id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" rows="4"><?php echo esc_textarea(self::get_string($key)); ?></textarea>
+                            <?php else : ?>
+                                <input type="text" id="authgate_str_<?php echo esc_attr($key); ?>" name="strings[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr(self::get_string($key)); ?>">
+                            <?php endif; ?>
+                            <?php if ($default !== '') : ?>
+                                <p class="description"><?php esc_html_e('Por defecto:', 'authgate'); ?> <em><?php echo esc_html($default); ?></em></p>
+                            <?php endif; ?>
+                            <?php if ($key === 'field_gdpr') : ?>
+                                <p class="description"><?php esc_html_e('Usa {privacy_url} para insertar el enlace a la política de privacidad.', 'authgate'); ?></p>
+                            <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
-                </table>
+                </div>
             </div>
 
             <?php submit_button(__('Guardar textos', 'authgate')); ?>
@@ -1439,7 +1523,7 @@ CSS;
                         .finally(function(){ $btn.prop('disabled', false); });
                 });
                 function authgateSiteToast(msg, type) {
-                    var $t = $('<div class="authgate-admin-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
+                    var $t = $('<div class="mw22-back-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
                     $('body').append($t);
                     setTimeout(function(){ $t.addClass('is-hiding'); }, 2800);
                     setTimeout(function(){ $t.remove(); }, 3200);
