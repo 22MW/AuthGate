@@ -10,7 +10,7 @@ AuthGate prepara release estable `1.2.1` con QA multisite confirmado por el usua
 
 ## Estado general
 
-Release `1.2.1` en preparación desde `mishaAuthDev`. QA multisite confirmado por el usuario; pendiente publicación GitHub/ZIP.
+Release `1.2.1` publicada. Rama `main` actualizada, rama `release` limpia y tag remoto `v1.2.1` existente.
 
 ## Hecho
 
@@ -26,6 +26,7 @@ Release `1.2.1` en preparación desde `mishaAuthDev`. QA multisite confirmado po
 - Corrección visual post-QA: bloques con fondo blanco en oscuro neutralizados por CSS scoped a `.authgate-back`.
 - QA manual confirmado por el usuario para backend/admin, Textos, Estilo, General, guardados y comprobaciones frontend principales.
 - Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.0`.
+- Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.1`.
 - ZIP publicado: `https://github.com/22MW/AuthGate/releases/download/v1.2.0/authgate.zip`.
 - `_dev/` excluido de rama `release` y ZIP público por script interno.
 - Trabajo comercial interno subido a `mishaAuthDev` dentro de `_dev/comercial/`.
@@ -37,15 +38,15 @@ Release `1.2.1` en preparación desde `mishaAuthDev`. QA multisite confirmado po
 
 ## En curso
 
-- Preparación de release estable `1.2.1`.
+- Seguimiento post-release `1.2.1`.
 
 ## Bloqueado
 
-- No hay bloqueo técnico confirmado para `1.2.1`.
+- No hay bloqueo de release abierto.
 
 ## Próximo paso recomendado
 
-- Publicar release estable `1.2.1` y verificar ZIP/GitHub release.
+- Seguimiento post-release si aparece incidencia.
 
 ## No volver a investigar
 
@@ -53,6 +54,7 @@ Release `1.2.1` en preparación desde `mishaAuthDev`. QA multisite confirmado po
 - Rama de trabajo: `mishaAuthDev`.
 - Release GitHub `v1.1.1` publicada correctamente.
 - Release GitHub `v1.2.0` publicada correctamente.
+- Release GitHub `v1.2.1` publicada correctamente.
 - `_dev/` puede estar en `mishaAuthDev`, pero nunca debe entrar en rama `release`, `main` pública limpia ni ZIP.
 - `_dev/comercial/` es trabajo interno y no debe aparecer en release público.
 - Script de release interno: `_dev/deploy-release.sh`.

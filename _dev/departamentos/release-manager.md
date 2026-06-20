@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release `1.2.1` en preparación. QA multisite confirmado por el usuario; se consolida trabajo posterior a `1.2.0`.
+Release `1.2.1` publicada en GitHub. Se consolidó MS0–MS3 multisite y mejoras admin posteriores a `1.2.0`.
 
 ## Descubierto
 
@@ -18,6 +18,9 @@ Release `1.2.1` en preparación. QA multisite confirmado por el usuario; se cons
 
 - Preparada versión estable `1.2.1`: cabecera, readme, changelog y release-notes.
 - QA multisite confirmado por el usuario antes de release `1.2.1`.
+- GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.1`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada y rama `release` limpia sin `_dev/`.
 
 - Versión estable preparada: `1.1.1`.
 - `readme.txt` preparado con `Stable tag: 1.1.1`.
@@ -32,7 +35,7 @@ Release `1.2.1` en preparación. QA multisite confirmado por el usuario; se cons
 
 ## Pendiente
 
-- Publicar GitHub release `v1.2.1` y verificar ZIP `authgate.zip`.
+- Seguimiento post-release si aparece incidencia.
 
 ## No volver a investigar
 
@@ -48,4 +51,4 @@ Release `1.2.1` en preparación. QA multisite confirmado por el usuario; se cons
 
 ## Próximo paso recomendado
 
-- Ejecutar `_dev/deploy-release.sh` desde `mishaAuthDev` limpio para publicar `v1.2.1`.
+- No repetir release `v1.2.1`; usar una versión nueva si hay hotfix.

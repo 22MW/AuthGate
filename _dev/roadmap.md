@@ -40,7 +40,7 @@
 
 ## Bloqueado
 
-- Release `1.2.1` pendiente de publicación; QA MS1/MS2/MS3 confirmado por el usuario.
+- Sin urgente abierto tras release `1.2.1`.
 - Creación de usuarios de prueba bloqueada hasta permiso explícito si se considera prueba que altera datos.
 
 ## Descartado
@@ -55,6 +55,7 @@
 
 - Release `1.1.1` publicada.
 - Release `1.2.0` publicada.
+- Release `1.2.1` publicada.
 - Backend/admin visual 22MW Fases 1, 2, 2B y 3 consolidadas en `1.2.0`.
 - Base reusable `22mw-back` sincronizada dentro de AuthGate.
 - Duplicación de estilos base eliminada: base común en `22mw-back.*`, overrides específicos en `authgate-back.*`.

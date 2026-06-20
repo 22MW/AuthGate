@@ -10,6 +10,10 @@
 - QA multisite confirmado por el usuario antes de preparar release.
 - Incluye registro global de red, textos por sitio con fallback, CSS global/heredado/override por site, redirect `/wp-admin`, ajustes de logo y toast admin unificado.
 - `_dev/`, `.kilo/`, secretos y contenido interno quedan excluidos del ZIP/release público.
+- Release publicada en GitHub: `https://github.com/22MW/AuthGate/releases/tag/v1.2.1`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada.
+- Rama `release` limpia sin `_dev/`.
 
 ## Dev 1.2.0.3 — 2026-06-20
 
