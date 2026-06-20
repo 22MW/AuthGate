@@ -747,7 +747,11 @@ CSS;
             <div id="authgate-section-registration" class="mw22-back-section" style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
                 <h2 style="margin-top:0;"><?php esc_html_e('Registro de usuarios', 'authgate'); ?></h2>
                 <p class="description" style="margin-bottom:16px;">
-                    <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
+                    <?php if (self::is_network()) : ?>
+                        <?php esc_html_e('La red multisite controla si se permite el registro de usuarios. AuthGate usará esta política global para mostrar u ocultar el registro en frontend.', 'authgate'); ?>
+                    <?php else : ?>
+                        <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
+                    <?php endif; ?>
                 </p>
                 <table class="form-table">
                     <?php if (self::is_network()) : ?>
@@ -1685,7 +1689,7 @@ CSS;
         ?>
         <div class="mw22-back authgate-back" data-mw22-back data-mw22-theme-key="authgateBackTheme" data-mw22-updated-message="Ajustes guardados.">
             <header class="mw22-back__header">
-                <a class="mw22-back__brand" href="https://22mw.online/" target="_blank" rel="noopener noreferrer">
+                <div class="mw22-back__brand">
                     <span class="mw22-back__mark" aria-hidden="true">
                         <svg viewBox="0 0 45 56" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <polygon points="0 20 44.9189011 20 44.9189011 15 4.48417582 15 4.48417582 12.5 44.9189011 12.5 45 12.5 45 0 0.0810989011 0 0.0810989011 5 40.5168132 5 40.5168132 7.5 0 7.5 0 20"/>
@@ -1696,11 +1700,10 @@ CSS;
                     </span>
                     <div class="mw22-back__title-row">
                         <h1><?php esc_html_e('AuthGate', 'authgate'); ?></h1>
-                        <span class="mw22-back__version"><?php esc_html_e('Ajustes de este sitio', 'authgate'); ?></span>
+                        <a class="mw22-back__version" href="<?php echo esc_url(network_admin_url('settings.php?page=authgate')); ?>"><?php esc_html_e('Config global', 'authgate'); ?></a>
                     </div>
-                </a>
+                </div>
                 <div class="mw22-back__actions">
-                    <a class="button button-secondary" href="<?php echo esc_url(network_admin_url('settings.php?page=authgate')); ?>"><?php esc_html_e('Config global', 'authgate'); ?></a>
                     <button type="button" class="mw22-back__theme" data-mw22-back-theme="dark"><?php esc_html_e('Oscuro', 'authgate'); ?></button>
                     <button type="button" class="mw22-back__theme" data-mw22-back-theme="light"><?php esc_html_e('Claro', 'authgate'); ?></button>
                 </div>
@@ -1718,6 +1721,28 @@ CSS;
                 <?php $this->render_site_strings_section(); ?>
 
                 <?php $this->render_site_css_section(); ?>
+
+                <?php if (self::is_woocommerce_active()) : ?>
+                <!-- WooCommerce -->
+                <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+                    <h2 style="margin-top:0;"><?php esc_html_e('WooCommerce', 'authgate'); ?></h2>
+                    <p class="description" style="margin-bottom:16px;">
+                        <?php esc_html_e('Ajustes específicos de WooCommerce para esta web.', 'authgate'); ?>
+                    </p>
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row"><?php esc_html_e('Contraseña WooCommerce', 'authgate'); ?></th>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="woocommerce_registration_generate_password" value="1" <?php checked(get_option('woocommerce_registration_generate_password'), 'yes'); ?>>
+                                    <?php esc_html_e('Enviar enlace de configuración de contraseña en esta web', 'authgate'); ?>
+                                </label>
+                                <p class="description"><?php esc_html_e('Este ajuste pertenece a esta web y equivale a la opción nativa de WooCommerce para generar la contraseña automáticamente.', 'authgate'); ?></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <?php endif; ?>
 
                 <!-- Exclusiones -->
                 <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
@@ -1799,6 +1824,10 @@ CSS;
         }
         update_option(self::option_name('custom_css_mode'), $css_mode);
         update_option(self::option_name('custom_css'), self::sanitize_custom_css(wp_unslash($_POST['custom_css'] ?? '')));
+
+        if (self::is_woocommerce_active()) {
+            update_option('woocommerce_registration_generate_password', !empty($_POST['woocommerce_registration_generate_password']) ? 'yes' : 'no');
+        }
 
         $excluded = array_filter(array_map('intval', (array) ($_POST['excluded_pages'] ?? array())));
         update_option('authgate_excluded_pages', $excluded);

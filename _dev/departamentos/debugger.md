@@ -21,6 +21,7 @@ Incidencia multisite post-release `1.2.0`: AuthGate mezcla ajustes globales de r
 
 ## Hecho
 
+- QA multisite corregido: el texto de Registro ahora distingue network/single y el ajuste de contraseña WooCommerce vuelve a aparecer/guardarse por site.
 - QA adicional corregido: Estilo vuelve a estar visible en red para editar CSS global; `/wp-admin` no logueado redirige al slug AuthGate; site header enlaza a configuración global.
 
 - QA parcial del usuario recibido y corregido: registro pasa a control global de red, se ocultan Textos/Estilo en network admin, se quita registro local en site admin, site admin adopta diseño 22MW y los strings muestran mejor la herencia.

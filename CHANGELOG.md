@@ -7,6 +7,20 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.2] — 2026-06-20
+
+### Changed
+- Improved multisite network registration copy so it describes the global registration policy correctly.
+- Moved the site-level “Config global” link into the header badge style.
+
+### Fixed
+- Restored the WooCommerce generated-password setting in each multisite site where WooCommerce is active.
+- Fixed site-level AuthGate save toast behavior by processing all AuthGate admin roots.
+- Fixed the left layout margin on the site-level AuthGate screen in multisite.
+
+### QA
+- Manual QA confirmed by user before release.
+
 ## [1.2.1] — 2026-06-20
 
 ### Added

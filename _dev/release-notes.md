@@ -4,6 +4,14 @@
 
 2026-06-20
 
+## Release 1.2.2 — 2026-06-20
+
+- Hotfix estable posterior a `1.2.1`.
+- Restaura ajuste WooCommerce de contraseña por site multisite.
+- Ajusta copy de registro global en network admin.
+- Corrige header, enlace global, toast y margen izquierdo en pantalla AuthGate por site.
+- QA manual confirmado por el usuario antes de release.
+
 ## Release 1.2.1 — 2026-06-20
 
 - Consolidación estable de MS0–MS3 multisite, fixes QA y mejoras admin posteriores a `1.2.0`.

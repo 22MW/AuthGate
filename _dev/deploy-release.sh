@@ -30,9 +30,14 @@ if [ -f ".env.local" ]; then
     export $(grep -v '^#' ".env.local" | xargs)
 fi
 
+WORKSPACE_ENV="$(cd "$REPO_DIR/../../../../.." && pwd)/.env"
+if [ -f "$WORKSPACE_ENV" ]; then
+    export $(grep -v '^#' "$WORKSPACE_ENV" | xargs)
+fi
+
 if [ -z "$GITHUB_TOKEN" ]; then
-    echo "Error: define GITHUB_TOKEN en _dev/.env, .env.local o variable de entorno"
-    echo "  echo 'GITHUB_TOKEN=ghp_xxx' > _dev/.env"
+    echo "Error: define GITHUB_TOKEN en _dev/.env, .env.local, raíz del workspace o variable de entorno"
+    echo "  echo 'GITHUB_TOKEN=ghp_xxx' > /Users/22mw/Local\ Sites/plugins/.env"
     exit 1
 fi
 

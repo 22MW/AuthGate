@@ -129,13 +129,9 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    var root = document.querySelector('[data-mw22-back].authgate-back');
-
-    if (!root) {
-      return;
-    }
-
-    enhancePagePicker(root);
-    enhanceAjaxForms(root);
+    document.querySelectorAll('[data-mw22-back].authgate-back').forEach(function (root) {
+      enhancePagePicker(root);
+      enhanceAjaxForms(root);
+    });
   });
 })();

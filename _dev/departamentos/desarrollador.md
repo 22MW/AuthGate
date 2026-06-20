@@ -17,6 +17,8 @@ MS0–MS3 multisite aplicados localmente. Registro, Textos y CSS ya tienen separ
 
 ## Hecho
 
+- Fix site-level multisite: Config global pasa al badge del header, JS procesa todos los roots AuthGate y se elimina el padding/línea izquierda en `authgate-site`.
+- Fix multisite: restaurado ajuste `woocommerce_registration_generate_password` por site y ajustado copy de Registro según contexto network/single.
 - Ajuste toast: posición fija para que sea visible aunque se guarde desde zonas bajas de la página.
 - Ajuste backend: toast AJAX unificado en pantallas AuthGate, tab Estilo renombrado a CSS y botón Guardar CSS movido bajo el editor.
 - Ajuste logo: quitado logo de la pantalla protegida del sitio y enlazado a home el logo personalizado de la URL AuthGate.

@@ -29,6 +29,8 @@ QA multisite parcial recibido: se corrigieron los puntos reportados y queda repe
 
 ## Pendiente
 
+- Revalidar site-level multisite: badge Config global enlaza a red, toast guarda correctamente y no aparece línea blanca izquierda.
+- Revalidar en multisite que cada site con WooCommerce muestra y guarda “Contraseña WooCommerce”.
 - Ajuste toast: posición fija para que sea visible aunque se guarde desde zonas bajas de la página.
 - Ajuste backend: toast AJAX unificado en pantallas AuthGate, tab Estilo renombrado a CSS y botón Guardar CSS movido bajo el editor.
 - Ajuste logo: quitado logo de la pantalla protegida del sitio y enlazado a home el logo personalizado de la URL AuthGate.

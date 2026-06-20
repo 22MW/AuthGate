@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release `1.2.1` publicada en GitHub. Se consolidó MS0–MS3 multisite y mejoras admin posteriores a `1.2.0`.
+Release `1.2.2` en preparación. Hotfix multisite/admin posterior a `1.2.1`, QA confirmado por el usuario.
 
 ## Descubierto
 
@@ -15,6 +15,8 @@ Release `1.2.1` publicada en GitHub. Se consolidó MS0–MS3 multisite y mejoras
 - El script necesitaba excluir `_dev/` y `.kilo/` antes de crear rama/ZIP de release.
 
 ## Hecho
+
+- Preparada versión estable `1.2.2`: cabecera, readme, changelog y release-notes.
 
 - Preparada versión estable `1.2.1`: cabecera, readme, changelog y release-notes.
 - QA multisite confirmado por el usuario antes de release `1.2.1`.
@@ -35,10 +37,12 @@ Release `1.2.1` publicada en GitHub. Se consolidó MS0–MS3 multisite y mejoras
 
 ## Pendiente
 
-- Seguimiento post-release si aparece incidencia.
+- Publicar GitHub release `v1.2.2` y verificar ZIP `authgate.zip`.
 
 ## No volver a investigar
 
+- Token GitHub para releases disponible en la raíz local del workspace: `/Users/22mw/Local Sites/plugins/.env`; está ignorado por Git y no debe mostrarse ni commitearse.
+- `_dev/deploy-release.sh` ahora también lee ese `.env` raíz además de `_dev/.env`, `.env.local` y variable de entorno.
 - `_dev/` y `.kilo/` no deben ir en ZIP/release pública.
 - `_dev/deploy-release.sh` requiere working tree limpio antes de ejecutarse.
 - `_dev/deploy-release.sh` requiere `GITHUB_TOKEN` disponible en `_dev/.env`, `.env.local` o entorno.
