@@ -63,29 +63,89 @@ class AuthGate_Settings {
             : admin_url('admin-post.php');
     }
 
+    private const SCOPE_NETWORK = 'network';
+    private const SCOPE_SITE = 'site';
+    private const SCOPE_SITE_WITH_NETWORK_FALLBACK = 'site_with_network_fallback';
+
+    /**
+     * Mapa explícito de scopes multisite.
+     *
+     * MS0 mantiene el comportamiento actual para evitar migraciones implícitas:
+     * - `network`: usa site options en multisite.
+     * - `site`: usa options del sitio actual.
+     * - `site_with_network_fallback`: reservado para MS2/MS3/MS4.
+     *
+     * @return array<string,string>
+     */
+    private static function multisite_scope_map(): array {
+        return array(
+            'blacklist'                                  => self::SCOPE_NETWORK,
+            'block_wp_login'                            => self::SCOPE_NETWORK,
+            'custom_css'                                => self::SCOPE_SITE_WITH_NETWORK_FALLBACK,
+            'custom_css_enabled'                        => self::SCOPE_SITE_WITH_NETWORK_FALLBACK,
+            'custom_css_mode'                           => self::SCOPE_SITE,
+            'inline_intro_html'                         => self::SCOPE_NETWORK,
+            'login_logo_url'                            => self::SCOPE_NETWORK,
+            'login_slug'                                => self::SCOPE_NETWORK,
+            'login_slug_redirect'                       => self::SCOPE_NETWORK,
+            'max_attempts'                              => self::SCOPE_NETWORK,
+            'reset_slug'                                => self::SCOPE_NETWORK,
+            'excluded_pages'                            => self::SCOPE_SITE,
+            'mailmint_list_id'                          => self::SCOPE_SITE,
+            'users_can_register'                        => self::SCOPE_SITE,
+            'woocommerce_registration_generate_password'=> self::SCOPE_SITE,
+        );
+    }
+
     /**
      * Claves que se guardan por subsite (get_option) aunque estemos en multisite.
      *
      * @return string[]
      */
     private static function subsite_keys(): array {
-        return array('excluded_pages', 'mailmint_list_id');
+        return array_keys(
+            array_filter(
+                self::multisite_scope_map(),
+                static function (string $scope): bool {
+                    return self::SCOPE_SITE === $scope;
+                }
+            )
+        );
+    }
+
+    /** @return string */
+    private static function setting_scope(string $key): string {
+        if (0 === strpos($key, 'str_')) {
+            return self::SCOPE_SITE_WITH_NETWORK_FALLBACK;
+        }
+
+        $map = self::multisite_scope_map();
+        return $map[$key] ?? self::SCOPE_NETWORK;
+    }
+
+    /** @return bool */
+    private static function setting_uses_site_option(string $key): bool {
+        return self::SCOPE_SITE === self::setting_scope($key);
+    }
+
+    /** @return string */
+    private static function option_name(string $key): string {
+        return 'authgate_' . $key;
     }
 
     /**
      * Guarda una opción de ajustes.
-     * En multisite, las claves de subsite_keys() usan get/update_option (por sitio);
-     * el resto usa site options (red).
+     * En multisite, el scope explícito decide si se guarda en red o sitio.
      *
      * @param string $key   Sin prefijo 'authgate_'
      * @param mixed  $value
      * @return void
      */
     private static function update_setting( string $key, $value ): void {
-        if (self::is_network() && !in_array($key, self::subsite_keys(), true)) {
-            update_site_option('authgate_' . $key, $value);
+        if (self::is_network() && !self::setting_uses_site_option($key)) {
+            update_site_option(self::option_name($key), $value);
         } else {
-            update_option('authgate_' . $key, $value);
+            update_option(self::option_name($key), $value);
         }
     }
 
@@ -160,15 +220,58 @@ class AuthGate_Settings {
      * @return mixed
      */
     public static function get($key, $default = '') {
-        if (self::is_network() && !in_array($key, self::subsite_keys(), true)) {
-            return get_site_option('authgate_' . $key, $default);
+        if (self::is_network()) {
+            if (self::SCOPE_SITE_WITH_NETWORK_FALLBACK === self::setting_scope($key)) {
+                $site_value = get_option(self::option_name($key), null);
+                if (null !== $site_value && '' !== $site_value) {
+                    return $site_value;
+                }
+                return get_site_option(self::option_name($key), $default);
+            }
+
+            if (!self::setting_uses_site_option($key)) {
+                return get_site_option(self::option_name($key), $default);
+            }
         }
-        return get_option('authgate_' . $key, $default);
+
+        return get_option(self::option_name($key), $default);
+    }
+
+    /** @return bool */
+    public static function network_allows_user_registration(): bool {
+        if (!is_multisite()) {
+            return true;
+        }
+
+        return in_array(get_site_option('registration', 'none'), array('user', 'all'), true);
+    }
+
+    /** @return string */
+    private static function network_registration_label(): string {
+        $labels = array(
+            'none' => __('Registro desactivado en la red', 'authgate'),
+            'user' => __('Solo cuentas de usuario', 'authgate'),
+            'blog' => __('Solo nuevos sitios', 'authgate'),
+            'all'  => __('Sitios y cuentas de usuario', 'authgate'),
+        );
+
+        $value = is_multisite() ? get_site_option('registration', 'none') : 'user';
+        return $labels[$value] ?? sprintf(__('Valor desconocido: %s', 'authgate'), $value);
     }
 
     /** @return bool */
     public static function registration_enabled(): bool {
+        if (self::is_network()) {
+            return self::network_allows_user_registration();
+        }
+
         return (bool) get_option('users_can_register');
+    }
+
+    /** @return string */
+    private static function network_registration_mode(): string {
+        $mode = (string) get_site_option('registration', 'none');
+        return in_array($mode, array('none', 'user', 'blog', 'all'), true) ? $mode : 'none';
     }
 
     /** @return bool */
@@ -252,7 +355,17 @@ class AuthGate_Settings {
 
     /** @return bool */
     public static function custom_css_enabled(): bool {
+        if (self::is_network() && 'disabled' === get_option(self::option_name('custom_css_mode'), 'inherit')) {
+            return false;
+        }
+
         return (bool) self::get('custom_css_enabled', true);
+    }
+
+    /** @return string */
+    private static function custom_css_mode(): string {
+        $mode = (string) get_option(self::option_name('custom_css_mode'), 'inherit');
+        return in_array($mode, array('inherit', 'override', 'disabled'), true) ? $mode : 'inherit';
     }
 
     /** @return array<string,string> */
@@ -274,6 +387,10 @@ class AuthGate_Settings {
 .authgate-protected-page__logo {
     text-align: center;
     margin-bottom: 18px;
+}
+
+.authgate__message {
+    font-size: var(--fs-small, 1.575rem);
 }
 
 .authgate-protected-page__logo img,
@@ -314,7 +431,7 @@ class AuthGate_Settings {
 .authgate-protected-page__desc,
 .authgate__intro {
     margin-bottom: 24px;
-    font-size: 1rem;
+    font-size: 1.5rem;
     line-height: 1.55;
 }
 
@@ -374,6 +491,26 @@ class AuthGate_Settings {
 .authgate__label {
     font-size: var(--fs-small, 1.2rem);
 }
+
+.authgate__link,
+.authgate__switch-link,
+.authgate__back-login,
+.authgate__check-label {
+    font-size: var(--fs-small, 1.375rem);
+}
+
+.authgate__btn {
+    border-radius: 999px !important;
+    font-size: var(--fs-body, 1.5rem) !important;
+}
+
+.authgate__btn:hover {
+    opacity: .6;
+}
+
+.authgate__lost-trigger {
+    display: none !important;
+}
 CSS;
 
         $white = <<<'CSS'
@@ -394,6 +531,12 @@ CSS;
 .authgate__input:focus {
     border-color: currentColor;
     box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+}
+
+.authgate__btn {
+    background-color: #000000 !important;
+    border: none !important;
+    color: #ffffff !important;
 }
 CSS;
 
@@ -425,6 +568,12 @@ CSS;
 .authgate__input:focus {
     border-color: #f9fafb;
     box-shadow: 0 0 0 3px rgba(249, 250, 251, 0.16);
+}
+
+.authgate__btn {
+    background-color: #ffffff !important;
+    border: none !important;
+    color: #111827 !important;
 }
 CSS;
 
@@ -465,12 +614,8 @@ CSS;
      * @return string
      */
     public static function get_string($key) {
-        $defs    = self::string_definitions();
-        $default = $defs[$key] ?? '';
-        $saved   = self::is_network()
-            ? get_site_option('authgate_str_' . $key, '')
-            : get_option('authgate_str_' . $key, '');
-        return $saved !== '' ? $saved : $default;
+        $defs = self::string_definitions();
+        return (string) self::get('str_' . $key, $defs[$key] ?? '');
     }
 
     /** @return void */
@@ -480,6 +625,9 @@ CSS;
         }
 
         $tab = sanitize_key($_GET['tab'] ?? 'general');
+        if (self::is_network() && 'strings' === $tab) {
+            $tab = 'general';
+        }
         ?>
         <div class="mw22-back authgate-back" data-mw22-back data-mw22-theme-key="authgateBackTheme" data-mw22-updated-message="Ajustes guardados.">
             <header class="mw22-back__header">
@@ -507,11 +655,25 @@ CSS;
                 <?php
                 $tabs = array(
                     'general'    => __('General', 'authgate'),
-                    'strings'    => __('Textos', 'authgate'),
-                    'css'        => __('Estilo', 'authgate'),
                     'shortcodes' => __('Shortcodes', 'authgate'),
                     'blocked'    => __('Seguridad', 'authgate'),
                     'log'        => __('Accesos', 'authgate'),
+                );
+
+                if (!self::is_network()) {
+                    $tabs = array_merge(
+                        array_slice($tabs, 0, 1, true),
+                        array(
+                            'strings' => __('Textos', 'authgate'),
+                        ),
+                        array_slice($tabs, 1, null, true)
+                    );
+                }
+
+                $tabs = array_merge(
+                    array_slice($tabs, 0, 1, true),
+                    array('css' => __('Estilo', 'authgate')),
+                    array_slice($tabs, 1, null, true)
                 );
                 foreach ($tabs as $slug => $label) :
                     $active = $tab === $slug ? 'is-active' : '';
@@ -588,14 +750,35 @@ CSS;
                     <?php esc_html_e('Estos controles usan las opciones nativas de WordPress y WooCommerce. Si el registro está desactivado, AuthGate ocultará la parte de registro en frontend.', 'authgate'); ?>
                 </p>
                 <table class="form-table">
+                    <?php if (self::is_network()) : ?>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Política de red', 'authgate'); ?></th>
+                        <td>
+                            <fieldset>
+                                <label><input type="radio" name="network_registration" value="none" <?php checked(self::network_registration_mode(), 'none'); ?>> <?php esc_html_e('Registro desactivado', 'authgate'); ?></label><br>
+                                <label><input type="radio" name="network_registration" value="user" <?php checked(self::network_registration_mode(), 'user'); ?>> <?php esc_html_e('Permitir cuentas de usuario', 'authgate'); ?></label><br>
+                                <label><input type="radio" name="network_registration" value="blog" <?php checked(self::network_registration_mode(), 'blog'); ?>> <?php esc_html_e('Permitir nuevos sitios', 'authgate'); ?></label><br>
+                                <label><input type="radio" name="network_registration" value="all" <?php checked(self::network_registration_mode(), 'all'); ?>> <?php esc_html_e('Permitir sitios y cuentas de usuario', 'authgate'); ?></label>
+                            </fieldset>
+                            <p class="description">
+                                <?php esc_html_e('Equivale a la opción nativa de multisite “Permitir nuevos registros”. AuthGate usará esta política global para mostrar u ocultar el registro.', 'authgate'); ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <?php else : ?>
+                    <?php $network_allows_registration = self::network_allows_user_registration(); ?>
                     <tr>
                         <th scope="row"><?php esc_html_e('Permitir registro', 'authgate'); ?></th>
                         <td>
                             <label>
-                                <input type="checkbox" name="users_can_register" value="1" <?php checked(self::registration_enabled()); ?>>
+                                <input type="checkbox" name="users_can_register" value="1" <?php checked((bool) get_option('users_can_register')); ?> <?php disabled(!$network_allows_registration); ?>>
                                 <?php esc_html_e('Permitir que los visitantes creen una cuenta', 'authgate'); ?>
                             </label>
-                            <p class="description"><?php esc_html_e('Equivale a la opción nativa de WordPress “Cualquiera puede registrarse”.', 'authgate'); ?></p>
+                            <?php if (!$network_allows_registration) : ?>
+                                <p class="description"><?php esc_html_e('La red multisite tiene bloqueado el registro de usuarios. Este sitio no puede activarlo.', 'authgate'); ?></p>
+                            <?php else : ?>
+                                <p class="description"><?php esc_html_e('Equivale a la opción nativa de WordPress “Cualquiera puede registrarse”.', 'authgate'); ?></p>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php if (self::is_woocommerce_active()) : ?>
@@ -609,6 +792,7 @@ CSS;
                             <p class="description"><?php esc_html_e('Equivale a la opción nativa de WooCommerce. Si está activa, AuthGate no mostrará campos de contraseña en el registro.', 'authgate'); ?></p>
                         </td>
                     </tr>
+                    <?php endif; ?>
                     <?php endif; ?>
                 </table>
             </div>
@@ -1258,19 +1442,28 @@ CSS;
         }
 
         self::update_setting('max_attempts',        max(1, (int) ($_POST['max_attempts'] ?? 10)));
+
+        if (self::is_network()) {
+            $network_registration = sanitize_key($_POST['network_registration'] ?? 'none');
+            if (!in_array($network_registration, array('none', 'user', 'blog', 'all'), true)) {
+                $network_registration = 'none';
+            }
+            update_site_option('registration', $network_registration);
+        }
+
         self::update_setting('login_logo_url',      esc_url_raw(wp_unslash($_POST['login_logo_url'] ?? '')));
         self::update_setting('inline_intro_html',   wp_kses_post(wp_unslash($_POST['inline_intro_html'] ?? '')));
         self::update_setting('login_slug',          sanitize_title(wp_unslash($_POST['login_slug'] ?? 'acceder')));
         self::update_setting('login_slug_redirect', esc_url_raw(wp_unslash($_POST['login_slug_redirect'] ?? '')));
         self::update_setting('reset_slug',          sanitize_title(wp_unslash($_POST['reset_slug'] ?? 'restablecer-contrasena')));
         self::update_setting('block_wp_login',      !empty($_POST['block_wp_login']));
-        update_option('users_can_register', !empty($_POST['users_can_register']) ? 1 : 0);
-
-        if (self::is_woocommerce_active()) {
-            update_option('woocommerce_registration_generate_password', !empty($_POST['woocommerce_registration_generate_password']) ? 'yes' : 'no');
-        }
-
         if (!self::is_network()) {
+            update_option('users_can_register', !empty($_POST['users_can_register']) ? 1 : 0);
+
+            if (self::is_woocommerce_active()) {
+                update_option('woocommerce_registration_generate_password', !empty($_POST['woocommerce_registration_generate_password']) ? 'yes' : 'no');
+            }
+
             self::update_setting('mailmint_list_id', max(0, (int) ($_POST['mailmint_list_id'] ?? 0)));
             $excluded = array_filter(array_map('intval', (array) ($_POST['excluded_pages'] ?? array())));
             self::update_setting('excluded_pages', $excluded);
@@ -1343,7 +1536,7 @@ CSS;
     }
 
     /** @return void */
-    private function save_string_values(): void {
+    private function save_string_values(bool $site_scope = false): void {
         $defs          = self::string_definitions();
         $textarea_keys = self::textarea_string_keys();
         $wysiwyg_keys  = self::wysiwyg_string_keys();
@@ -1357,8 +1550,51 @@ CSS;
             } else {
                 $val = sanitize_text_field($raw);
             }
-            self::update_setting('str_' . $key, $val);
+
+            if ($site_scope) {
+                update_option(self::option_name('str_' . $key), $val);
+            } else {
+                self::update_setting('str_' . $key, $val);
+            }
         }
+    }
+
+    /** @return void */
+    private function render_site_css_section(): void {
+        $presets = self::css_presets();
+        $mode    = self::custom_css_mode();
+        ?>
+        <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <h2 style="margin-top:0;"><?php esc_html_e('Estilo de este sitio', 'authgate'); ?></h2>
+            <p class="description" style="margin-bottom:16px;">
+                <?php esc_html_e('Puedes heredar el CSS global de la red, sobrescribirlo solo en esta web o desactivar el CSS propio en este sitio.', 'authgate'); ?>
+            </p>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php esc_html_e('Modo CSS', 'authgate'); ?></th>
+                    <td>
+                        <label><input type="radio" name="custom_css_mode" value="inherit" <?php checked($mode, 'inherit'); ?>> <?php esc_html_e('Heredar CSS global de la red', 'authgate'); ?></label><br>
+                        <label><input type="radio" name="custom_css_mode" value="override" <?php checked($mode, 'override'); ?>> <?php esc_html_e('Usar CSS propio para este sitio', 'authgate'); ?></label><br>
+                        <label><input type="radio" name="custom_css_mode" value="disabled" <?php checked($mode, 'disabled'); ?>> <?php esc_html_e('Desactivar CSS propio en este sitio', 'authgate'); ?></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="authgate_site_custom_css"><?php esc_html_e('CSS de este sitio', 'authgate'); ?></label></th>
+                    <td>
+                        <textarea id="authgate_site_custom_css" name="custom_css" rows="14" style="width:100%;font-family:monospace;"><?php echo esc_textarea(get_option(self::option_name('custom_css'), '')); ?></textarea>
+                        <p class="description"><?php esc_html_e('Solo se usa si eliges “Usar CSS propio para este sitio”. Deja vacío para no añadir reglas locales.', 'authgate'); ?></p>
+                    </td>
+                </tr>
+            </table>
+            <details>
+                <summary><?php esc_html_e('Ver presets copiables', 'authgate'); ?></summary>
+                <h3><?php esc_html_e('Preset blanco', 'authgate'); ?></h3>
+                <textarea readonly rows="8" style="width:100%;font-family:monospace;margin-bottom:16px;"><?php echo esc_textarea($presets['white']); ?></textarea>
+                <h3><?php esc_html_e('Preset oscuro', 'authgate'); ?></h3>
+                <textarea readonly rows="8" style="width:100%;font-family:monospace;"><?php echo esc_textarea($presets['dark']); ?></textarea>
+            </details>
+        </div>
+        <?php
     }
 
     /** @return void */
@@ -1427,6 +1663,49 @@ CSS;
     }
 
     /** @return void */
+    private function render_site_strings_section(): void {
+        $defs          = self::string_definitions();
+        $textarea_keys = self::textarea_string_keys();
+        $wysiwyg_keys  = self::wysiwyg_string_keys();
+        ?>
+        <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
+            <h2 style="margin-top:0;"><?php esc_html_e('Textos de este sitio', 'authgate'); ?></h2>
+            <p class="description" style="margin-bottom:16px;">
+                <?php esc_html_e('Deja un campo vacío para heredar el texto global configurado en la red. Si la red tampoco tiene texto, se usará el valor por defecto del plugin.', 'authgate'); ?>
+            </p>
+            <div class="authgate-strings-grid">
+                <?php foreach ($defs as $key => $default) :
+                    $field_id   = 'authgate_site_str_' . $key;
+                    $saved      = get_option('authgate_str_' . $key, '');
+                    $inherited  = self::get_string($key);
+                    $is_wide    = in_array($key, $textarea_keys, true) || in_array($key, $wysiwyg_keys, true);
+                    $field_class = $is_wide ? 'authgate-string-field authgate-string-field--wide' : 'authgate-string-field';
+                    ?>
+                    <div class="<?php echo esc_attr($field_class); ?>">
+                        <label for="<?php echo esc_attr($field_id); ?>"><code><?php echo esc_html($key); ?></code></label>
+                        <?php if (in_array($key, $wysiwyg_keys, true)) : ?>
+                            <?php wp_editor($saved, $field_id, array(
+                                'textarea_name' => 'strings[' . $key . ']',
+                                'textarea_rows' => 5,
+                                'media_buttons' => false,
+                                'teeny'         => false,
+                            )); ?>
+                        <?php elseif (in_array($key, $textarea_keys, true)) : ?>
+                            <textarea id="<?php echo esc_attr($field_id); ?>" name="strings[<?php echo esc_attr($key); ?>]" rows="4" placeholder="<?php echo esc_attr($inherited); ?>"><?php echo esc_textarea($saved); ?></textarea>
+                        <?php else : ?>
+                            <input type="text" id="<?php echo esc_attr($field_id); ?>" name="strings[<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr($saved); ?>" placeholder="<?php echo esc_attr($inherited); ?>">
+                        <?php endif; ?>
+                        <p class="description">
+                            <?php printf(esc_html__('Heredado si queda vacío: %s', 'authgate'), esc_html($inherited)); ?>
+                        </p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    /** @return void */
     public function render_site_page() {
         if (!current_user_can('manage_options')) {
             wp_die(esc_html__('Sin permiso.', 'authgate'));
@@ -1435,15 +1714,41 @@ CSS;
         $excluded_pages = (array) self::get('excluded_pages', array());
         $all_pages      = get_pages(array('sort_column' => 'post_title'));
         ?>
-        <div class="wrap">
-            <h1><?php esc_html_e('AuthGate', 'authgate'); ?></h1>
+        <div class="mw22-back authgate-back" data-mw22-back data-mw22-theme-key="authgateBackTheme" data-mw22-updated-message="Ajustes guardados.">
+            <header class="mw22-back__header">
+                <a class="mw22-back__brand" href="https://22mw.online/" target="_blank" rel="noopener noreferrer">
+                    <span class="mw22-back__mark" aria-hidden="true">
+                        <svg viewBox="0 0 45 56" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="0 20 44.9189011 20 44.9189011 15 4.48417582 15 4.48417582 12.5 44.9189011 12.5 45 12.5 45 0 0.0810989011 0 0.0810989011 5 40.5168132 5 40.5168132 7.5 0 7.5 0 20"/>
+                            <polygon points="0.0810989011 42 44.9189011 42 44.9189011 37 4.48417582 37 4.48417582 34.5 45 34.5 45 22 0.0810989011 22 0.0810989011 27 40.5168132 27 40.5168132 29.5 0 29.5 0 42"/>
+                            <polygon points="21 44 0 44 0 56 5.37209302 56 5.37209302 48.8 7.81395349 48.8 7.81395349 56 13.1860465 56 13.1860465 48.8 15.627907 48.8 15.627907 56 21 56"/>
+                            <polygon transform="translate(34.5,50) rotate(-180) translate(-34.5,-50)" points="24 44 24 56 29.372093 56 29.372093 48.8 31.8139535 48.8 31.8139535 56 37.1860465 56 37.1860465 48.8 39.627907 48.8 39.627907 56 45 56 45 44"/>
+                        </svg>
+                    </span>
+                    <div class="mw22-back__title-row">
+                        <h1><?php esc_html_e('AuthGate', 'authgate'); ?></h1>
+                        <span class="mw22-back__version"><?php esc_html_e('Ajustes de este sitio', 'authgate'); ?></span>
+                    </div>
+                </a>
+                <div class="mw22-back__actions">
+                    <a class="button button-secondary" href="<?php echo esc_url(network_admin_url('settings.php?page=authgate')); ?>"><?php esc_html_e('Config global', 'authgate'); ?></a>
+                    <button type="button" class="mw22-back__theme" data-mw22-back-theme="dark"><?php esc_html_e('Oscuro', 'authgate'); ?></button>
+                    <button type="button" class="mw22-back__theme" data-mw22-back-theme="light"><?php esc_html_e('Claro', 'authgate'); ?></button>
+                </div>
+            </header>
+
+            <main class="mw22-back__content">
             <p class="description" style="margin-bottom:20px;">
-                <?php esc_html_e('Ajustes específicos de este sitio. Los ajustes globales (textos, URLs, rate limiting) se gestionan desde el administrador de red.', 'authgate'); ?>
+                <?php esc_html_e('Ajustes específicos de este sitio. La activación/desactivación del registro se gestiona desde AuthGate en el administrador de red.', 'authgate'); ?>
             </p>
 
             <form id="authgate-site-settings-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <input type="hidden" name="action" value="authgate_save_site">
                 <?php wp_nonce_field('authgate_save_site', '_authgate_nonce'); ?>
+
+                <?php $this->render_site_strings_section(); ?>
+
+                <?php $this->render_site_css_section(); ?>
 
                 <!-- Exclusiones -->
                 <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
@@ -1500,12 +1805,14 @@ CSS;
 
                 <?php submit_button(__('Guardar', 'authgate')); ?>
             </form>
+            </main>
             <script>
             (function($){
                 var $form = $('#authgate-site-settings-form');
                 var $btn  = $form.find('[type="submit"]');
                 $form.on('submit', function(e){
                     e.preventDefault();
+                    if (typeof tinyMCE !== 'undefined') { tinyMCE.triggerSave(); }
                     $btn.prop('disabled', true);
                     var data = new FormData(this);
                     fetch(ajaxurl, { method: 'POST', body: data, credentials: 'same-origin' })
@@ -1545,6 +1852,15 @@ CSS;
         if (!current_user_can('manage_options')) {
             $is_ajax ? wp_send_json_error(array('message' => __('Sin permiso.', 'authgate'))) : wp_die();
         }
+
+        $this->save_string_values(true);
+
+        $css_mode = sanitize_key($_POST['custom_css_mode'] ?? 'inherit');
+        if (!in_array($css_mode, array('inherit', 'override', 'disabled'), true)) {
+            $css_mode = 'inherit';
+        }
+        update_option(self::option_name('custom_css_mode'), $css_mode);
+        update_option(self::option_name('custom_css'), self::sanitize_custom_css(wp_unslash($_POST['custom_css'] ?? '')));
 
         $excluded = array_filter(array_map('intval', (array) ($_POST['excluded_pages'] ?? array())));
         update_option('authgate_excluded_pages', $excluded);

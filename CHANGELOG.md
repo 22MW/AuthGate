@@ -7,6 +7,25 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.0.2] — 2026-06-20
+
+### Added
+- Added multisite scope handling for AuthGate settings with network, site and fallback behavior.
+- Added per-site text overrides with fallback to network/default values.
+- Added per-site CSS mode to inherit global CSS, override it or disable custom CSS locally.
+- Added network-level registration policy control from AuthGate.
+- Added a global settings link from each site-level AuthGate screen.
+
+### Changed
+- Restored the global Style tab in network admin so inherited CSS can be edited centrally.
+- Moved multisite registration control to the network-level AuthGate settings.
+- Updated white and dark CSS presets with the latest confirmed frontend sizing and button styles.
+
+### Fixed
+- Fixed unauthenticated `/wp-admin` access redirecting to WordPress signup instead of the configured AuthGate login slug.
+- Improved site-level AuthGate screen styling to match the 22MW admin shell.
+- Improved empty per-site text fields so inherited values are visible as guidance.
+
 ## [1.2.0] — 2026-06-17
 
 ### Added

@@ -6,11 +6,11 @@
 
 ## Resumen humano
 
-AuthGate tiene release pública `1.2.0` publicada en GitHub. La versión consolida el backend/admin visual 22MW, la base reusable `22mw-back`, dark/light, navegación interna, selector buscable de exclusiones y la normalización de estilos para evitar duplicación entre base y overrides de AuthGate.
+AuthGate tiene release pública `1.2.0` publicada en GitHub. En rama `mishaAuthDev` se está aplicando el bloque multisite MS0–MS5; MS0, MS1, MS2 y MS3 ya están implementados localmente y queda QA conjunto multisite pendiente.
 
 ## Estado general
 
-Release `1.2.0` publicada. Rama `main` actualizada, rama `release` limpia y tag remoto `v1.2.0` existente.
+Release `1.2.0` publicada. Desarrollo actual en `mishaAuthDev` con MS0–MS3 multisite aplicados localmente, sin release nueva.
 
 ## Hecho
 
@@ -29,20 +29,22 @@ Release `1.2.0` publicada. Rama `main` actualizada, rama `release` limpia y tag 
 - ZIP publicado: `https://github.com/22MW/AuthGate/releases/download/v1.2.0/authgate.zip`.
 - `_dev/` excluido de rama `release` y ZIP público por script interno.
 - Trabajo comercial interno subido a `mishaAuthDev` dentro de `_dev/comercial/`.
+- MS0: mapa de scopes multisite aplicado.
+- MS1: registro por sitio respetando política de red aplicado.
+- MS2: textos por sitio con fallback sitio → red → default aplicado.
+- MS3: CSS por sitio con modo heredar, sobrescribir o desactivar aplicado.
 
 ## En curso
 
-- Seguimiento post-release `1.2.0`.
-- Trabajo comercial interno en `_dev/comercial/`, fuera de release/ZIP público.
+- QA conjunto MS1/MS2/MS3 pendiente con red + mínimo 2 subsites.
 
 ## Bloqueado
 
-- No hay bloqueo de release abierto.
+- No hay bloqueo técnico confirmado; QA multisite pendiente antes de commit/push o nueva release.
 
 ## Próximo paso recomendado
 
-- Verificar actualización desde una instalación con versión anterior usando el ZIP `1.2.0` si se quiere validar el updater en entorno real.
-- Mantener Fase 4 AJAX admin como futuro; no ejecutarla sin nueva decisión.
+- Ejecutar QA multisite conjunto de MS1/MS2/MS3 antes de avanzar a MS4 o preparar release.
 
 ## No volver a investigar
 

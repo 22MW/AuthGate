@@ -2,11 +2,11 @@
 
 ## Última actualización
 
-2026-06-16
+2026-06-19
 
 ## Resumen humano
 
-P1 validada manualmente por el usuario. La versión dev `1.1.0.1` ya está pusheada. No hay release estable todavía.
+QA multisite parcial recibido: se corrigieron los puntos reportados y queda repetir validación conjunta MS1/MS2/MS3.
 
 ## Descubierto
 
@@ -14,27 +14,42 @@ P1 validada manualmente por el usuario. La versión dev `1.1.0.1` ya está pushe
 - WooCommerce confirmado activo: `10.7.0`.
 - AuthGate permite gestionar registro WordPress y opción WooCommerce de contraseña.
 - Usuario confirmó QA P1 OK.
+- MS1/MS2/MS3 requieren validación conjunta en red multisite con al menos 2 subsites.
+- Hallazgos QA: registro debía controlarse desde red, Textos/Estilo no debían mostrarse en network admin, registro local por site no afectaba, site admin no tenía diseño 22MW y strings parecían vacíos sin herencia clara.
 
 ## Hecho
 
 - Validación técnica previa: `php -l` en PHP tocado.
 - `git diff --check` sin salida antes del push dev.
 - QA manual P1 confirmada por el usuario.
+- Preparado alcance de QA conjunto MS1/MS2/MS3.
+- Fixes QA aplicados sobre los cinco hallazgos reportados.
 
 ## Pendiente
 
-- Documentar release estable si el usuario la solicita.
+- Presets CSS actualizados: blanco toma los ajustes visuales aportados por el usuario y oscuro replica tamaños/interacciones adaptando colores.
+- Revalidar que Estilo global aparece en red y puede heredarse desde sites.
+- Revalidar que `/wp-admin` no logueado redirige a `/acceder/` si ese es el slug configurado.
+- Revalidar enlace “Config global” desde AuthGate de cada site.
+- Validar que la red activa/desactiva registro desde AuthGate.
+- Validar que los sites ya no muestran control local de registro.
+- Validar textos distintos por subsite y fallback a red/default.
+- Validar CSS heredado, sobrescrito y desactivado por subsite.
+- Validar que Exclusiones y Mail Mint siguen sin cruzarse entre sitios.
+- Validar que network admin no muestra pestañas Textos/Estilo.
+- Validar que site admin respeta diseño 22MW.
 
 ## No volver a investigar
 
 - Entorno actual es local.
 - P1 ya está implementada en `1.1.0.1`.
 - QA P1 OK confirmado por el usuario.
+- No crear usuarios de prueba sin permiso explícito si se considera prueba con efecto.
 
 ## Riesgos o bloqueos
 
-- No hay bloqueo QA confirmado para P1.
+- QA multisite no ejecutado todavía.
 
 ## Próximo paso recomendado
 
-- Pasar a preparación de release estable solo con permiso explícito.
+- Ejecutar QA manual MS1/MS2/MS3 junto con el usuario antes de commit/push o MS4.

@@ -4,7 +4,7 @@
  * Plugin Name: AuthGate by 22MW
  * Plugin URI: https://wordpress.org/plugins/authgate
  * Description: Frontend authentication & access control for WordPress
- * Version: 1.2.0
+ * Version: 1.2.0.2
  * Author: 22MW
  * Author URI: http://22mw.online
  * License: GPLv2 o posterior

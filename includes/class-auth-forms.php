@@ -29,6 +29,7 @@ class AuthGate_Forms
         add_shortcode('authgate_reset',           array($this, 'shortcode_reset_password'));
 
         add_action('init',                  array($this, 'register_rewrite_rules'));
+        add_action('init',                  array($this, 'maybe_redirect_wp_admin'));
         add_filter('query_vars',            array($this, 'register_query_vars'));
         add_action('wp_enqueue_scripts',    array($this, 'enqueue_assets'));
         add_action('template_redirect',     array($this, 'handle_auth_slug_page'), 9);
@@ -230,6 +231,24 @@ class AuthGate_Forms
     // -------------------------------------------------------------------------
     // Bloqueo wp-login.php
     // -------------------------------------------------------------------------
+
+    /** @return void */
+    public function maybe_redirect_wp_admin()
+    {
+        if (is_user_logged_in()) return;
+        if (!(bool) AuthGate_Settings::get('block_wp_login', false)) return;
+
+        $request_path = parse_url(wp_unslash($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+        $request_path = '/' . ltrim((string) $request_path, '/');
+
+        if (!in_array($request_path, array('/wp-admin', '/wp-admin/'), true)) return;
+
+        $login_slug = sanitize_title(AuthGate_Settings::get('login_slug', ''));
+        if (!$login_slug) return;
+
+        wp_safe_redirect(home_url('/' . $login_slug . '/'), 302);
+        exit;
+    }
 
     /** @return void */
     public function maybe_block_wp_login()

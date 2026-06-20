@@ -2,7 +2,16 @@
 
 ## Última actualización
 
-2026-06-16
+2026-06-20
+
+## Dev 1.2.0.2 — 2026-06-20
+
+- MS0–MS3 multisite: mapa de scopes, registro global de red, textos por sitio con fallback y CSS por sitio con herencia/sobrescritura/desactivación.
+- Restaurada la pestaña global “Estilo” en network admin para editar el CSS heredable.
+- Añadido enlace a configuración global desde la pantalla AuthGate de cada site.
+- Corregida redirección de `/wp-admin` no logueado hacia el slug AuthGate configurado.
+- Actualizados presets CSS blanco y oscuro con los ajustes visuales confirmados.
+- QA manual parcial recibido; queda repetir QA conjunto multisite antes de release estable.
 
 
 ## Release 1.2.0 — 2026-06-17

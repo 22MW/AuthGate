@@ -33,7 +33,7 @@
     .checklist { list-style: none; padding-left: 0; }
     .checklist li::before { content: "☐"; color: var(--warn); font-weight: 700; margin-right: 8px; }
     .checklist .done::before { content: "☑"; color: var(--ok); }
-    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
     .flow div { border-radius: 18px; padding: 14px; background: rgba(127,139,236,.12); }
     @media (max-width: 900px) { header { display: block; } .grid, .flow { grid-template-columns: 1fr; } .wide, .span2 { grid-column: span 1; } .areas { grid-template-columns: 1fr 1fr; } }
   </style>
@@ -42,95 +42,86 @@
   <main>
     <header>
       <div>
-        <h1>AuthGate<br><em>1.2.0</em></h1>
-        <p class="muted">Última actualización: 2026-06-17</p>
+        <h1>AuthGate<br><em>Multisite</em></h1>
+        <p class="muted">Última actualización: 2026-06-19</p>
       </div>
-      <span class="badge ok">Release publicada</span>
+      <span class="badge warn">MS0 + MS1 + MS2 + MS3 aplicados</span>
     </header>
 
     <section class="grid">
       <article class="card wide">
         <h2>Resumen humano</h2>
-        <p>AuthGate tiene release pública <code>1.2.0</code> publicada en GitHub. La versión consolida el backend/admin visual 22MW, la base reusable <code>22mw-back</code>, dark/light, submenús verticales, selector buscable de exclusiones y la separación correcta entre estilos base y overrides específicos.</p>
-        <p><a href="https://github.com/22MW/AuthGate/releases/tag/v1.2.0">Release v1.2.0</a> · <a href="https://github.com/22MW/AuthGate/releases/download/v1.2.0/authgate.zip">authgate.zip</a></p>
+        <p>AuthGate tiene release pública <code>1.2.0</code> publicada. En rama de trabajo ya están aplicados MS0, MS1, MS2 y MS3 con fixes del primer QA multisite. Queda repetir QA conjunto antes de avanzar. Últimos fixes: Estilo global visible, `/wp-admin` redirige al login AuthGate y sites enlazan a config global.</p>
       </article>
 
       <article class="card span2">
-        <h2>Checklist release 1.2.0</h2>
-        <ul class="checklist">
-          <li class="done">Versión actualizada a <code>1.2.0</code>.</li>
-          <li class="done"><code>CHANGELOG.md</code> actualizado.</li>
-          <li class="done"><code>readme.txt</code> actualizado con stable tag <code>1.2.0</code>.</li>
-          <li class="done">QA manual confirmado por el usuario.</li>
-          <li class="done">Rama <code>release</code> creada limpia.</li>
-          <li class="done">ZIP público generado sin <code>_dev/</code>.</li>
-          <li class="done">GitHub Release <code>v1.2.0</code> publicada.</li>
-          <li class="done">Rama <code>main</code> actualizada.</li>
+        <h2>Problema confirmado</h2>
+        <ul>
+          <li>MS1: Registro se gestiona desde la red y usa la política nativa multisite.</li>
+          <li>MS2: Textos ya tienen fallback sitio → red → default.</li>
+          <li>MS3: CSS ya permite heredar, sobrescribir o desactivar por sitio.</li>
+          <li>Exclusiones y Mail Mint sí están por sitio.</li>
+          <li>General mezcla scopes globales y por sitio.</li>
+          <li>La red debe mandar si bloquea registro de usuarios.</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>No entra en release</h2>
-        <ul>
-          <li><code>_dev/</code></li>
-          <li><code>_dev/comercial/</code></li>
-          <li><code>.kilo/</code></li>
-          <li><code>.git/</code></li>
-          <li><code>.env</code> o tokens</li>
-          <li>logs, backups o dumps</li>
-        </ul>
+        <h2>Decisión base</h2>
+        <p>Modelo recomendado: <code>sitio → red → default</code>. La red define política y defaults; cada web puede sobrescribir Textos/Estilo/Registro cuando la red lo permite.</p>
       </article>
 
       <article class="card wide">
-        <h2>Fases 22MW-BACK</h2>
+        <h2>Plan multisite</h2>
         <div class="flow">
-          <div><strong>1</strong><br>Shell + menú + dark/light<br><span class="badge ok">cerrado</span></div>
-          <div><strong>2</strong><br>Componentes, formularios y switches<br><span class="badge ok">cerrado</span></div>
-          <div><strong>3</strong><br>Submenús verticales internos<br><span class="badge ok">cerrado</span></div>
-          <div><strong>4</strong><br>Carga AJAX de secciones<br><span class="badge warn">futuro</span></div>
+          <div><strong>MS0</strong><br>Mapa de scopes<br><span class="badge ok">hecho</span></div>
+          <div><strong>MS1</strong><br>Registro por sitio<br><span class="badge ok">hecho</span></div>
+          <div><strong>MS2</strong><br>Textos por sitio<br><span class="badge ok">hecho</span></div>
+          <div><strong>MS3</strong><br>Estilo por sitio<br><span class="badge ok">hecho</span></div>
+          <div><strong>MS4</strong><br>General separado<br><span class="badge warn">pendiente</span></div>
         </div>
       </article>
 
       <article class="card wide">
         <h2>Áreas</h2>
         <div class="areas">
-          <div class="area"><strong>Funcional</strong><br><span class="badge ok">estable</span></div>
-          <div class="area"><strong>Backend</strong><br><span class="badge ok">1.2.0</span></div>
-          <div class="area"><strong>Frontend</strong><br><span class="badge ok">sin cambios</span></div>
-          <div class="area"><strong>AJAX admin</strong><br><span class="badge warn">futuro</span></div>
-          <div class="area"><strong>Dark/light</strong><br><span class="badge ok">localStorage</span></div>
-          <div class="area"><strong>Multisite site-level</strong><br><span class="badge warn">pendiente futuro</span></div>
-          <div class="area"><strong>QA</strong><br><span class="badge ok">OK usuario</span></div>
-          <div class="area"><strong>Release</strong><br><span class="badge ok">publicada</span></div>
+          <div class="area"><strong>Release</strong><br><span class="badge ok">1.2.0 publicada</span></div>
+          <div class="area"><strong>Multisite</strong><br><span class="badge warn">QA pendiente</span></div>
+          <div class="area"><strong>Registro</strong><br><span class="badge ok">global red</span></div>
+          <div class="area"><strong>Textos</strong><br><span class="badge ok">por sitio</span></div>
+          <div class="area"><strong>Estilo</strong><br><span class="badge ok">por sitio</span></div>
+          <div class="area"><strong>Exclusiones</strong><br><span class="badge ok">por sitio</span></div>
+          <div class="area"><strong>Mail Mint</strong><br><span class="badge ok">por sitio</span></div>
+          <div class="area"><strong>QA</strong><br><span class="badge warn">multisite pendiente</span></div>
         </div>
       </article>
 
       <article class="card">
-        <h2>Archivos clave publicados</h2>
-        <ul>
-          <li><code>authgate.php</code></li>
-          <li><code>includes/class-auth-settings.php</code></li>
-          <li><code>assets/css/22mw-back.css</code></li>
-          <li><code>assets/css/authgate-back.css</code></li>
-          <li><code>assets/js/22mw-back.js</code></li>
-          <li><code>assets/js/authgate-back.js</code></li>
-          <li><code>CHANGELOG.md</code></li>
-          <li><code>readme.txt</code></li>
+        <h2>Validación necesaria</h2>
+        <ul class="checklist">
+          <li>Red activa/desactiva registro desde AuthGate.</li>
+          <li>Sites no muestran control local de registro.</li>
+          <li>Sitio A/B muestran textos distintos.</li>
+          <li>Sitio A/B aplican CSS distinto o heredado.</li>
+          <li>Exclusiones no se cruzan entre sitios.</li>
+          <li>Mail Mint no se cruza entre sitios.</li>
+          <li>Network admin no muestra pestañas Textos/Estilo.</li>
+          <li>Site admin respeta diseño 22MW.</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>Riesgos abiertos</h2>
+        <h2>Riesgos</h2>
         <ul>
-          <li>Updater no validado desde instalación real anterior en esta tarea.</li>
-          <li>AJAX admin sigue aplazado por riesgo con WP Editor/CodeMirror.</li>
-          <li>Comercial pendiente de publicación externa si se decide.</li>
+          <li>Slugs por sitio pueden requerir flush de rewrites por subsite.</li>
+          <li>Cambiar scopes sin fallback puede ocultar valores existentes.</li>
+          <li>WooCommerce puede variar entre subsites.</li>
         </ul>
       </article>
 
       <article class="card">
         <h2>Próximo paso</h2>
-        <p>Seguimiento post-release <code>1.2.0</code>. Si se continúa técnicamente, validar updater en entorno seguro. Si se continúa comercialmente, trabajar desde <code>_dev/comercial/</code> sin mezclar con release público.</p>
+        <p>Siguiente paso: QA multisite conjunto de <code>MS1</code>, <code>MS2</code> y <code>MS3</code> con red + 2 subsites.</p>
       </article>
     </section>
   </main>

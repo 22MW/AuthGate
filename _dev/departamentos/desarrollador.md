@@ -2,11 +2,11 @@
 
 ## Última actualización
 
-2026-06-16
+2026-06-19
 
 ## Resumen humano
 
-Bloques A, B y C cerrados. Bloque D implementado localmente: pestaña “CSS propio”, activación frontend, CodeMirror, sanitización y presets.
+MS0–MS3 multisite aplicados localmente. Registro, Textos y CSS ya tienen separación por sitio/red según el plan; queda QA conjunto antes de commit/push o avanzar a MS4.
 
 ## Descubierto
 
@@ -16,6 +16,39 @@ Bloques A, B y C cerrados. Bloque D implementado localmente: pestaña “CSS pro
 - Los textos WYSIWYG existentes usan `wp_editor()` y se guardan con `wp_kses_post()`.
 
 ## Hecho
+
+- Presets CSS actualizados: blanco toma los ajustes visuales aportados por el usuario y oscuro replica tamaños/interacciones adaptando colores.
+- Fix QA: pestaña Estilo vuelve a mostrarse en network admin para mantener el CSS global heredable.
+- Fix QA: añadido redirect de `/wp-admin` no logueado al slug de login configurado cuando `block_wp_login` está activo.
+- Fix QA: header de AuthGate por site añade enlace a configuración global de red.
+
+- MS2: `get_string()` usa fallback sitio → red → default mediante `get('str_*')`.
+- MS2: añadida sección de textos por sitio en `render_site_page()`.
+- MS2: `save_site_settings()` guarda overrides de textos por sitio.
+- MS2: submit site-level dispara `tinyMCE.triggerSave()` para guardar WYSIWYG.
+
+- MS3: `custom_css` y `custom_css_enabled` pasan a scope `site_with_network_fallback`.
+- MS3: añadido `custom_css_mode` por sitio con valores `inherit`, `override` y `disabled`.
+- MS3: añadida sección “Estilo de este sitio” en pantalla site-level.
+- MS3: `custom_css_enabled()` desactiva CSS propio si el sitio marca modo `disabled`.
+- MS3: guardado site-level sanitiza CSS local con la sanitización existente.
+
+- Fix QA multisite: network admin permite cambiar `registration` desde AuthGate.
+- Fix QA multisite: network admin oculta pestañas Textos y Estilo.
+- Fix QA multisite: site admin ya no muestra ni guarda registro local.
+- Fix QA multisite: site admin usa wrapper visual 22MW.
+- Fix QA multisite: campos de texto por site muestran el valor heredado como placeholder/ayuda.
+
+- MS1: añadidos helpers `network_allows_user_registration()` y `network_registration_label()`.
+- MS1: `registration_enabled()` respeta la política global de red y `users_can_register` del sitio.
+- MS1: eliminado guardado de registro/WooCommerce password desde pantalla de red.
+- MS1: añadido bloque Registro en la pantalla site-level de cada web.
+- MS1: `save_site_settings()` guarda `users_can_register` y WooCommerce password por sitio.
+
+- MS0: añadido mapa explícito de scopes multisite en `includes/class-auth-settings.php`.
+- MS0: añadidos helpers `setting_scope()`, `setting_uses_site_option()` y `option_name()`.
+- MS0: `update_setting()` y `get()` usan el mapa de scopes, manteniendo compatibilidad con el comportamiento anterior.
+- Validado `php -l includes/class-auth-settings.php`: ok.
 
 - Añadido helper `AuthGate_Forms::is_mailmint_available()`.
 - Ocultado checkbox newsletter si Mail Mint no está disponible.
@@ -40,15 +73,18 @@ Bloques A, B y C cerrados. Bloque D implementado localmente: pestaña “CSS pro
 
 ## Pendiente
 
-- QA manual del Bloque D.
+- Repetir QA multisite conjunto tras fixes de QA MS1/MS2/MS3.
 
 ## No volver a investigar
 
+- MS0 no cambia scopes efectivos de Textos/CSS; solo introduce mapa y helpers.
+- `users_can_register` y `woocommerce_registration_generate_password` están declarados como scope site para preparar MS1.
 - Bloque A no toca settings de admin ni base de datos.
 - El enlace de inicio no debe aparecer en popup.
 - Bloque B guarda HTML permitido mediante `wp_kses_post()`.
 - Bloque C conserva sanitización previa por tipo de texto.
 - Bloque D bloquea patrones CSS peligrosos básicos: `@import`, `javascript:`, `expression()`, `behavior` y `-moz-binding`.
+- MS3 reutiliza la sanitización CSS existente para el CSS local por sitio.
 
 ## Riesgos o bloqueos
 
@@ -56,4 +92,4 @@ Bloques A, B y C cerrados. Bloque D implementado localmente: pestaña “CSS pro
 
 ## Próximo paso recomendado
 
-- Validar pestaña CSS, guardado, checkbox de activación y render frontend.
+- Validar MS1/MS2/MS3 en multisite real con al menos dos subsites.
