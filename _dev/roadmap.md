@@ -11,9 +11,9 @@
 | Código | Nombre | Estado | Prioridad | Qué contiene | Archivos probables o áreas | Validación prevista | Bloqueos/dependencias |
 |---|---|---|---|---|---|---|---|
 | MS0 | Mapa de scopes multisite | hecho | alta | Definidas constantes de scope, mapa explícito y helpers compatibles sin cambiar comportamiento efectivo | `includes/class-auth-settings.php`, `_dev/decisiones.md` | `php -l` y `git diff --check` OK | Base lista para MS1 |
-| MS1 | Registro global de red | hecho | alta | La red gestiona la política nativa `registration`; los sites ya no muestran control local de registro | `includes/class-auth-settings.php` | `php -l` y `git diff --check` OK; QA multisite pendiente | Validar activar/desactivar desde red |
-| MS2 | Textos por sitio con fallback | hecho | alta | Textos editables por sitio; campos vacíos muestran herencia red/default como placeholder/ayuda | `includes/class-auth-settings.php`, frontend que usa strings | `php -l` y `git diff --check` OK; QA multisite pendiente | Validar textos distintos en 2 subsites |
-| MS3 | Estilo/CSS por sitio con fallback | hecho | alta | Pantalla site-level con diseño 22MW y modo heredar, sobrescribir o desactivar CSS; frontend resuelve sitio → red → default | `includes/class-auth-settings.php`, `includes/class-auth-forms.php` | `php -l` y `git diff --check` OK; QA multisite pendiente | Validar CSS heredado, sobrescrito y desactivado en subsites |
+| MS1 | Registro global de red | hecho | alta | La red gestiona la política nativa `registration`; los sites ya no muestran control local de registro | `includes/class-auth-settings.php` | QA multisite confirmado por usuario | Cerrado para 1.2.1 |
+| MS2 | Textos por sitio con fallback | hecho | alta | Textos editables por sitio; campos vacíos muestran herencia red/default como placeholder/ayuda | `includes/class-auth-settings.php`, frontend que usa strings | QA multisite confirmado por usuario | Cerrado para 1.2.1 |
+| MS3 | Estilo/CSS por sitio con fallback | hecho | alta | Pantalla site-level con diseño 22MW y modo heredar, sobrescribir o desactivar CSS; frontend resuelve sitio → red → default | `includes/class-auth-settings.php`, `includes/class-auth-forms.php` | QA multisite confirmado por usuario | Cerrado para 1.2.1 |
 | MS4 | General red/sitio separado | pendiente | media | Separar logo, intro, slugs, redirect, exclusiones, Mail Mint y seguridad según scope | `includes/class-auth-settings.php`, rewrites | Guardado claro por contexto | Rewrites/flush multisite |
 | MS5 | QA multisite | pendiente | alta | Pruebas con red + 2 subsites | QA manual, `tester-qa.md`, `visual.html` | Checklist multisite completo | No crear usuarios sin permiso |
 
@@ -40,7 +40,7 @@
 
 ## Bloqueado
 
-- QA conjunto MS1/MS2/MS3 pendiente de ejecutar con red + 2 subsites tras fixes: Estilo global visible, redirect `/wp-admin` y enlace a config global.
+- Release `1.2.1` pendiente de publicación; QA MS1/MS2/MS3 confirmado por el usuario.
 - Creación de usuarios de prueba bloqueada hasta permiso explícito si se considera prueba que altera datos.
 
 ## Descartado
@@ -59,3 +59,4 @@
 - Base reusable `22mw-back` sincronizada dentro de AuthGate.
 - Duplicación de estilos base eliminada: base común en `22mw-back.*`, overrides específicos en `authgate-back.*`.
 - QA manual confirmado por el usuario antes de release `1.2.0`.
+- MS0–MS3 multisite con QA confirmado para `1.2.1`.

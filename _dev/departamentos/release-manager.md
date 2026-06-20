@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.1` a `1.1.0.7` mediante `deploy-release.sh`.
+Release `1.2.1` en preparación. QA multisite confirmado por el usuario; se consolida trabajo posterior a `1.2.0`.
 
 ## Descubierto
 
@@ -15,6 +15,9 @@ Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.
 - El script necesitaba excluir `_dev/` y `.kilo/` antes de crear rama/ZIP de release.
 
 ## Hecho
+
+- Preparada versión estable `1.2.1`: cabecera, readme, changelog y release-notes.
+- QA multisite confirmado por el usuario antes de release `1.2.1`.
 
 - Versión estable preparada: `1.1.1`.
 - `readme.txt` preparado con `Stable tag: 1.1.1`.
@@ -29,7 +32,7 @@ Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.
 
 ## Pendiente
 
-- Seguimiento post-release si aparece incidencia.
+- Publicar GitHub release `v1.2.1` y verificar ZIP `authgate.zip`.
 
 ## No volver a investigar
 
@@ -45,4 +48,4 @@ Release production `1.1.1` publicado en GitHub. Se consolidaron los devs `1.1.0.
 
 ## Próximo paso recomendado
 
-- No repetir release `v1.1.1`; usar una versión nueva si hay hotfix.
+- Ejecutar `_dev/deploy-release.sh` desde `mishaAuthDev` limpio para publicar `v1.2.1`.

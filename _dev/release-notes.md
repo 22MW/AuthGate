@@ -4,6 +4,13 @@
 
 2026-06-20
 
+## Release 1.2.1 — 2026-06-20
+
+- Consolidación estable de MS0–MS3 multisite, fixes QA y mejoras admin posteriores a `1.2.0`.
+- QA multisite confirmado por el usuario antes de preparar release.
+- Incluye registro global de red, textos por sitio con fallback, CSS global/heredado/override por site, redirect `/wp-admin`, ajustes de logo y toast admin unificado.
+- `_dev/`, `.kilo/`, secretos y contenido interno quedan excluidos del ZIP/release público.
+
 ## Dev 1.2.0.3 — 2026-06-20
 
 - Quitado el logo de la pantalla protegida renderizada dentro del tema.

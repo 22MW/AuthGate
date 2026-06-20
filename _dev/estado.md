@@ -6,11 +6,11 @@
 
 ## Resumen humano
 
-AuthGate tiene release pública `1.2.0` publicada en GitHub. En rama `mishaAuthDev` se está aplicando el bloque multisite MS0–MS5; MS0, MS1, MS2 y MS3 ya están implementados localmente y queda QA conjunto multisite pendiente.
+AuthGate prepara release estable `1.2.1` con QA multisite confirmado por el usuario. MS0–MS3 quedan consolidados; MS4 permanece fuera de alcance.
 
 ## Estado general
 
-Release `1.2.0` publicada. Desarrollo actual en `mishaAuthDev` con MS0–MS3 multisite aplicados localmente, sin release nueva.
+Release `1.2.1` en preparación desde `mishaAuthDev`. QA multisite confirmado por el usuario; pendiente publicación GitHub/ZIP.
 
 ## Hecho
 
@@ -33,18 +33,19 @@ Release `1.2.0` publicada. Desarrollo actual en `mishaAuthDev` con MS0–MS3 mul
 - MS1: registro por sitio respetando política de red aplicado.
 - MS2: textos por sitio con fallback sitio → red → default aplicado.
 - MS3: CSS por sitio con modo heredar, sobrescribir o desactivar aplicado.
+- QA multisite MS1/MS2/MS3 confirmado por el usuario antes de `1.2.1`.
 
 ## En curso
 
-- QA conjunto MS1/MS2/MS3 pendiente con red + mínimo 2 subsites.
+- Preparación de release estable `1.2.1`.
 
 ## Bloqueado
 
-- No hay bloqueo técnico confirmado; QA multisite pendiente antes de commit/push o nueva release.
+- No hay bloqueo técnico confirmado para `1.2.1`.
 
 ## Próximo paso recomendado
 
-- Ejecutar QA multisite conjunto de MS1/MS2/MS3 antes de avanzar a MS4 o preparar release.
+- Publicar release estable `1.2.1` y verificar ZIP/GitHub release.
 
 ## No volver a investigar
 

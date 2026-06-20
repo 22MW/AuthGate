@@ -79,6 +79,55 @@
     });
   }
 
+  function showToast(root, message, type) {
+    var toast = document.createElement('div');
+    toast.className = 'mw22-back-toast' + (type === 'error' ? ' is-error' : '');
+    toast.textContent = message;
+    root.appendChild(toast);
+    setTimeout(function () { toast.classList.add('is-hiding'); }, 2800);
+    setTimeout(function () { toast.remove(); }, 3200);
+  }
+
+  function enhanceAjaxForms(root) {
+    root.querySelectorAll('[data-authgate-ajax-form]').forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        var button = form.querySelector('[type="submit"]');
+        event.preventDefault();
+
+        if (typeof window.tinyMCE !== 'undefined') {
+          window.tinyMCE.triggerSave();
+        }
+
+        if (button) {
+          button.disabled = true;
+        }
+
+        fetch(window.ajaxurl, {
+          method: 'POST',
+          body: new FormData(form),
+          credentials: 'same-origin'
+        })
+          .then(function (response) { return response.json(); })
+          .then(function (response) {
+            if (response.success) {
+              showToast(root, response.data && response.data.message ? response.data.message : 'Ajustes guardados.');
+              return;
+            }
+
+            showToast(root, response.data && response.data.message ? response.data.message : 'Error al guardar.', 'error');
+          })
+          .catch(function () {
+            showToast(root, 'Error al guardar.', 'error');
+          })
+          .finally(function () {
+            if (button) {
+              button.disabled = false;
+            }
+          });
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var root = document.querySelector('[data-mw22-back].authgate-back');
 
@@ -87,5 +136,6 @@
     }
 
     enhancePagePicker(root);
+    enhanceAjaxForms(root);
   });
 })();

@@ -4,7 +4,7 @@ Tags: login, register, authentication, access control, woocommerce
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,15 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 
 == Changelog ==
 
+= 1.2.1 =
+* Added multisite-aware settings for network, site and fallback behavior.
+* Added per-site text overrides with fallback to network/default values.
+* Added per-site CSS mode to inherit global CSS, override it or disable custom CSS locally.
+* Added network-level registration policy control from AuthGate.
+* Fixed unauthenticated `/wp-admin` redirect in multisite to use the configured AuthGate login slug.
+* Improved AuthGate admin save toasts and CSS settings layout.
+* Adjusted protected-page logo behavior and standalone login logo home link.
+
 = 1.2.0 =
 * Added the 22MW visual admin shell for the AuthGate settings area.
 * Added reusable 22MW admin CSS/JS base assets.
@@ -122,6 +131,9 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 * Full i18n readiness (text domain `authgate`, `languages/` folder).
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Multisite settings and admin UX improvements. No migration required.
 
 = 1.2.0 =
 Admin UI refresh and settings experience improvements. No migration required.

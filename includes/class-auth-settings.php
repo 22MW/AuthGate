@@ -672,7 +672,7 @@ CSS;
 
                 $tabs = array_merge(
                     array_slice($tabs, 0, 1, true),
-                    array('css' => __('Estilo', 'authgate')),
+                    array('css' => __('CSS', 'authgate')),
                     array_slice($tabs, 1, null, true)
                 );
                 foreach ($tabs as $slug => $label) :
@@ -712,7 +712,7 @@ CSS;
         $excluded_pages = (array) self::get('excluded_pages', array());
         $all_pages      = get_pages(array('sort_column' => 'post_title'));
         ?>
-        <form id="authgate-settings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
+        <form id="authgate-settings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>" data-authgate-ajax-form>
             <input type="hidden" name="action" value="authgate_save">
             <?php wp_nonce_field('authgate_save', '_authgate_nonce'); ?>
 
@@ -984,38 +984,6 @@ CSS;
                 frame.open();
             });
 
-            // AJAX save
-            var $form = $('#authgate-settings-form');
-            var $btn  = $form.find('[type="submit"]');
-
-            $form.on('submit', function(e){
-                e.preventDefault();
-                if (typeof tinyMCE !== 'undefined') { tinyMCE.triggerSave(); }
-                $btn.prop('disabled', true);
-                var data = new FormData(this);
-                fetch(ajaxurl, { method: 'POST', body: data, credentials: 'same-origin' })
-                    .then(function(r){ return r.json(); })
-                    .then(function(res){
-                        if (res.success) {
-                            authgateToast(res.data.message);
-                        } else {
-                            authgateToast(res.data && res.data.message ? res.data.message : '<?php echo esc_js(__('Error al guardar.', 'authgate')); ?>', 'error');
-                        }
-                    })
-                    .catch(function(){
-                        authgateToast('<?php echo esc_js(__('Error al guardar.', 'authgate')); ?>', 'error');
-                    })
-                    .finally(function(){
-                        $btn.prop('disabled', false);
-                    });
-            });
-
-            function authgateToast(msg, type) {
-                var $t = $('<div class="mw22-back-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
-                $('body').append($t);
-                setTimeout(function(){ $t.addClass('is-hiding'); }, 2800);
-                setTimeout(function(){ $t.remove(); }, 3200);
-            }
         })(jQuery);
         </script>
         <?php
@@ -1027,7 +995,7 @@ CSS;
         $textarea_keys = self::textarea_string_keys();
         $wysiwyg_keys  = self::wysiwyg_string_keys();
         ?>
-        <form id="authgate-strings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
+        <form id="authgate-strings-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>" data-authgate-ajax-form>
             <input type="hidden" name="action" value="authgate_save_strings">
             <?php wp_nonce_field('authgate_save_strings', '_authgate_nonce'); ?>
 
@@ -1079,7 +1047,7 @@ CSS;
     private function render_tab_css() {
         $presets = self::css_presets();
         ?>
-        <form id="authgate-css-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>">
+        <form id="authgate-css-form" method="post" action="<?php echo esc_url(self::admin_post_url()); ?>" data-authgate-ajax-form>
             <input type="hidden" name="action" value="authgate_save_css">
             <?php wp_nonce_field('authgate_save_css', '_authgate_nonce'); ?>
 
@@ -1105,6 +1073,8 @@ CSS;
                         </td>
                     </tr>
                 </table>
+
+                <?php submit_button(__('Guardar CSS', 'authgate')); ?>
             </div>
 
             <div style="background:#fff;padding:24px;margin-bottom:20px;border:1px solid #ccd0d4;border-radius:4px;">
@@ -1116,7 +1086,6 @@ CSS;
                 <textarea readonly rows="10" style="width:100%;font-family:monospace;"><?php echo esc_textarea($presets['dark']); ?></textarea>
             </div>
 
-            <?php submit_button(__('Guardar CSS', 'authgate')); ?>
         </form>
         <script>
         (function(){
@@ -1742,7 +1711,7 @@ CSS;
                 <?php esc_html_e('Ajustes específicos de este sitio. La activación/desactivación del registro se gestiona desde AuthGate en el administrador de red.', 'authgate'); ?>
             </p>
 
-            <form id="authgate-site-settings-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+            <form id="authgate-site-settings-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" data-authgate-ajax-form>
                 <input type="hidden" name="action" value="authgate_save_site">
                 <?php wp_nonce_field('authgate_save_site', '_authgate_nonce'); ?>
 
@@ -1806,37 +1775,6 @@ CSS;
                 <?php submit_button(__('Guardar', 'authgate')); ?>
             </form>
             </main>
-            <script>
-            (function($){
-                var $form = $('#authgate-site-settings-form');
-                var $btn  = $form.find('[type="submit"]');
-                $form.on('submit', function(e){
-                    e.preventDefault();
-                    if (typeof tinyMCE !== 'undefined') { tinyMCE.triggerSave(); }
-                    $btn.prop('disabled', true);
-                    var data = new FormData(this);
-                    fetch(ajaxurl, { method: 'POST', body: data, credentials: 'same-origin' })
-                        .then(function(r){ return r.json(); })
-                        .then(function(res){
-                            if (res.success) {
-                                authgateSiteToast(res.data.message);
-                            } else {
-                                authgateSiteToast(res.data && res.data.message ? res.data.message : '<?php echo esc_js(__('Error al guardar.', 'authgate')); ?>', 'error');
-                            }
-                        })
-                        .catch(function(){
-                            authgateSiteToast('<?php echo esc_js(__('Error al guardar.', 'authgate')); ?>', 'error');
-                        })
-                        .finally(function(){ $btn.prop('disabled', false); });
-                });
-                function authgateSiteToast(msg, type) {
-                    var $t = $('<div class="mw22-back-toast' + (type === 'error' ? ' is-error' : '') + '">').text(msg);
-                    $('body').append($t);
-                    setTimeout(function(){ $t.addClass('is-hiding'); }, 2800);
-                    setTimeout(function(){ $t.remove(); }, 3200);
-                }
-            })(jQuery);
-            </script>
         </div>
         <?php
     }

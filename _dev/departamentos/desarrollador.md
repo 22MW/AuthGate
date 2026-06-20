@@ -17,6 +17,8 @@ MS0–MS3 multisite aplicados localmente. Registro, Textos y CSS ya tienen separ
 
 ## Hecho
 
+- Ajuste toast: posición fija para que sea visible aunque se guarde desde zonas bajas de la página.
+- Ajuste backend: toast AJAX unificado en pantallas AuthGate, tab Estilo renombrado a CSS y botón Guardar CSS movido bajo el editor.
 - Ajuste logo: quitado logo de la pantalla protegida del sitio y enlazado a home el logo personalizado de la URL AuthGate.
 - Presets CSS actualizados: blanco toma los ajustes visuales aportados por el usuario y oscuro replica tamaños/interacciones adaptando colores.
 - Fix QA: pestaña Estilo vuelve a mostrarse en network admin para mantener el CSS global heredable.
