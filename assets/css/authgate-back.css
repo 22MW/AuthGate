@@ -1,5 +1,16 @@
-body.settings_page_authgate #wpcontent {
+body.settings_page_authgate #wpcontent,
+body.settings_page_authgate-site #wpcontent {
   padding-left: 0;
+}
+
+.authgate-back a.mw22-back__version {
+  text-decoration: none;
+}
+
+.authgate-back a.mw22-back__version:hover,
+.authgate-back a.mw22-back__version:focus {
+  color: #000000;
+  text-decoration: none;
 }
 
 .authgate-back {
