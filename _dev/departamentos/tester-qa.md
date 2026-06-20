@@ -27,6 +27,7 @@ QA multisite parcial recibido: se corrigieron los puntos reportados y queda repe
 
 ## Pendiente
 
+- Ajuste logo: quitado logo de la pantalla protegida del sitio y enlazado a home el logo personalizado de la URL AuthGate.
 - Presets CSS actualizados: blanco toma los ajustes visuales aportados por el usuario y oscuro replica tamaños/interacciones adaptando colores.
 - Revalidar que Estilo global aparece en red y puede heredarse desde sites.
 - Revalidar que `/wp-admin` no logueado redirige a `/acceder/` si ese es el slug configurado.

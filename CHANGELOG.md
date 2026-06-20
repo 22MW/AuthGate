@@ -7,6 +7,15 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.0.3] — 2026-06-20
+
+### Changed
+- Removed the logo from the protected-page card shown inside the site theme.
+- Kept the logo on the standalone custom AuthGate login URL.
+
+### Fixed
+- Linked the standalone custom login logo to the site home page.
+
 ## [1.2.0.2] — 2026-06-20
 
 ### Added

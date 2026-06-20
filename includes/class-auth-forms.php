@@ -148,7 +148,9 @@ class AuthGate_Forms
     $logo_url = AuthGate_Settings::get('login_logo_url', '');
     if ($logo_url) :
         ?>
-        <img src="<?php echo esc_url($logo_url); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+        <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
+            <img src="<?php echo esc_url($logo_url); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+        </a>
     <?php elseif (has_custom_logo()) :
         echo get_custom_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core WP function, returns safe HTML
     else :

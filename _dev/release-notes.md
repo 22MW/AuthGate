@@ -4,6 +4,12 @@
 
 2026-06-20
 
+## Dev 1.2.0.3 — 2026-06-20
+
+- Quitado el logo de la pantalla protegida renderizada dentro del tema.
+- Mantenido el logo en la URL personalizada AuthGate.
+- El logo personalizado de la URL AuthGate enlaza ahora a la home.
+
 ## Dev 1.2.0.2 — 2026-06-20
 
 - MS0–MS3 multisite: mapa de scopes, registro global de red, textos por sitio con fallback y CSS por sitio con herencia/sobrescritura/desactivación.
