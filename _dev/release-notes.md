@@ -11,6 +11,10 @@
 - Ajusta copy de registro global en network admin.
 - Corrige header, enlace global, toast y margen izquierdo en pantalla AuthGate por site.
 - QA manual confirmado por el usuario antes de release.
+- Release publicada en GitHub: `https://github.com/22MW/AuthGate/releases/tag/v1.2.2`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada.
+- Rama `release` limpia sin `_dev/`.
 
 ## Release 1.2.1 — 2026-06-20
 

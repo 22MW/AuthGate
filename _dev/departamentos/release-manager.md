@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release `1.2.2` en preparación. Hotfix multisite/admin posterior a `1.2.1`, QA confirmado por el usuario.
+Release `1.2.2` publicada en GitHub. Hotfix multisite/admin posterior a `1.2.1`, QA confirmado por el usuario.
 
 ## Descubierto
 
@@ -17,6 +17,9 @@ Release `1.2.2` en preparación. Hotfix multisite/admin posterior a `1.2.1`, QA 
 ## Hecho
 
 - Preparada versión estable `1.2.2`: cabecera, readme, changelog y release-notes.
+- GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.2`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada y rama `release` limpia sin `_dev/`.
 
 - Preparada versión estable `1.2.1`: cabecera, readme, changelog y release-notes.
 - QA multisite confirmado por el usuario antes de release `1.2.1`.
@@ -37,7 +40,7 @@ Release `1.2.2` en preparación. Hotfix multisite/admin posterior a `1.2.1`, QA 
 
 ## Pendiente
 
-- Publicar GitHub release `v1.2.2` y verificar ZIP `authgate.zip`.
+- Seguimiento post-release si aparece incidencia.
 
 ## No volver a investigar
 
