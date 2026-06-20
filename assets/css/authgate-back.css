@@ -143,6 +143,13 @@ body.settings_page_authgate #wpcontent {
   box-shadow: inset 5px 0 0 var(--mw22-amber) !important;
 }
 
+.authgate-back > .mw22-back-toast {
+  position: fixed;
+  top: 72px;
+  right: clamp(20px, 4vw, 56px);
+  z-index: 99999;
+}
+
 .authgate-back > .notice,
 .authgate-back > .updated,
 .authgate-back > .error,
