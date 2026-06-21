@@ -80,6 +80,7 @@ class AuthGate_Settings {
     private static function multisite_scope_map(): array {
         return array(
             'blacklist'                                  => self::SCOPE_NETWORK,
+            'blocked_route_redirect'                     => self::SCOPE_NETWORK,
             'block_wp_login'                            => self::SCOPE_NETWORK,
             'custom_css'                                => self::SCOPE_SITE_WITH_NETWORK_FALLBACK,
             'custom_css_enabled'                        => self::SCOPE_SITE_WITH_NETWORK_FALLBACK,
@@ -925,11 +926,26 @@ CSS;
                         <td>
                             <label>
                                 <input type="checkbox" name="block_wp_login" value="1" <?php checked((bool) self::get('block_wp_login', false)); ?>>
-                                <?php esc_html_e('Redirigir visitas a wp-login.php a la URL personalizada', 'authgate'); ?>
+                                <?php esc_html_e('Redirigir visitas a wp-admin, wp-login.php y wp-signup.php', 'authgate'); ?>
                             </label>
-                            <?php if (is_multisite()) : ?>
-                            <p class="description"><?php esc_html_e('En multisite, solo se redirige la página de reset; wp-login.php permanece accesible para el resto de acciones.', 'authgate'); ?></p>
-                            <?php endif; ?>
+                            <p class="description"><?php esc_html_e('Las acciones de logout y recuperación de contraseña se mantienen disponibles para no romper el flujo nativo.', 'authgate'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Destino al bloquear rutas técnicas', 'authgate'); ?></th>
+                        <td>
+                            <?php $blocked_route_redirect = self::get('blocked_route_redirect', 'home'); ?>
+                            <fieldset>
+                                <label>
+                                    <input type="radio" name="blocked_route_redirect" value="home" <?php checked($blocked_route_redirect, 'home'); ?>>
+                                    <?php esc_html_e('Redirigir a la home', 'authgate'); ?>
+                                </label><br>
+                                <label>
+                                    <input type="radio" name="blocked_route_redirect" value="slug" <?php checked($blocked_route_redirect, 'slug'); ?>>
+                                    <?php esc_html_e('Redirigir al slug personalizado de login', 'authgate'); ?>
+                                </label>
+                            </fieldset>
+                            <p class="description"><?php esc_html_e('El slug personalizado sigue funcionando si se visita directamente. Este ajuste solo decide qué hacer cuando alguien entra por rutas técnicas.', 'authgate'); ?></p>
                         </td>
                     </tr>
                 </table>
@@ -1430,6 +1446,11 @@ CSS;
         self::update_setting('login_slug_redirect', esc_url_raw(wp_unslash($_POST['login_slug_redirect'] ?? '')));
         self::update_setting('reset_slug',          sanitize_title(wp_unslash($_POST['reset_slug'] ?? 'restablecer-contrasena')));
         self::update_setting('block_wp_login',      !empty($_POST['block_wp_login']));
+        $blocked_route_redirect = sanitize_key($_POST['blocked_route_redirect'] ?? 'home');
+        if (!in_array($blocked_route_redirect, array('home', 'slug'), true)) {
+            $blocked_route_redirect = 'home';
+        }
+        self::update_setting('blocked_route_redirect', $blocked_route_redirect);
         if (!self::is_network()) {
             update_option('users_can_register', !empty($_POST['users_can_register']) ? 1 : 0);
 

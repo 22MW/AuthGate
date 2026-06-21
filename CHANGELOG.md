@@ -7,6 +7,21 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.4] — 2026-06-21
+
+### Added
+- Added a setting to choose whether blocked technical routes redirect to the home page or to the custom login slug.
+
+### Changed
+- Applied the technical-route destination to `/wp-admin`, `wp-login.php`, and `wp-signup.php`.
+- Updated public readme text to describe multisite per-site settings more accurately.
+
+### Fixed
+- Kept password-reset, reset-password and logout flows out of the technical-route redirect.
+
+### QA
+- Manual QA requested before release.
+
 ## [1.2.3] — 2026-06-21
 
 ### Changed
