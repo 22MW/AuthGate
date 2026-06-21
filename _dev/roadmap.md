@@ -57,6 +57,7 @@
 - Release `1.2.0` publicada.
 - Release `1.2.1` publicada.
 - Release `1.2.2` publicada.
+- Release `1.2.3` publicada.
 - Backend/admin visual 22MW Fases 1, 2, 2B y 3 consolidadas en `1.2.0`.
 - Base reusable `22mw-back` sincronizada dentro de AuthGate.
 - Duplicación de estilos base eliminada: base común en `22mw-back.*`, overrides específicos en `authgate-back.*`.

@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release `1.2.3` en preparación. Cambio de metadatos/compatibilidad solicitado por el usuario.
+Release `1.2.3` publicada en GitHub. Cambio de metadatos/compatibilidad solicitado por el usuario.
 
 ## Descubierto
 
@@ -17,6 +17,9 @@ Release `1.2.3` en preparación. Cambio de metadatos/compatibilidad solicitado p
 ## Hecho
 
 - Preparada versión estable `1.2.3`: cabecera, readme, changelog y release-notes.
+- GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.3`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada y rama `release` limpia sin `_dev/`.
 
 - Preparada versión estable `1.2.2`: cabecera, readme, changelog y release-notes.
 - GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.2`.
@@ -42,7 +45,7 @@ Release `1.2.3` en preparación. Cambio de metadatos/compatibilidad solicitado p
 
 ## Pendiente
 
-- Publicar GitHub release `v1.2.3` y verificar ZIP `authgate.zip`.
+- Seguimiento post-release si aparece incidencia.
 
 ## No volver a investigar
 

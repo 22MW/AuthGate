@@ -9,6 +9,10 @@
 - Release de metadatos del plugin.
 - Actualiza Author, Author URI, License URI, requisitos WordPress/PHP y compatibilidad WooCommerce declarada.
 - No incluye cambios funcionales.
+- Release publicada en GitHub: `https://github.com/22MW/AuthGate/releases/tag/v1.2.3`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada.
+- Rama `release` limpia sin `_dev/`.
 
 ## Release 1.2.2 — 2026-06-20
 
