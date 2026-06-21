@@ -7,6 +7,15 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.3] — 2026-06-21
+
+### Changed
+- Updated plugin header metadata: author, author URI, license URI and compatibility requirements.
+- Raised declared requirements to WordPress 6.5+, PHP 8.1+ and WooCommerce 10.0+.
+
+### QA
+- Metadata-only release requested by user.
+
 ## [1.2.2] — 2026-06-20
 
 ### Changed

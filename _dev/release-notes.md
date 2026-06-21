@@ -4,6 +4,12 @@
 
 2026-06-20
 
+## Release 1.2.3 — 2026-06-21
+
+- Release de metadatos del plugin.
+- Actualiza Author, Author URI, License URI, requisitos WordPress/PHP y compatibilidad WooCommerce declarada.
+- No incluye cambios funcionales.
+
 ## Release 1.2.2 — 2026-06-20
 
 - Hotfix estable posterior a `1.2.1`.

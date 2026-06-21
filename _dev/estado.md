@@ -10,7 +10,7 @@ AuthGate prepara release estable `1.2.1` con QA multisite confirmado por el usua
 
 ## Estado general
 
-Release `1.2.2` publicada. Rama `main` actualizada, rama `release` limpia y tag remoto `v1.2.2` existente.
+Release `1.2.3` en preparación desde `mishaAuthDev` para actualizar metadatos y compatibilidad declarada.
 
 ## Hecho
 
@@ -39,7 +39,7 @@ Release `1.2.2` publicada. Rama `main` actualizada, rama `release` limpia y tag 
 
 ## En curso
 
-- Seguimiento post-release `1.2.2`.
+- Preparación de release estable `1.2.3`.
 
 ## Bloqueado
 
@@ -47,7 +47,7 @@ Release `1.2.2` publicada. Rama `main` actualizada, rama `release` limpia y tag 
 
 ## Próximo paso recomendado
 
-- Seguimiento post-release si aparece incidencia.
+- Publicar release estable `1.2.3` y verificar ZIP/GitHub release.
 
 ## No volver a investigar
 
