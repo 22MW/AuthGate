@@ -10,6 +10,10 @@
 - Aplica a `/wp-admin`, `wp-login.php` y `wp-signup.php`.
 - Mantiene fuera del bloqueo logout, postpass, lost password y reset password.
 - Documentación pública actualizada para multisite y rutas técnicas.
+- Release publicada en GitHub: `https://github.com/22MW/AuthGate/releases/tag/v1.2.4`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada.
+- Rama `release` limpia sin `_dev/`.
 
 ## Release 1.2.3 — 2026-06-21
 

@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release `1.2.4` en preparación. Ajuste funcional de rutas técnicas y documentación pública.
+Release `1.2.4` publicada en GitHub. Ajuste funcional de rutas técnicas y documentación pública.
 
 ## Descubierto
 
@@ -17,6 +17,9 @@ Release `1.2.4` en preparación. Ajuste funcional de rutas técnicas y documenta
 ## Hecho
 
 - Preparada versión estable `1.2.4`: cabecera, readme, changelog y release-notes.
+- GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.4`.
+- ZIP `authgate.zip` subido como asset.
+- Rama `main` actualizada y rama `release` limpia sin `_dev/`.
 
 - Preparada versión estable `1.2.3`: cabecera, readme, changelog y release-notes.
 - GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.3`.
@@ -47,7 +50,7 @@ Release `1.2.4` en preparación. Ajuste funcional de rutas técnicas y documenta
 
 ## Pendiente
 
-- Publicar GitHub release `v1.2.4` y verificar ZIP `authgate.zip`.
+- Seguimiento post-release si aparece incidencia.
 
 ## No volver a investigar
 

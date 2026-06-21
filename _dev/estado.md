@@ -10,7 +10,7 @@ AuthGate prepara release estable `1.2.1` con QA multisite confirmado por el usua
 
 ## Estado general
 
-Release `1.2.4` en preparación desde `mishaAuthDev` para ajuste de rutas técnicas y documentación.
+Release `1.2.4` publicada. Rama `main` actualizada, rama `release` limpia y tag remoto `v1.2.4` existente.
 
 ## Hecho
 
@@ -29,6 +29,7 @@ Release `1.2.4` en preparación desde `mishaAuthDev` para ajuste de rutas técni
 - Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.1`.
 - Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.2`.
 - Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.3`.
+- Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.4`.
 - ZIP publicado: `https://github.com/22MW/AuthGate/releases/download/v1.2.0/authgate.zip`.
 - `_dev/` excluido de rama `release` y ZIP público por script interno.
 - Trabajo comercial interno subido a `mishaAuthDev` dentro de `_dev/comercial/`.
@@ -40,7 +41,7 @@ Release `1.2.4` en preparación desde `mishaAuthDev` para ajuste de rutas técni
 
 ## En curso
 
-- Preparación de release estable `1.2.4`.
+- Seguimiento post-release `1.2.4`.
 
 ## Bloqueado
 
@@ -48,7 +49,7 @@ Release `1.2.4` en preparación desde `mishaAuthDev` para ajuste de rutas técni
 
 ## Próximo paso recomendado
 
-- Publicar release estable `1.2.4` y verificar ZIP/GitHub release.
+- Seguimiento post-release si aparece incidencia.
 
 ## No volver a investigar
 
@@ -59,6 +60,7 @@ Release `1.2.4` en preparación desde `mishaAuthDev` para ajuste de rutas técni
 - Release GitHub `v1.2.1` publicada correctamente.
 - Release GitHub `v1.2.2` publicada correctamente.
 - Release GitHub `v1.2.3` publicada correctamente.
+- Release GitHub `v1.2.4` publicada correctamente.
 - `_dev/` puede estar en `mishaAuthDev`, pero nunca debe entrar en rama `release`, `main` pública limpia ni ZIP.
 - `_dev/comercial/` es trabajo interno y no debe aparecer en release público.
 - Script de release interno: `_dev/deploy-release.sh`.
