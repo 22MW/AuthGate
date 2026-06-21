@@ -29,6 +29,7 @@ QA multisite parcial recibido: se corrigieron los puntos reportados y queda repe
 
 ## Pendiente
 
+- Validar rutas técnicas con destino Home y Slug: `/wp-admin`, `/wp-login.php`, `/wp-signup.php`; confirmar que reset/logout siguen funcionando.
 - Revalidar site-level multisite: badge Config global enlaza a red, toast guarda correctamente y no aparece línea blanca izquierda.
 - Revalidar en multisite que cada site con WooCommerce muestra y guarda “Contraseña WooCommerce”.
 - Ajuste toast: posición fija para que sea visible aunque se guarde desde zonas bajas de la página.

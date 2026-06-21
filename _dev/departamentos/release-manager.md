@@ -6,7 +6,7 @@
 
 ## Resumen humano
 
-Release `1.2.3` publicada en GitHub. Cambio de metadatos/compatibilidad solicitado por el usuario.
+Release `1.2.4` en preparación. Ajuste funcional de rutas técnicas y documentación pública.
 
 ## Descubierto
 
@@ -15,6 +15,8 @@ Release `1.2.3` publicada en GitHub. Cambio de metadatos/compatibilidad solicita
 - El script necesitaba excluir `_dev/` y `.kilo/` antes de crear rama/ZIP de release.
 
 ## Hecho
+
+- Preparada versión estable `1.2.4`: cabecera, readme, changelog y release-notes.
 
 - Preparada versión estable `1.2.3`: cabecera, readme, changelog y release-notes.
 - GitHub release publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.3`.
@@ -45,7 +47,7 @@ Release `1.2.3` publicada en GitHub. Cambio de metadatos/compatibilidad solicita
 
 ## Pendiente
 
-- Seguimiento post-release si aparece incidencia.
+- Publicar GitHub release `v1.2.4` y verificar ZIP `authgate.zip`.
 
 ## No volver a investigar
 

@@ -29,7 +29,7 @@ class AuthGate_Forms
         add_shortcode('authgate_reset',           array($this, 'shortcode_reset_password'));
 
         add_action('init',                  array($this, 'register_rewrite_rules'));
-        add_action('init',                  array($this, 'maybe_redirect_wp_admin'));
+        add_action('init',                  array($this, 'maybe_redirect_technical_routes'));
         add_filter('query_vars',            array($this, 'register_query_vars'));
         add_action('wp_enqueue_scripts',    array($this, 'enqueue_assets'));
         add_action('template_redirect',     array($this, 'handle_auth_slug_page'), 9);
@@ -235,7 +235,7 @@ class AuthGate_Forms
     // -------------------------------------------------------------------------
 
     /** @return void */
-    public function maybe_redirect_wp_admin()
+    public function maybe_redirect_technical_routes()
     {
         if (is_user_logged_in()) return;
         if (!(bool) AuthGate_Settings::get('block_wp_login', false)) return;
@@ -243,22 +243,42 @@ class AuthGate_Forms
         $request_path = parse_url(wp_unslash($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
         $request_path = '/' . ltrim((string) $request_path, '/');
 
-        if (!in_array($request_path, array('/wp-admin', '/wp-admin/'), true)) return;
+        if (!in_array($request_path, array('/wp-admin', '/wp-admin/', '/wp-login.php', '/wp-signup.php'), true)) return;
+
+        $action = sanitize_key(wp_unslash($_GET['action'] ?? ''));
+        if ('/wp-login.php' === $request_path && in_array($action, array('logout', 'postpass', 'rp', 'resetpass', 'lostpassword'), true)) return;
+
+        $url = $this->blocked_route_redirect_url();
+
+        if ('slug' === AuthGate_Settings::get('blocked_route_redirect', 'home')) {
+            $redirect_to = wp_validate_redirect(
+                esc_url_raw(wp_unslash($_GET['redirect_to'] ?? '')),
+                ''
+            );
+            if ($redirect_to) {
+                $url = add_query_arg('redirect_to', rawurlencode($redirect_to), $url);
+            }
+        }
+
+        wp_safe_redirect($url, 302);
+        exit;
+    }
+
+    /** @return string */
+    private function blocked_route_redirect_url()
+    {
+        if ('slug' !== AuthGate_Settings::get('blocked_route_redirect', 'home')) {
+            return home_url('/');
+        }
 
         $login_slug = sanitize_title(AuthGate_Settings::get('login_slug', ''));
-        if (!$login_slug) return;
-
-        wp_safe_redirect(home_url('/' . $login_slug . '/'), 302);
-        exit;
+        return $login_slug ? home_url('/' . $login_slug . '/') : home_url('/');
     }
 
     /** @return void */
     public function maybe_block_wp_login()
     {
         if (!(bool) AuthGate_Settings::get('block_wp_login', false)) return;
-
-        $login_slug = sanitize_title(AuthGate_Settings::get('login_slug', ''));
-        if (!$login_slug) return;
 
         $action = sanitize_key(wp_unslash($_GET['action'] ?? ''));
 
@@ -271,15 +291,12 @@ class AuthGate_Forms
             return;
         }
 
-        // En multisite solo redirigimos el reset; el resto permanece accesible
-        if (is_multisite()) return;
-
-        $url = home_url('/' . $login_slug . '/');
+        $url = $this->blocked_route_redirect_url();
         $redirect_to = wp_validate_redirect(
             esc_url_raw(wp_unslash($_GET['redirect_to'] ?? '')),
             ''
         );
-        if ($redirect_to) {
+        if ($redirect_to && 'slug' === AuthGate_Settings::get('blocked_route_redirect', 'home')) {
             $url = add_query_arg('redirect_to', rawurlencode($redirect_to), $url);
         }
 

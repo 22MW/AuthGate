@@ -4,6 +4,13 @@
 
 2026-06-20
 
+## Release 1.2.4 — 2026-06-21
+
+- Añadido ajuste para decidir si rutas técnicas bloqueadas redirigen a home o al slug personalizado.
+- Aplica a `/wp-admin`, `wp-login.php` y `wp-signup.php`.
+- Mantiene fuera del bloqueo logout, postpass, lost password y reset password.
+- Documentación pública actualizada para multisite y rutas técnicas.
+
 ## Release 1.2.3 — 2026-06-21
 
 - Release de metadatos del plugin.

@@ -24,6 +24,7 @@ AuthGate ya tiene aplicada localmente la arquitectura multisite MS0–MS3: mapa 
 
 ## Hecho
 
+- Decisión técnica: slug personalizado queda como ruta manual; bloqueo de rutas técnicas decide destino con `blocked_route_redirect` (`home` por defecto o `slug`).
 - MS2 implementado: Textos por sitio con fallback sitio → red → default.
 - MS2: pantalla site-level incluye sección “Textos de este sitio”; campos vacíos heredan texto global/default.
 - MS2: `get_string()` resuelve a través de `get('str_*')` y el scope `site_with_network_fallback`.

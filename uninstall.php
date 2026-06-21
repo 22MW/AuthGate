@@ -16,6 +16,7 @@ if (is_multisite()) {
     delete_site_option('authgate_login_slug_redirect');
     delete_site_option('authgate_reset_slug');
     delete_site_option('authgate_block_wp_login');
+    delete_site_option('authgate_blocked_route_redirect');
     delete_site_option('authgate_blacklist');
 
     // Strings editables (prefijo authgate_str_*)

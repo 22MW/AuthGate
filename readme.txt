@@ -4,7 +4,7 @@ Tags: login, register, authentication, access control, woocommerce
 Requires at least: 6.5
 Tested up to: 6.7
 Requires PHP: 8.1
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,8 @@ WP AuthGate replaces the default WordPress login and registration flow with a po
 * **Rate limiting** — per-IP lockout via WordPress transients
 * **WooCommerce integration** — creates WooCommerce customers, respects auto-password setting, protects My Account pages, forwards WC registration hooks
 * **Standalone login page** — optional minimal page (no theme header/footer) with custom slug
-* **Multisite-ready** — settings panel at Network Admin level when Multisite is active
+* **Technical-route blocking** — redirect `/wp-admin`, `wp-login.php` and `wp-signup.php` to the home page or to the custom login slug
+* **Multisite-ready** — network-level registration policy plus per-site text/CSS and WooCommerce password settings
 
 WP AuthGate is hook-driven. Every behaviour can be extended or overridden from a theme or add-on plugin without editing core files.
 
@@ -69,11 +70,11 @@ The forms inherit your theme's input, label, and button styles. WP AuthGate only
 
 = Is it compatible with Multisite? =
 
-Yes. When Multisite is active the settings panel moves to **Network Admin > Settings** and options are stored as network options, so all sites share a single configuration.
+Yes. Multisite can use network-level registration settings while each site can keep its own text overrides, CSS mode and WooCommerce generated-password setting.
 
 = Where is the admin area blocked? =
 
-WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and `wp-signup.php`. Password-reset flows (`action=rp`, `action=resetpass`, `action=lostpassword`) are always allowed.
+WP AuthGate can redirect non-authenticated users away from `/wp-admin`, `wp-login.php`, and `wp-signup.php`. The destination can be the home page or the custom login slug. Password-reset flows (`action=rp`, `action=resetpass`, `action=lostpassword`) are always allowed.
 
 == Screenshots ==
 
@@ -82,6 +83,11 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 3. Settings panel in WordPress admin.
 
 == Changelog ==
+
+= 1.2.4 =
+* Added a setting to choose whether blocked technical routes redirect to the home page or to the custom login slug.
+* Applied the technical-route destination to `/wp-admin`, `wp-login.php`, and `wp-signup.php`.
+* Documented multisite per-site settings more accurately.
 
 = 1.2.3 =
 * Updated plugin metadata, author details, license URI and compatibility requirements.
@@ -140,6 +146,9 @@ WP AuthGate redirects non-admin users away from `/wp-admin`, `wp-login.php`, and
 * Full i18n readiness (text domain `authgate`, `languages/` folder).
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+Adds configurable technical-route redirect destination. No migration required.
 
 = 1.2.3 =
 Metadata and compatibility declaration update. No migration required.
