@@ -2,15 +2,15 @@
 
 ## Última actualización
 
-2026-06-17
+2026-09-22
 
 ## Resumen humano
 
-AuthGate prepara release estable `1.2.1` con QA multisite confirmado por el usuario. MS0–MS3 quedan consolidados; MS4 permanece fuera de alcance.
+AuthGate tiene publicada la versión estable `1.2.5`, que restaura el enlace de recuperación de contraseña ocultado por los presets CSS.
 
 ## Estado general
 
-Release `1.2.4` publicada. Rama `main` actualizada, rama `release` limpia y tag remoto `v1.2.4` existente.
+Release `1.2.5` publicada. Rama `main` actualizada, rama `release` limpia, tag remoto `v1.2.5` y ZIP verificados.
 
 ## Hecho
 
@@ -30,7 +30,8 @@ Release `1.2.4` publicada. Rama `main` actualizada, rama `release` limpia y tag 
 - Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.2`.
 - Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.3`.
 - Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.4`.
-- ZIP publicado: `https://github.com/22MW/AuthGate/releases/download/v1.2.0/authgate.zip`.
+- Release GitHub publicada: `https://github.com/22MW/AuthGate/releases/tag/v1.2.5`.
+- ZIP publicado: `https://github.com/22MW/AuthGate/releases/download/v1.2.5/authgate.zip`.
 - `_dev/` excluido de rama `release` y ZIP público por script interno.
 - Trabajo comercial interno subido a `mishaAuthDev` dentro de `_dev/comercial/`.
 - MS0: mapa de scopes multisite aplicado.
@@ -41,7 +42,7 @@ Release `1.2.4` publicada. Rama `main` actualizada, rama `release` limpia y tag 
 
 ## En curso
 
-- Seguimiento post-release `1.2.4`.
+- Seguimiento post-release `1.2.5` y QA visual del enlace de recuperación.
 
 ## Bloqueado
 
@@ -61,6 +62,7 @@ Release `1.2.4` publicada. Rama `main` actualizada, rama `release` limpia y tag 
 - Release GitHub `v1.2.2` publicada correctamente.
 - Release GitHub `v1.2.3` publicada correctamente.
 - Release GitHub `v1.2.4` publicada correctamente.
+- Release GitHub `v1.2.5` publicada correctamente con `authgate.zip`.
 - `_dev/` puede estar en `mishaAuthDev`, pero nunca debe entrar en rama `release`, `main` pública limpia ni ZIP.
 - `_dev/comercial/` es trabajo interno y no debe aparecer en release público.
 - Script de release interno: `_dev/deploy-release.sh`.

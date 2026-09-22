@@ -9,7 +9,10 @@
 - Restaurado el enlace “¿Olvidaste tu contraseña?” en el formulario de login.
 - Eliminada la regla de los presets CSS que ocultaba el acceso al flujo de recuperación.
 - Validación estática completada; QA manual frontend pendiente.
-- Publicación en GitHub pendiente de ejecutar mediante `_dev/deploy-release.sh`.
+- Release publicada en GitHub: `https://github.com/22MW/AuthGate/releases/tag/v1.2.5`.
+- ZIP `authgate.zip` publicado y verificado como asset de la release.
+- Ramas `release` y `main` actualizadas; tag remoto `v1.2.5` apunta a la rama limpia de release.
+- El script terminó con rechazo al intentar volver a subir tags remotos ya existentes; la publicación, el ZIP y `main` quedaron completados.
 
 ## Release 1.2.4 — 2026-06-21
 
