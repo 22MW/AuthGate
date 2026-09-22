@@ -7,6 +7,15 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.5] — 2026-09-22
+
+### Fixed
+- Restored the “Forgot your password?” link in the login form by removing the preset CSS rule that hid it.
+
+### QA
+- PHP syntax and Git diff checks passed.
+- Manual frontend QA pending.
+
 ## [1.2.4] — 2026-06-21
 
 ### Added

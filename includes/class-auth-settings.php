@@ -509,9 +509,6 @@ class AuthGate_Settings {
     opacity: .6;
 }
 
-.authgate__lost-trigger {
-    display: none !important;
-}
 CSS;
 
         $white = <<<'CSS'
