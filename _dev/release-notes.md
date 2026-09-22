@@ -2,7 +2,14 @@
 
 ## Última actualización
 
-2026-06-20
+2026-09-22
+
+## Release 1.2.5 — 2026-09-22
+
+- Restaurado el enlace “¿Olvidaste tu contraseña?” en el formulario de login.
+- Eliminada la regla de los presets CSS que ocultaba el acceso al flujo de recuperación.
+- Validación estática completada; QA manual frontend pendiente.
+- Publicación en GitHub pendiente de ejecutar mediante `_dev/deploy-release.sh`.
 
 ## Release 1.2.4 — 2026-06-21
 

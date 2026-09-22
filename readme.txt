@@ -4,7 +4,7 @@ Tags: login, register, authentication, access control, woocommerce
 Requires at least: 6.5
 Tested up to: 6.7
 Requires PHP: 8.1
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ WP AuthGate can redirect non-authenticated users away from `/wp-admin`, `wp-logi
 
 == Changelog ==
 
+= 1.2.5 =
+* Restored the “Forgot your password?” link in the login form when using the bundled CSS presets.
+
 = 1.2.4 =
 * Added a setting to choose whether blocked technical routes redirect to the home page or to the custom login slug.
 * Applied the technical-route destination to `/wp-admin`, `wp-login.php`, and `wp-signup.php`.
@@ -146,6 +149,9 @@ WP AuthGate can redirect non-authenticated users away from `/wp-admin`, `wp-logi
 * Full i18n readiness (text domain `authgate`, `languages/` folder).
 
 == Upgrade Notice ==
+
+= 1.2.5 =
+Restores access to the password-recovery flow from the login form.
 
 = 1.2.4 =
 Adds configurable technical-route redirect destination. No migration required.
