@@ -351,7 +351,7 @@ class AuthGate_Settings {
     /** @return string */
     public static function get_custom_css(): string {
         $presets = self::css_presets();
-        return (string) self::get('custom_css', $presets['white']);
+        return (string) self::get('custom_css', $presets['dark']);
     }
 
     /** @return bool */
@@ -378,6 +378,10 @@ class AuthGate_Settings {
     border-radius: 24px;
 }
 
+.authgate {
+    max-width: 330px;
+}
+
 .authgate-protected-page__inner .authgate {
     padding: 0;
     border: 0;
@@ -391,7 +395,7 @@ class AuthGate_Settings {
 }
 
 .authgate__message {
-    font-size: var(--fs-small, 1.575rem);
+    font-size: var(--fs-small, 1rem);
 }
 
 .authgate-protected-page__logo img,
@@ -425,15 +429,15 @@ class AuthGate_Settings {
 .authgate-protected-page__title,
 .authgate__title {
     margin: 0 0 10px;
-    font-size: clamp(1.35rem, 2vw, 1.75rem) !important;
+    font-size: clamp(1rem, 2vw, 1.5rem) !important;
     line-height: 1.2;
 }
 
 .authgate-protected-page__desc,
 .authgate__intro {
     margin-bottom: 24px;
-    font-size: 1.5rem;
-    line-height: 1.55;
+    font-size: 1.1rem;
+    line-height: 90%;
 }
 
 .authgate__form {
@@ -451,7 +455,7 @@ class AuthGate_Settings {
     padding: 11px 16px;
     border-radius: 999px;
     font: inherit;
-    font-size: 1.5rem !important;
+    font-size: 1.1rem !important;
     box-shadow: none;
 }
 
@@ -497,12 +501,12 @@ class AuthGate_Settings {
 .authgate__switch-link,
 .authgate__back-login,
 .authgate__check-label {
-    font-size: var(--fs-small, 1.375rem);
+    font-size: var(--fs-small, 1rem);
 }
 
 .authgate__btn {
     border-radius: 999px !important;
-    font-size: var(--fs-body, 1.5rem) !important;
+    font-size: var(--fs-body, 1.1rem) !important;
 }
 
 .authgate__btn:hover {
