@@ -7,6 +7,14 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+### Changed
+- Default CSS preset is now `dark` instead of `white`, with a 330px max form width and smaller font sizes.
+
+### Fixed
+- GitHub updater: keep the trailing slash after renaming the extracted folder, so updates no longer fail with “No valid plugins were found” when the installed folder is not named `authgate`.
+
 ## [1.2.5] — 2026-09-22
 
 ### Fixed

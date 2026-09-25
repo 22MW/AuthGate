@@ -226,7 +226,7 @@ final class AuthGate_Github_Updater {
         $corrected = trailingslashit(dirname($source)) . $plugin_dir;
         // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
         if (@rename($source, $corrected)) {
-            return $corrected;
+            return trailingslashit($corrected);
         }
 
         return $source;
