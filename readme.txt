@@ -4,7 +4,7 @@ Tags: login, register, authentication, access control, woocommerce
 Requires at least: 6.5
 Tested up to: 6.7
 Requires PHP: 8.1
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,10 @@ WP AuthGate can redirect non-authenticated users away from `/wp-admin`, `wp-logi
 
 == Changelog ==
 
+= 1.2.6 =
+* Fixed updates failing with "No valid plugins were found" when the plugin folder is not named `authgate`.
+* Default CSS preset is now dark, with a narrower form and smaller font sizes.
+
 = 1.2.5 =
 * Restored the “Forgot your password?” link in the login form when using the bundled CSS presets.
 
@@ -149,6 +153,9 @@ WP AuthGate can redirect non-authenticated users away from `/wp-admin`, `wp-logi
 * Full i18n readiness (text domain `authgate`, `languages/` folder).
 
 == Upgrade Notice ==
+
+= 1.2.6 =
+Fixes automatic updates on sites where the plugin folder has a different name. Sites already affected must update manually once.
 
 = 1.2.5 =
 Restores access to the password-recovery flow from the login form.

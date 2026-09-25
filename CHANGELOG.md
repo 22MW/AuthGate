@@ -7,7 +7,7 @@ Versions follow [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased]
+## [1.2.6] — 2026-09-25
 
 ### Changed
 - Default CSS preset is now `dark` instead of `white`, with a 330px max form width and smaller font sizes.
